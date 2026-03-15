@@ -27,7 +27,7 @@ standards following the [Digital NSW, NSW Design System](https://github.com/digi
 You can install the development version of waratah from [GitHub](https://github.com/) with:
 
 ``` r
-TODO
+TODO test
 ```
 
 ##

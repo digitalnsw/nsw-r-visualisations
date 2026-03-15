@@ -4,9 +4,12 @@
 # waratah
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of waratah is to …
+The goal of `waratah` is to provide a R tool kit for styles, patterns
+and standards following the [Digital NSW, NSW Design
+System](https://github.com/digitalnsw/nsw-design-system)
 
 ## Installation
 
@@ -14,15 +17,7 @@ You can install the development version of waratah from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("digitalnsw/nsw-r-visualisations")
+TODO test
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-#library(waratah)
-## basic example code
-```
+## 
