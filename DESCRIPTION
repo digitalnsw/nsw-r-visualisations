@@ -17,3 +17,5 @@ NeedsCompilation: no
 Packaged: 2024-06-20 05:19:54 UTC; 60023619
 Author: Zoe Baldwin [aut, cre] (<https://orcid.org/0000-0002-6010-9361>)
 Maintainer: Zoe Baldwin <zoe.baldwin@health.nsw.gov.au>
+URL: https://github.com/digitalnsw/nsw-r-visualisations
+BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
