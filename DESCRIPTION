@@ -2,18 +2,33 @@ Package: waratah
 Title: Easy data viz - NSW Government colour & typography design
 Version: 0.1.0
 Authors@R:
-    person("Zoe", "Baldwin", , "zoe.baldwin@health.nsw.gov.au", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-6010-9361"))
-Description: This package allows NSW Government R users to create data visualisations in keeping with the NSW Design System. This ensures a consistent approach to data visualisations with appropriate colours and fonts. Special thanks to Carl Suster (ORCID = 0000-0001-7021-9380, Western Sydney Local Health District, NSW Health [cph]) for methodical review and feedback. This package was inspired by the data viz work of Cara Thompson https://github.com/cararthompson.
+    c(person(given = "Zoe",
+             family = "Baldwin",
+             email = "zoe.baldwin@health.nsw.gov.au",
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-6010-9361")),
+      person(given = "Carl",
+             family = "Suster",
+             email = "carl.suster@sydney.edu.au",
+             role = "ctb",
+             comment = c(ORCID = "0000-0001-7021-9380")))
+Description: This package allows NSW Government R users to create data visualisations
+    in keeping with the NSW Design System. This ensures a consistent approach to data
+    visualisations with appropriate colours and fonts.
+    This package was inspired by the data viz work of Cara Thompson
+    <https://github.com/cararthompson>.
 License: MIT + file LICENSE
 Copyright: file COPYRIGHTS + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-Imports: ggplot2 (>= 3.5.1), ggtext (>= 0.1.2), magrittr (>= 2.0.3),
-        reactable (>= 0.4.4), scales (>= 1.3.0), cli
+Imports:
+  cli,
+  ggplot2 (>= 3.5.1),
+  ggtext (>= 0.1.2),
+  magrittr (>= 2.0.3),
+  reactable (>= 0.4.4),
+  scales (>= 1.3.0)
 NeedsCompilation: no
-Packaged: 2024-06-20 05:19:54 UTC; 60023619
-Maintainer: Zoe Baldwin <zoe.baldwin@health.nsw.gov.au>
 URL: https://github.com/digitalnsw/nsw-r-visualisations
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
