@@ -33,3 +33,5 @@ Imports:
 NeedsCompilation: no
 URL: https://github.com/digitalnsw/nsw-r-visualisations
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
+Suggests: 
+    ragg
