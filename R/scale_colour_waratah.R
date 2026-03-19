@@ -13,14 +13,15 @@
 #' @export
 #' @rdname scale_colour_waratah
 scale_colour_waratah <- function(
-    name = ggplot2::waiver(),
-    ...,
-    palette = "default",
-    direction = 1,
-    aesthetics = "colour"
-  ) {
+  name = ggplot2::waiver(),
+  ...,
+  palette = "default",
+  direction = 1,
+  aesthetics = "colour"
+) {
   ggplot2::discrete_scale(
-    aesthetics, name = name,
+    aesthetics,
+    name = name,
     palette = pal_waratah(palette, direction),
     ...
   )
@@ -29,14 +30,15 @@ scale_colour_waratah <- function(
 #' @export
 #' @rdname scale_colour_waratah
 scale_fill_waratah <- function(
-    name = ggplot2::waiver(),
-    ...,
-    palette = "default",
-    direction = 1,
-    aesthetics = "fill"
-  ) {
+  name = ggplot2::waiver(),
+  ...,
+  palette = "default",
+  direction = 1,
+  aesthetics = "fill"
+) {
   ggplot2::discrete_scale(
-    aesthetics, name = name,
+    aesthetics,
+    name = name,
     palette = pal_waratah(palette, direction),
     ...
   )
@@ -45,37 +47,49 @@ scale_fill_waratah <- function(
 #' @export
 #' @rdname scale_colour_waratah
 scale_colour_waratah_c <- function(
-    name = ggplot2::waiver(),
-    ...,
-    palette = "default",
-    direction = -1,
-    values = NULL,
-    na.value = "grey50",
-    guide = "colourbar",
-    aesthetics = "colour"
+  name = ggplot2::waiver(),
+  ...,
+  palette = "default",
+  direction = -1,
+  values = NULL,
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "colour"
 ) {
   ggplot2::continuous_scale(
-    aesthetics, name = name,
-    palette = scales::pal_gradient_n(get_full_palette(palette, direction), values),
-    na.value = na.value, guide = guide, ...
+    aesthetics,
+    name = name,
+    palette = scales::pal_gradient_n(
+      get_full_palette(palette, direction),
+      values
+    ),
+    na.value = na.value,
+    guide = guide,
+    ...
   )
 }
 
 #' @export
 #' @rdname scale_colour_waratah
 scale_fill_waratah_c <- function(
-    name = ggplot2::waiver(),
-    ...,
-    palette = "default",
-    direction = -1,
-    values = NULL,
-    na.value = "grey50",
-    guide = "colourbar",
-    aesthetics = "fill"
+  name = ggplot2::waiver(),
+  ...,
+  palette = "default",
+  direction = -1,
+  values = NULL,
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "fill"
 ) {
   ggplot2::continuous_scale(
-    aesthetics, name = name,
-    palette = scales::pal_gradient_n(get_full_palette(palette, direction), values),
-    na.value = na.value, guide = guide, ...
+    aesthetics,
+    name = name,
+    palette = scales::pal_gradient_n(
+      get_full_palette(palette, direction),
+      values
+    ),
+    na.value = na.value,
+    guide = guide,
+    ...
   )
 }

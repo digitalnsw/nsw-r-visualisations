@@ -51,5 +51,5 @@ tooltip_css <- function(font_family = NULL,
     padding: 10px;
   ', background_color, text_color, font_family, font_size)
 
-  return(css)
+  css
 }
