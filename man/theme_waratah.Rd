@@ -15,19 +15,33 @@ theme_waratah(
 )
 }
 \arguments{
-\item{title_font}{The default title is \"Public Sans\". To change to a different font (e.g. to match up with an external publication requirement), simply change as desired (e.g. \"Arial\"). Make sure you've installed the fonts you want to use on your device first!}
+\item{title_font}{The default title is \"Public Sans\".
+To change to a different font (e.g. to match up with an external publication
+requirement), simply change as desired (e.g. \"Arial\"). Make sure you've
+installed the fonts you want to use on your device first!}
 
-\item{base_font}{The default font is \"Arial\"). If you want to use a different font (e.g. to match up with an external publication requirement), simply change as desired (e.g. \"Times New Roman\"). Make sure you've installed the fonts you want to use on your device first!}
+\item{base_font}{The default font is \"Arial\").
+If you want to use a different font (e.g. to match up with an external
+publication requirement), simply change as desired (e.g. \"Times New Roman\").
+Make sure you've installed the fonts you want to use on your device first!}
 
-\item{void}{Logical (TRUE/FALSE). If TRUE, all grid lines and axes are removed. This is useful when creating pie/donut charts.}
+\item{void}{Logical (TRUE/FALSE).
+If TRUE, all grid lines and axes are removed. This is useful when creating
+pie/donut charts.}
 
-\item{show_grid_lines}{Logical (TRUE/FALSE). If FALSE, all grid lines are removed but the axis text is retained.}
+\item{show_grid_lines}{Logical (TRUE/FALSE).
+If FALSE, all grid lines are removed but the axis text is retained.}
 
-\item{base_text_size}{Base text size in pt. The relative size of the title / subtitle text and of the margins is derived from this.}
+\item{base_text_size}{Base text size in pt.
+The relative size of the title / subtitle text and of the margins is derived
+from this.}
 
-\item{background_colour}{Logical. The default (TRUE) adds an off white colour to the background in line with the ophelia colour palette. Change to FALSE for a white background.}
+\item{background_colour}{Logical.
+The default (TRUE) adds an off white colour to the background in line with
+the ophelia colour palette. Change to FALSE for a white background.}
 
-\item{.colours}{Used to read in waratah_colours. Please leave as is!}
+\item{.colours}{Used to read in waratah_colours.
+Please leave as is!}
 }
 \value{
 No object is returned. Instead, the theme is applied to a ggplot plot.

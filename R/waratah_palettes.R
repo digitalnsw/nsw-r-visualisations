@@ -28,7 +28,7 @@ pal_waratah <- function(palette = "default", direction = 1) {
 
 get_full_palette <- function(palette, direction) {
   if (!palette %in% names(waratah_palettes)) {
-      cli::cli_warn("Unknown palette: {.val {palette}}")
+    cli::cli_warn("Unknown palette: {.val {palette}}")
   }
   pal <- waratah_palettes[[palette]]
   if (direction < 0) pal <- rev(pal)

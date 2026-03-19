@@ -9,7 +9,7 @@ License: MIT + file LICENSE
 Additional_repositories: This package uses the Public Sans font, licensed under the SIL Open Font License 1.1.
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: ggplot2 (>= 3.5.1), ggtext (>= 0.1.2), magrittr (>= 2.0.3),
         reactable (>= 0.4.4), scales (>= 1.3.0), cli
 Additional fonts: inst/fonts/Public_Sans
