@@ -19,3 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+# Public Sans font
+
+Copyright © 2015 The Public Sans Project Authors (https://github.com/uswds/public-sans)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+This license is avalable at `inst/fonts/Public_Sans/OFL.txt` and also with a FAQ at http://scripts.sil.org/OFL
