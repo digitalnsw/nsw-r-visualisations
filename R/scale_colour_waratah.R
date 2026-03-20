@@ -3,13 +3,13 @@
 #' These scales can be used with ggplot to use the waratah palettes. The `_c`
 #' variants interpolate the palette colours into a continuous gradient.
 #'
-#' @inheritParams pal_waratah
+#' @inheritParams pal_nsw
 #' @param name,na.value,guide,aesthetics,... Arguments passed on to
 #'   [ggplot2::discrete_scale()] or [ggplot2::continuous_scale()] to control name,
 #'   limits, breaks, labels and so forth.
 #' @param values if colours should not be evenly positioned along the gradient
 #'   this vector gives the position (between 0 and 1) for each anchor colour.
-
+#'
 #' @export
 #' @rdname scale_colour_waratah
 scale_colour_waratah <- function(
