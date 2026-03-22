@@ -32,19 +32,25 @@ A palette object (see \link[scales:new_continuous_palette]{palette constructors}
 }
 \description{
 Palettes created using the \href{https://designsystem.nsw.gov.au/docs/content/design/theming.html}{NSW Design System}.
-Either specify a named palette with \code{palette}, or choose a \code{hue} or \code{shade}.
+There are several named palettes (the first block in the figure) which can
+be specified with \code{palette}.
+To use palettes based on the NSW Design System colour grid, either
+specify \code{hue} and allow the shade to vary, or specify \code{shade} to allow the
+hue to vary.
+To use the Aboriginal grid, specify \code{variant = "aboriginal"}.
+\if{html}{\figure{nsw_palette.svg}{options: width=95\%}}
 }
 \details{
 The \code{"base"} variant supports:
 \itemize{
-\item \strong{hues}: greys, greens, teals, blues, purples, fucshias, reds, oranges, yellows, browns
-\item \strong{shades}: dark, normal, light, lighter
+\item \strong{hue}: greys, greens, teals, blues, purples, fucshias, reds, oranges, yellows, browns
+\item \strong{shade}: dark, normal, light, lighter
 }
 
 The \code{"aboriginal"} variant supports:
 \itemize{
-\item \strong{hues}: reds, oranges, browns, yellows, greens, blues, purples, greys
-\item \strong{shades}: dark, normal, light, lighter
+\item \strong{hue}: reds, oranges, browns, yellows, greens, blues, purples, greys
+\item \strong{shade}: dark, normal, light, lighter
 }
 }
 \examples{

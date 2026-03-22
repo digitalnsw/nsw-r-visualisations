@@ -1,7 +1,13 @@
 #' NSW Design System Colour Palettes
 #'
 #' Palettes created using the [NSW Design System](https://designsystem.nsw.gov.au/docs/content/design/theming.html).
-#' Either specify a named palette with `palette`, or choose a `hue` or `shade`.
+#' There are several named palettes (the first block in the figure) which can
+#' be specified with `palette`.
+#' To use palettes based on the NSW Design System colour grid, either
+#' specify `hue` and allow the shade to vary, or specify `shade` to allow the
+#' hue to vary.
+#' To use the Aboriginal grid, specify `variant = "aboriginal"`.
+#' \if{html}{\figure{nsw_palette.svg}{options: width=95%}}
 #'
 #' [NSW Design System]: (https://designsystem.nsw.gov.au/docs/content/design/theming.html)
 #'
@@ -20,12 +26,12 @@
 #'
 #' @details
 #' The `"base"` variant supports:
-#'   - **hues**: `r nsw_colour_grids$base$hues`
-#'   - **shades**: `r nsw_colour_grids$base$shades`
+#'   - **hue**: `r nsw_colour_grids$base$hues`
+#'   - **shade**: `r nsw_colour_grids$base$shades`
 #'
 #' The `"aboriginal"` variant supports:
-#'   - **hues**: `r nsw_colour_grids$aboriginal$hues`
-#'   - **shades**: `r nsw_colour_grids$aboriginal$shades`
+#'   - **hue**: `r nsw_colour_grids$aboriginal$hues`
+#'   - **shade**: `r nsw_colour_grids$aboriginal$shades`
 #'
 #' @examples
 #' library(scales)
@@ -69,36 +75,27 @@ pal_name <- function(
   shade = NA,
   variant = c("base", "aboriginal")
 ) {
-  if (is_waiver(palette)) {
+  if (is_waiver(palette) && !all(is.na(hue), is.na(shade))) {
     variant <- match.arg(variant)
-    grid <- nsw_colour_grids[[match.arg(variant)]]
-
-    if (!is.na(hue) && !is.na(shade)) {
-      cli::cli_abort("Only one of {.arg hue} and {.arg shade} can be specified")
-    }
-
-    if (!is.na(shade)) {
-      if (is.numeric(shade)) {
-        shade <- grid$shades[[shade]]
-      } else {
-        shade <- match.arg(shade, grid$shades)
-      }
-      palette <- shade
-      if (variant != "base") palette <- paste0(variant, "_", palette)
-    } else if (!is.na(hue)) {
-      if (is.na(hue)) {
-        hue <- 1L
-      }
-      if (is.numeric(hue)) {
-        hue <- grid$hues[[hue]]
-      } else {
-        hue <- match.arg(hue, grid$hues)
-      }
-      palette <- hue
-      if (variant != "base") palette <- paste0(variant, "_", palette)
-    } else {
-      palette <- "default"
-    }
+    pals <- Filter(
+      \(x) {
+        isTRUE(
+          attr(x, "variant") == variant &&
+            (is.na(hue) || attr(x, "hue") == hue) &&
+            (is.na(shade) || attr(x, "shade") == shade)
+        )
+      },
+      nsw_palettes
+    )
+    palette <- switch(
+      length(pals) + 1L,
+      cli::cli_abort("No matching palettes"),
+      names(pals)[[1]],
+      cli::cli_abort("Bad search")
+    )
+  }
+  if (is_waiver(palette)) {
+    palette = names(nsw_palettes)[[1]]
   }
   if (!palette %in% names(nsw_palettes)) {
     cli::cli_abort("Unknown palette: {.val {palette}}")
@@ -138,29 +135,67 @@ nsw_palettes_manual <- list(
 )
 
 nsw_palettes <- {
-  base_hues <- Map(
-    \(i) unname(calc_pal_shade(nsw_colour_grids$base, i)),
-    seq_along(nsw_colour_grids$base$hues)
-  ) |>
-    setNames(nsw_colour_grids$base$hues)
+  new_pal_group <- function(
+    pals,
+    variant = NA_character_,
+    hue = NA_character_,
+    shade = NA_character_
+  ) {
+    pals <- mapply(
+      structure,
+      .Data = pals,
+      variant = variant,
+      hue = hue,
+      shade = shade,
+      SIMPLIFY = FALSE
+    )
+    setNames(
+      pals,
+      apply(cbind(variant, hue, shade), 1, function(x) {
+        paste(x[!is.na(x)], collapse = "_")
+      })
+    )
+  }
 
-  base_shades <- Map(
-    \(i) unname(calc_pal_hue(nsw_colour_grids$base, i)),
-    seq_along(nsw_colour_grids$base$shades)
-  ) |>
-    setNames(nsw_colour_grids$base$shades)
+  base_hues <-
+    new_pal_group(
+      Map(
+        \(i) unname(calc_pal_shade(nsw_colour_grids$base, i)),
+        seq_along(nsw_colour_grids$base$hues)
+      ),
+      variant = "base",
+      hue = nsw_colour_grids$base$hues
+    )
 
-  aboriginal_hues <- Map(
-    \(i) unname(calc_pal_shade(nsw_colour_grids$aboriginal, i)),
-    seq_along(nsw_colour_grids$aboriginal$hues)
-  ) |>
-    setNames(paste0("aboriginal_", nsw_colour_grids$aboriginal$hues))
+  base_shades <-
+    new_pal_group(
+      Map(
+        \(i) unname(calc_pal_hue(nsw_colour_grids$base, i)),
+        seq_along(nsw_colour_grids$base$shades)
+      ),
+      variant = "base",
+      shade = nsw_colour_grids$base$shades
+    )
 
-  aboriginal_shades <- Map(
-    \(i) unname(calc_pal_hue(nsw_colour_grids$aboriginal, i)),
-    seq_along(nsw_colour_grids$aboriginal$shades)
-  ) |>
-    setNames(paste0("aboriginal_", nsw_colour_grids$aboriginal$shades))
+  aboriginal_hues <-
+    new_pal_group(
+      Map(
+        \(i) unname(calc_pal_shade(nsw_colour_grids$aboriginal, i)),
+        seq_along(nsw_colour_grids$aboriginal$hues)
+      ),
+      variant = "aboriginal",
+      hue = nsw_colour_grids$aboriginal$hues
+    )
+
+  aboriginal_shades <-
+    new_pal_group(
+      Map(
+        \(i) unname(calc_pal_hue(nsw_colour_grids$aboriginal, i)),
+        seq_along(nsw_colour_grids$aboriginal$shades)
+      ),
+      variant = "aboriginal",
+      shade = nsw_colour_grids$aboriginal$shades
+    )
 
   c(
     nsw_palettes_manual,
@@ -168,5 +203,74 @@ nsw_palettes <- {
     base_shades,
     aboriginal_hues,
     aboriginal_shades
+  )
+}
+
+# svglite::svglite("man/figures/nsw_palette.svg"); display_pal_nsw(); dev.off()
+display_pal_nsw <- function() {
+  pals <- c(
+    names(nsw_palettes_manual),
+    " ",
+    " v=base",
+    Filter(\(x) isTRUE(attr(x, "variant") == "base"), nsw_palettes) |>
+      names(),
+    " ",
+    " v=aboriginal",
+    Filter(\(x) isTRUE(attr(x, "variant") == "aboriginal"), nsw_palettes) |>
+      names()
+  )
+  labels <- Map(function(pal) {
+    if (startsWith(pal, " ")) return(pal)
+    hue <- attr(nsw_palettes[[pal]], "hue")
+    shade <- attr(nsw_palettes[[pal]], "shade")
+    if (is.null(hue)) {
+      pal
+    } else if (is.na(shade)) {
+      sprintf("h=%s", hue)
+    } else {
+      sprintf("s=%s", shade)
+    }
+  }, pals)
+
+  n <- lengths(nsw_palettes[pals])
+  nr <- length(pals)
+  nc <- max(n)
+
+  ylim <- c(0, nr)
+  oldpar <- par(mgp = c(0, 0, 0), mar = c(0, 4, 0, 0))
+  on.exit(par(oldpar))
+  plot(
+    1,
+    1,
+    xlim = c(0, nc),
+    ylim = ylim,
+    type = "n",
+    axes = FALSE,
+    bty = "n",
+    xlab = "",
+    ylab = ""
+  )
+  for (i in 1:nr) {
+    nj <- n[[i]]
+    if (startsWith(pals[[i]], " ")) {
+      next
+    }
+    shadi <- nsw_palettes[[pals[[i]]]]
+    rect(
+      xleft = 0:(nj - 1),
+      ytop = nr - i,
+      xright = 1:nj,
+      ybottom = nr - i + 0.8,
+      col = shadi,
+      border = "light grey"
+    )
+  }
+  text(
+    rep(-0.1, nr),
+    rev(1:nr) - 0.6,
+    labels = labels,
+    xpd = TRUE,
+    adj = 1,
+    cex = 0.7
   )
 }
