@@ -31,7 +31,7 @@ Imports:
     scales (>= 1.3.0),
     systemfonts
 NeedsCompilation: no
-URL: https://github.com/digitalnsw/nsw-r-visualisations
+URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests: 
     ragg
