@@ -33,4 +33,6 @@ Imports:
 URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests:
-    ragg
+    ragg,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

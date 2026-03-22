@@ -17,7 +17,7 @@
 #' @param shade Name or index of the shade - see Details.
 #'   Ignored if `palette` is specified.
 #' @param variant Name of palette variant.
-#'   Ignored if `palette` is specified.
+#'   Ignored unless `hue` or `shade` is specified.
 #' @param direction Set to -1 to reverse the order of colours in the palette,
 #'   or 1 for the original order.
 #' @returns A palette object (see [palette constructors][scales::new_continuous_palette])
@@ -52,6 +52,22 @@ pal_nsw <- function(
   variant = c("base", "aboriginal"),
   direction = 1
 ) {
+  if (
+    !missing(variant) && (!is_waiver(palette) || all(is.na(hue), is.na(shade)))
+  ) {
+    cli::cli_warn(
+      "{.arg variant} is ignored unless used with {.arg hue} or {.arg shade}"
+    )
+  }
+  if (!is_waiver(palette) && any(!is.na(hue), !is.na(shade))) {
+    cli::cli_warn(
+      "{.arg hue} and {.arg shade} are ignored when {.arg palette} is specified"
+    )
+  }
+  if (all(!is.na(hue), !is.na(shade))) {
+    cli::cli_abort("{.arg hue} and {.arg shade} cannot both be set")
+  }
+
   palette <- pal_name(
     palette = palette,
     hue = hue,
