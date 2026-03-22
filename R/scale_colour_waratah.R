@@ -22,7 +22,7 @@ scale_colour_waratah <- function(
   ggplot2::discrete_scale(
     aesthetics,
     name = name,
-    palette = pal_waratah(palette, direction),
+    palette = pal_nsw(palette, direction = direction),
     ...
   )
 }
@@ -39,7 +39,7 @@ scale_fill_waratah <- function(
   ggplot2::discrete_scale(
     aesthetics,
     name = name,
-    palette = pal_waratah(palette, direction),
+    palette = pal_nsw(palette, direction = direction),
     ...
   )
 }

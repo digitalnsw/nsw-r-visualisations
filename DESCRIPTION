@@ -30,8 +30,7 @@ Imports:
     reactable (>= 0.4.4),
     scales (>= 1.4.0),
     systemfonts
-NeedsCompilation: no
 URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
-Suggests: 
+Suggests:
     ragg

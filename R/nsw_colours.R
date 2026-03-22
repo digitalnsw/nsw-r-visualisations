@@ -1,13 +1,8 @@
-#' NSW Design System Colours
-#'
-#' Anchor colours used to create the waratah colour palettes. These can also be used as
-#' stand-alone colours (e.g. waratah_colours$blue_01 returns the hex code \"#002664\")
-#'
-#' Colours are available to view at
-#' https://digitalnsw.github.io/nsw-design-system/docs/content/design/theming.html
-#'
 #' @export
+#' @rdname pal_nsw
+#' @format NULL
 nsw_colours <- list(
+  # NOTE: order is important. Adjust grid definitions below if changing order.
   black = "#000000",
   white = "#ffffff",
   off_white = "#F2F2F2",
@@ -87,6 +82,8 @@ nsw_colours <- list(
   smoke_grey = "#e5e3e0"
 )
 
+# defines the offsets and dimensions of each colour grid,
+# used to index into the above vector
 nsw_colour_grids <- list(
   base = list(
     offset = 3L,

@@ -12,7 +12,7 @@
 #'   the fonts you want to use on your device first!
 #' @param base_text_size Base text size.
 #'   The header size is relative to the base text size.
-#' @param .colours Used to read in waratah_colours.
+#' @param .colours Used to read in nsw_colours.
 #'   Please leave as is!
 #' @param ... Other parameters to pass to reactable::reactableTheme().
 #'   See ?reactable::reactableTheme for documentation.
@@ -34,7 +34,7 @@ reactable_theme <- function(
   base_font = "Public Sans",
   base_text_size = 10,
   textColor = NULL,
-  .colours = waratah_colours,
+  .colours = nsw_colours,
   backgroundColor = TRUE,
   borderColor = TRUE,
   stripedColor = NULL,

@@ -1,15 +1,13 @@
 #' NSW Design System Colour Palettes
 #'
 #' Palettes created using the [NSW Design System](https://designsystem.nsw.gov.au/docs/content/design/theming.html).
-#' There are several named palettes (the first block in the figure) which can
-#' be specified with `palette`.
+#' There are several named palettes which can be specified with `palette`.
 #' To use palettes based on the NSW Design System colour grid, either
 #' specify `hue` and allow the shade to vary, or specify `shade` to allow the
 #' hue to vary.
-#' To use the Aboriginal grid, specify `variant = "aboriginal"`.
+#' To use the Aboriginal colour grid, specify `variant = "aboriginal"`.
 #' \if{html}{\figure{nsw_palette.svg}{options: width=95%}}
-#'
-#' [NSW Design System]: (https://designsystem.nsw.gov.au/docs/content/design/theming.html)
+#' `r svglite::svglite("man/figures/nsw_palette.svg"); display_pal_nsw(); invisible(dev.off())`
 #'
 #' @export
 #'
@@ -33,11 +31,15 @@
 #'   - **hue**: `r nsw_colour_grids$aboriginal$hues`
 #'   - **shade**: `r nsw_colour_grids$aboriginal$shades`
 #'
+#' Anchor colours used to create the NSW colour palettes can also be used
+#' stand-alone (e.g. `nsw_colours$blue_01` returns the hex code `"#002664"`).
+#'
 #' @examples
 #' library(scales)
 #'
 #' pal_nsw() |> show_col()
 #' pal_nsw(hue = "blues") |> show_col()
+#' pal_nsw(hue = "reds", direction = -1) |> show_col()
 #' pal_nsw(shade = "light") |> show_col()
 #' pal_nsw(shade = "normal", variant = "aboriginal") |> show_col()
 #'
@@ -59,7 +61,7 @@ pal_nsw <- function(
   colours <- nsw_palettes[[palette]]
 
   if (direction < 0) {
-    pal <- rev(pal)
+    colours <- rev(colours)
   }
 
   scales::pal_manual(colours, type = "colour")
@@ -135,6 +137,8 @@ nsw_palettes_manual <- list(
 )
 
 nsw_palettes <- {
+  # sets attributes on each grid-based palette so that they can
+  # be retrieved by other functions in this file
   new_pal_group <- function(
     pals,
     variant = NA_character_,
@@ -206,7 +210,6 @@ nsw_palettes <- {
   )
 }
 
-# svglite::svglite("man/figures/nsw_palette.svg"); display_pal_nsw(); dev.off()
 display_pal_nsw <- function() {
   pals <- c(
     names(nsw_palettes_manual),
