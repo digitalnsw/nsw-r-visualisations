@@ -26,8 +26,9 @@ Depends:
     R (>= 4.1)
 Imports:
     cli,
+    rlang,
     ggplot2 (>= 3.5.1),
-    ggtext (>= 0.1.2),
+    marquee (>= 1.2.1),
     reactable (>= 0.4.4),
     scales (>= 1.4.0),
     systemfonts,
@@ -45,6 +46,7 @@ Suggests:
     palmerpenguins,
     ragg,
     rmarkdown,
+    svglite,
     tidyr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

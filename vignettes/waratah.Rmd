@@ -151,8 +151,10 @@ p2 +
 Additional styling examples specifying font size, reversing colour palette:
 ```{r}
 p2 +
-  scale_fill_discrete(palette = pal_nsw(hue = "purples", variant = "aboriginal")) +
-  theme_waratah(base_text_size = 14)
+  scale_fill_discrete(
+    palette = pal_nsw(hue = "purples", variant = "aboriginal")
+  ) +
+  theme_waratah(base_size = 14)
 ```
 
 ## Example 3
@@ -178,10 +180,7 @@ Styling using the waratah package - specifying pallete, removing the off white b
 ```{r}
 p3 +
   scale_fill_discrete(palette = pal_nsw(hue = "purples")) +
-  theme_waratah(
-    background_colour = FALSE,
-    base_text_size = 14
-  ) +
+  theme_waratah(base_size = 14) +
   guides(x = guide_axis(angle = 70)) +
   theme(
     panel.grid.major.x = element_blank()
@@ -227,7 +226,7 @@ p4 <-
 p4
 ```
 
-Styling using the waratah package - making the background void, removing off white background, font size:
+Styling using the waratah package with options:
 ```{r}
 p4 +
   scale_fill_discrete(
@@ -237,8 +236,7 @@ p4 +
   ) +
   theme_waratah(
     void = TRUE,
-    base_text_size = 14,
-    background_colour = FALSE
+    base_size = 14
   )
 ```
 
@@ -316,10 +314,7 @@ p5 +
     palette = pal_stretch(waratah:::nsw_palettes$neg_to_pos),
     breaks = sentiment
   ) +
-  theme_waratah(
-    background_colour = FALSE,
-    base_text_size = 12
-  )
+  theme_waratah(base_size = 12)
 ```
 
 
