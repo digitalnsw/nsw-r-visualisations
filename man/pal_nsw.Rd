@@ -26,7 +26,7 @@ Ignored if \code{palette} is specified.}
 Ignored if \code{palette} is specified.}
 
 \item{variant}{Name of palette variant.
-Ignored if \code{palette} is specified.}
+Ignored unless \code{hue} or \code{shade} is specified.}
 
 \item{direction}{Set to -1 to reverse the order of colours in the palette,
 or 1 for the original order.}

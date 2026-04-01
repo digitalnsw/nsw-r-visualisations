@@ -12,6 +12,7 @@ This package allows NSW Government R users to create data visualisations in keep
 Useful links:
 \itemize{
   \item \url{https://github.com/digitalnsw/nsw-r-visualisations}
+  \item \url{https://digitalnsw.github.io/nsw-r-visualisations/}
   \item Report bugs at \url{https://github.com/digitalnsw/nsw-r-visualisations/issues}
 }
 

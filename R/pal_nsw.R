@@ -169,7 +169,7 @@ nsw_palettes <- {
       shade = shade,
       SIMPLIFY = FALSE
     )
-    setNames(
+    stats::setNames(
       pals,
       apply(cbind(variant, hue, shade), 1, function(x) {
         paste(x[!is.na(x)], collapse = "_")
@@ -256,8 +256,8 @@ display_pal_nsw <- function() {
   nc <- max(n)
 
   ylim <- c(0, nr)
-  oldpar <- par(mgp = c(0, 0, 0), mar = c(0, 4, 0, 0))
-  on.exit(par(oldpar))
+  oldpar <- graphics::par(mgp = c(0, 0, 0), mar = c(0, 4, 0, 0))
+  on.exit(graphics::par(oldpar))
   plot(
     1,
     1,
@@ -275,7 +275,7 @@ display_pal_nsw <- function() {
       next
     }
     shadi <- nsw_palettes[[pals[[i]]]]
-    rect(
+    graphics::rect(
       xleft = 0:(nj - 1),
       ytop = nr - i,
       xright = 1:nj,
@@ -284,7 +284,7 @@ display_pal_nsw <- function() {
       border = "light grey"
     )
   }
-  text(
+  graphics::text(
     rep(-0.1, nr),
     rev(1:nr) - 0.6,
     labels = labels,
