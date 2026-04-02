@@ -1,0 +1,497 @@
+---
+title: "waratah"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{waratah}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(waratah)
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+library(ggiraph)
+library(reactable)
+```
+
+## Example 1
+
+With standard ggplot output:
+```{r}
+ggplot(penguins) +
+  geom_point(aes(
+    x = bill_length_mm,
+    y = flipper_length_mm,
+    colour = species,
+    size = body_mass_g
+  )) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some *italics* in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none")
+```
+
+Styling using waratah package - just 2 extra lines of code:
+```{r}
+ggplot(penguins) +
+  geom_point(aes(
+    x = bill_length_mm,
+    y = flipper_length_mm,
+    colour = species,
+    size = body_mass_g
+  )) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some *italics* in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none") +
+  scale_colour_waratah() +
+  theme_waratah()
+```
+
+Additional styling using waratah package - specify a palette from the package:
+```{r}
+ggplot(penguins) +
+  geom_point(aes(
+    x = bill_length_mm,
+    y = flipper_length_mm,
+    colour = species,
+    size = body_mass_g
+  )) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some *italics* in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none") +
+  scale_colour_waratah(palette = "blues") +
+  theme_waratah()
+```
+
+
+## Example 2
+
+With standard ggplot output:
+```{r}
+ggplot(penguins) +
+  geom_point(
+    aes(
+      x = bill_length_mm,
+      y = flipper_length_mm,
+      fill = body_mass_g,
+      size = body_mass_g
+    ),
+    shape = 21,
+    colour = "black",
+    alpha = 0.8
+  ) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some *italics* in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none")
+```
+
+Styling using waratah package - specifying the palette and filling as continous using scale_fill_waratah function:
+```{r}
+ggplot(penguins) +
+  geom_point(
+    aes(
+      x = bill_length_mm,
+      y = flipper_length_mm,
+      fill = body_mass_g,
+      size = body_mass_g
+    ),
+    shape = 21,
+    colour = "black",
+    alpha = 0.8
+  ) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some *italics* in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none") +
+  scale_fill_waratah_c(palette = "default") +
+  theme_waratah()
+```
+
+Additional styling examples specifying font size, reversing colour palette:
+```{r}
+palmerpenguins::penguins |>
+  ggplot() +
+  geom_point(
+    aes(
+      x = bill_length_mm,
+      y = flipper_length_mm,
+      fill = body_mass_g,
+      size = body_mass_g
+    ),
+    shape = 21,
+    colour = "black",
+    alpha = 0.8
+  ) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some *italics* in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none") +
+  scale_fill_waratah_c(palette = "neg_to_pos", direction = 1) +
+  theme_waratah(base_text_size = 14)
+```
+
+## Example 3
+
+With standard ggplot output
+```{r}
+filter(penguins, !is.na(sex)) |>
+  ggplot(
+    aes(
+      x = species,
+      fill = island
+    ),
+    stat = "count"
+  ) +
+  geom_bar() +
+  labs(
+    title = "Perfectly proportional penguins",
+    subtitle = "Where do they all live?",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  facet_grid(. ~ sex)
+```
+
+Styling using the waratah package - specifying pallete, removing the off white background and adjusting font size
+```{r}
+filter(penguins, !is.na(sex)) |>
+  ggplot(
+    aes(
+      x = species,
+      fill = island
+    ),
+    stat = "count"
+  ) +
+  geom_bar() +
+  labs(
+    title = "Perfectly proportional penguins",
+    subtitle = "Where do they all live?",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  facet_grid(. ~ sex) +
+  scale_fill_waratah(palette = "cool_colours") +
+  theme_waratah(
+    background_colour = FALSE,
+    base_text_size = 14
+  )
+```
+
+## Example 4
+
+With standard ggplot output:
+```{r}
+ggplot(
+  penguins,
+  aes(
+    x = 1,
+    fill = species
+  ),
+  stat = "count"
+) +
+  geom_bar() +
+  xlim(c(-0.5, 2)) +
+  coord_polar(theta = "y") +
+  labs(
+    title = "Does anyone know if penguins like donuts?",
+    subtitle = "Not sure, but we know there are three species in the dataset",
+    caption = "Data from {palmerpenguins}"
+  )
+```
+
+Styling using the waratah package - making the background void, removing off white background, font size:
+```{r}
+ggplot(
+  penguins,
+  aes(
+    x = 1,
+    fill = species
+  ),
+  stat = "count"
+) +
+  geom_bar() +
+  xlim(c(-0.5, 2)) +
+  coord_polar(theta = "y") +
+  labs(
+    title = "Does anyone know if penguins like donuts?",
+    subtitle = "Not sure, but we know there are three species in the dataset",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  scale_fill_waratah(palette = "warm_colours") +
+  theme_waratah(
+    void = TRUE,
+    base_text_size = 14,
+    background_colour = FALSE
+  )
+```
+
+## Example 5
+
+With standard ggplot output:
+```{r}
+tibble(
+  answer = factor(
+    rep(
+      c(
+        "Strongly Disagree",
+        "Disagree",
+        "Agree",
+        "Strongly Agree"
+      ),
+      2
+    ),
+    levels = c(
+      "Strongly Disagree",
+      "Disagree",
+      "Strongly Agree",
+      "Agree"
+    )
+  ),
+  percent = c(
+    8,
+    12,
+    40,
+    10,
+    6,
+    18,
+    34,
+    18
+  ),
+  group = sort(rep(c("Male", "Female"), 4))
+) |>
+  mutate(
+    display_percent = case_when(
+      grepl("Dis|Neutral", answer) ~ -percent,
+      TRUE ~ percent
+    )
+  ) |>
+  ggplot() +
+  geom_col(
+    aes(
+      x = group,
+      fill = answer,
+      y = display_percent
+    ),
+    width = 0.8
+  ) +
+  labs(
+    title = "Let's find out!",
+    subtitle = "How much do they agree with the statement \"Donuts are delicious\"?",
+    caption = "Totally made up data!",
+    x = "Percent",
+    fill = "Answer"
+  ) +
+  scale_y_continuous(labels = function(x) paste0(abs(x), "%")) +
+  coord_flip()
+```
+
+Styling using the waratah package - removing background, changing font size:
+```{r}
+tibble(
+  answer = factor(
+    rep(
+      c(
+        "Strongly Disagree",
+        "Disagree",
+        "Agree",
+        "Strongly Agree"
+      ),
+      2
+    ),
+    levels = c(
+      "Strongly Disagree",
+      "Disagree",
+      "Strongly Agree",
+      "Agree"
+    )
+  ),
+  percent = c(
+    8,
+    12,
+    40,
+    10,
+    6,
+    18,
+    34,
+    18
+  ),
+  group = sort(rep(c("Male", "Female"), 4))
+) |>
+  mutate(
+    display_percent = case_when(
+      grepl("Dis|Neutral", answer) ~ -percent,
+      TRUE ~ percent
+    )
+  ) |>
+  ggplot() +
+  geom_col(
+    aes(
+      x = group,
+      fill = answer,
+      y = display_percent
+    ),
+    width = 0.8
+  ) +
+  labs(
+    title = "Let's find out!",
+    subtitle = "How much do they agree with the statement \"Donuts are delicious\"?",
+    caption = "Totally made up data!",
+    x = "Percent",
+    fill = "Answer"
+  ) +
+  scale_y_continuous(labels = function(x) paste0(abs(x), "%")) +
+  coord_flip() +
+  scale_fill_waratah(
+    palette = "neg_to_pos",
+    limits = c(
+      "Strongly Disagree",
+      "Disagree",
+      "Agree",
+      "Strongly Agree"
+    )
+  ) +
+  theme_waratah(
+    background_colour = FALSE,
+    base_text_size = 12
+  ) +
+  theme(
+    axis.title = element_blank(),
+    legend.position = "bottom"
+  )
+```
+
+## Example 6
+
+Saving plot to an object to demonstrate custom tooltip function using ggiraph:
+```{r}
+p <- penguins |>
+  ggplot() +
+  geom_point_interactive(aes(
+    x = bill_length_mm,
+    y = flipper_length_mm,
+    colour = species,
+    size = body_mass_g,
+    tooltip = paste0(
+      "Species: ",
+      species,
+      "<br>Bill length: ",
+      bill_length_mm,
+      "<br>Flipper length: ",
+      flipper_length_mm
+    )
+  )) +
+  labs(
+    x = "Bill length (mm)",
+    y = "Flipper length (mm)",
+    title = "Let's try some <i>italics</i> in the title",
+    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    caption = "Data from {palmerpenguins}"
+  ) +
+  guides(size = "none") +
+  scale_colour_manual(
+    values = c(
+      waratah_colours$blue_01,
+      waratah_colours$red_02,
+      waratah_colours$teal_02
+    )
+  ) +
+  theme_waratah()
+
+# Create the interactive plot using ggiraph and custom tooltip from waratah package (load the object to show in Viewer)
+interactive_plot <- girafe(
+  ggobj = p,
+  options = list(
+    opts_tooltip(css = tooltip_css())
+  )
+)
+
+# With additional styling options
+interactive_plot <- girafe(
+  ggobj = p,
+  options = list(
+    opts_tooltip(
+      css = tooltip_css(
+        font_family = "Arial",
+        font_size = "18px",
+        background_color = "blue_04",
+        text_color = "blue_01"
+      )
+    )
+  )
+)
+```
+
+
+## NSW Government logo
+
+The logo is in the package as a PNG file - to view it use the following code:
+```{r}
+library(magick)
+image_path <- system.file(
+  "images",
+  "nsw-gov-logo-primary.png",
+  package = "waratah"
+)
+image_read(image_path)
+```
+
+## Reactable
+
+Table styling function example - building on reactable package (should appear in your Viewer pane):
+```{r}
+head(penguins, 10) |>
+  reactable(theme = reactableTheme())
+
+# Adding styling function using waratah package
+head(palmerpenguins::penguins, 10) |>
+  reactable::reactable(
+    theme = waratah::reactable_theme()
+  )
+
+# Further arguments for styling
+head(palmerpenguins::penguins, 10) |>
+  reactable::reactable(
+    theme = reactable_theme(
+      colour = "blue_01",
+      base_font = "Arial",
+      textColor = "black",
+      backgroundColor = TRUE,
+      borderColor = TRUE
+    ),
+    striped = TRUE
+  )
+```
