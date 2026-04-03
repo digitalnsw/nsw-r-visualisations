@@ -34,9 +34,15 @@ Imports:
 URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests:
+    dplyr,
+    ggiraph,
     knitr,
+    legendry,
+    magick,
+    palmerpenguins,
     ragg,
-    testthat (>= 3.0.0)
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0),
+    vctrs
 Config/testthat/edition: 3
 VignetteBuilder: knitr

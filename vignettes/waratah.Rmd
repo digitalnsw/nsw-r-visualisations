@@ -12,22 +12,32 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
-library(waratah)
-library(palmerpenguins)
-library(dplyr)
-library(ggplot2)
-library(ggiraph)
-library(reactable)
+library(ggplot2, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(palmerpenguins, warn.conflicts = FALSE)
 ```
 
 ## Example 1
 
 With standard ggplot output:
 ```{r}
-ggplot(penguins) +
+library(waratah)
+library(palmerpenguins)
+library(ggplot2)
+library(dplyr)
+
+long_text <- paste(
+  c(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do",
+    "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim",
+    "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut",
+    "aliquip ex ea commodo consequat."
+  ),
+  collapse = " "
+)
+
+p1 <-
+  ggplot(penguins) +
   geom_point(aes(
     x = bill_length_mm,
     y = flipper_length_mm,
@@ -35,53 +45,30 @@ ggplot(penguins) +
     size = body_mass_g
   )) +
   labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
     title = "Let's try some *italics* in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    subtitle = long_text,
+    dictionary = c(
+      bill_length_mm = "Bill length (mm)",
+      flipper_length_mm = "Flipper length (mm)",
+      species = "Species",
+      body_mass_g = "Body mass (g)"
+    ),
     caption = "Data from {palmerpenguins}"
-  ) +
-  guides(size = "none")
+  )
+
+p1
 ```
 
 Styling using waratah package - just 2 extra lines of code:
 ```{r}
-ggplot(penguins) +
-  geom_point(aes(
-    x = bill_length_mm,
-    y = flipper_length_mm,
-    colour = species,
-    size = body_mass_g
-  )) +
-  labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
-    title = "Let's try some *italics* in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    caption = "Data from {palmerpenguins}"
-  ) +
-  guides(size = "none") +
+p1 +
   scale_colour_waratah() +
   theme_waratah()
 ```
 
 Additional styling using waratah package - specify a palette from the package:
 ```{r}
-ggplot(penguins) +
-  geom_point(aes(
-    x = bill_length_mm,
-    y = flipper_length_mm,
-    colour = species,
-    size = body_mass_g
-  )) +
-  labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
-    title = "Let's try some *italics* in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    caption = "Data from {palmerpenguins}"
-  ) +
-  guides(size = "none") +
+p1 +
   scale_colour_waratah(palette = "blues") +
   theme_waratah()
 ```
@@ -91,78 +78,70 @@ ggplot(penguins) +
 
 With standard ggplot output:
 ```{r}
-ggplot(penguins) +
+p2 <-
+  filter_out(penguins, is.na(sex)) |>
+  ggplot() +
   geom_point(
     aes(
       x = bill_length_mm,
-      y = flipper_length_mm,
-      fill = body_mass_g,
-      size = body_mass_g
+      y = bill_depth_mm,
+      fill = interaction(sex, species),
     ),
     shape = 21,
+    size = 3,
     colour = "black",
     alpha = 0.8
   ) +
   labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
-    title = "Let's try some *italics* in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    title = "Penguin bill dimensions",
+    subtitle = "Separated by *species* and *sex*",
+    dictionary = c(
+      bill_length_mm = "Bill length (mm)",
+      bill_depth_mm = "Bill depth (mm)"
+    ),
     caption = "Data from {palmerpenguins}"
   ) +
-  guides(size = "none")
+  guides(
+    fill = legendry::guide_legend_group(
+      title = NULL,
+      ncol = 1,
+      direction = "horizontal",
+      override.aes = list(size = 3)
+    )
+  )
+
+p2 + scale_fill_brewer(palette = "Paired")
 ```
 
 Styling using waratah package - specifying the palette and filling as continous using scale_fill_waratah function:
 ```{r}
-ggplot(penguins) +
-  geom_point(
-    aes(
-      x = bill_length_mm,
-      y = flipper_length_mm,
-      fill = body_mass_g,
-      size = body_mass_g
-    ),
-    shape = 21,
-    colour = "black",
-    alpha = 0.8
+pal_interleave <- function(...) {
+  pals <- vctrs::vec_recycle_common(...)
+  n_cols <- length(pals[[1]])
+  n_pals <- length(pals)
+  idx <- rep(seq_len(n_cols), each = n_pals)
+  idx <- rep(seq_len(n_cols), each = n_pals) +
+    rep(seq_len(n_pals) - 1, times = n_cols) * n_cols
+  scales::pal_manual(unlist(pals)[idx], type = "colour")
+}
+
+pal_paired <- function(colours, amount = 50) {
+  lighter <- scales::col_lighter(colours, amount = amount)
+  pal_interleave(colours, lighter)
+}
+
+p2 +
+  discrete_scale(
+    "fill",
+    palette = pal_paired(waratah:::nsw_palettes$default)
   ) +
-  labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
-    title = "Let's try some *italics* in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    caption = "Data from {palmerpenguins}"
-  ) +
-  guides(size = "none") +
-  scale_fill_waratah_c(palette = "default") +
   theme_waratah()
 ```
 
 Additional styling examples specifying font size, reversing colour palette:
 ```{r}
-palmerpenguins::penguins |>
-  ggplot() +
-  geom_point(
-    aes(
-      x = bill_length_mm,
-      y = flipper_length_mm,
-      fill = body_mass_g,
-      size = body_mass_g
-    ),
-    shape = 21,
-    colour = "black",
-    alpha = 0.8
-  ) +
-  labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
-    title = "Let's try some *italics* in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    caption = "Data from {palmerpenguins}"
-  ) +
-  guides(size = "none") +
-  scale_fill_waratah_c(palette = "neg_to_pos", direction = 1) +
+p2 +
+  scale_fill_waratah(palette = "cool_colours", direction = 1) +
   theme_waratah(base_text_size = 14)
 ```
 
@@ -170,44 +149,32 @@ palmerpenguins::penguins |>
 
 With standard ggplot output
 ```{r}
-filter(penguins, !is.na(sex)) |>
-  ggplot(
-    aes(
-      x = species,
-      fill = island
-    ),
-    stat = "count"
-  ) +
+p3 <-
+  filter_out(penguins, is.na(sex)) |>
+  ggplot(aes(x = species, fill = island)) +
   geom_bar() +
   labs(
+    dictionary = c(species = "Species", island = "Island"),
     title = "Perfectly proportional penguins",
     subtitle = "Where do they all live?",
     caption = "Data from {palmerpenguins}"
   ) +
-  facet_grid(. ~ sex)
+  facet_wrap(vars(sex))
+
+p3
 ```
 
 Styling using the waratah package - specifying pallete, removing the off white background and adjusting font size
 ```{r}
-filter(penguins, !is.na(sex)) |>
-  ggplot(
-    aes(
-      x = species,
-      fill = island
-    ),
-    stat = "count"
-  ) +
-  geom_bar() +
-  labs(
-    title = "Perfectly proportional penguins",
-    subtitle = "Where do they all live?",
-    caption = "Data from {palmerpenguins}"
-  ) +
-  facet_grid(. ~ sex) +
+p3 +
   scale_fill_waratah(palette = "cool_colours") +
   theme_waratah(
     background_colour = FALSE,
     base_text_size = 14
+  ) +
+  guides(x = guide_axis(angle = 70)) +
+  theme(
+    panel.grid.major.x = element_blank()
   )
 ```
 
@@ -215,43 +182,54 @@ filter(penguins, !is.na(sex)) |>
 
 With standard ggplot output:
 ```{r}
-ggplot(
-  penguins,
-  aes(
-    x = 1,
-    fill = species
-  ),
-  stat = "count"
-) +
-  geom_bar() +
-  xlim(c(-0.5, 2)) +
-  coord_polar(theta = "y") +
+col_contrasting <- function(bg) {
+  Lab <- convertColor(t(col2rgb(bg)), from = "sRGB", to = "Lab", scale.in = 255)
+  ifelse(Lab[, 1] < 50, "white", "black")
+}
+
+p4 <-
+  ggplot(penguins) +
+  geom_bar(aes(1, fill = species)) +
+  geom_text(
+    aes(
+      1,
+      y = after_stat(count),
+      label = stage(
+        species,
+        after_stat = sprintf("%s\n%.0f%%", label, 100 * count / sum(count))
+      ),
+      colour = stage(
+        species,
+        after_scale = col_contrasting(colour)
+      )
+    ),
+    stat = "count",
+    position = position_stack(vjust = .5),
+    show.legend = FALSE
+  ) +
+  coord_radial(
+    theta = "y",
+    inner.radius = .5,
+    expand = FALSE,
+    rotate.angle = TRUE
+  ) +
   labs(
     title = "Does anyone know if penguins like donuts?",
     subtitle = "Not sure, but we know there are three species in the dataset",
     caption = "Data from {palmerpenguins}"
   )
+
+p4
 ```
 
 Styling using the waratah package - making the background void, removing off white background, font size:
 ```{r}
-ggplot(
-  penguins,
-  aes(
-    x = 1,
-    fill = species
-  ),
-  stat = "count"
-) +
-  geom_bar() +
-  xlim(c(-0.5, 2)) +
-  coord_polar(theta = "y") +
-  labs(
-    title = "Does anyone know if penguins like donuts?",
-    subtitle = "Not sure, but we know there are three species in the dataset",
-    caption = "Data from {palmerpenguins}"
+p4 +
+  scale_fill_waratah(
+    aesthetics = c("fill", "colour"),
+    palette = "warm_colours",
+    guide = "none"
   ) +
-  scale_fill_waratah(palette = "warm_colours") +
   theme_waratah(
     void = TRUE,
     base_text_size = 14,
@@ -263,133 +241,90 @@ ggplot(
 
 With standard ggplot output:
 ```{r}
-tibble(
-  answer = factor(
-    rep(
-      c(
-        "Strongly Disagree",
-        "Disagree",
-        "Agree",
-        "Strongly Agree"
-      ),
-      2
-    ),
-    levels = c(
-      "Strongly Disagree",
-      "Disagree",
-      "Strongly Agree",
-      "Agree"
-    )
-  ),
-  percent = c(
-    8,
-    12,
-    40,
-    10,
-    6,
-    18,
-    34,
-    18
-  ),
-  group = sort(rep(c("Male", "Female"), 4))
-) |>
-  mutate(
-    display_percent = case_when(
-      grepl("Dis|Neutral", answer) ~ -percent,
-      TRUE ~ percent
-    )
-  ) |>
-  ggplot() +
+sentiment <- c(
+  "Strongly Disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly Agree"
+)
+
+survey_data <- tibble(
+  answer = factor(rep(sentiment, 2), levels = sentiment, ordered = TRUE),
+  percent = c(8, 12, 30, 40, 10, 6, 18, 24, 34, 18),
+  group = sort(rep(c("Male", "Female"), 5))
+)
+
+position_stack_offset <- function(...) {
+  stack <- position_stack(...)
+  ggproto(
+    NULL,
+    stack,
+    default_aes = c(stack$default_aes, offset_x = 0, offset_y = 0),
+    compute_layer = function(self, data, params, layout) {
+      data <- stack$compute_layer(data, params, layout)
+      transform_position(
+        data,
+        if (any(data$offset_x != 0)) \(x) x + data$offset_x,
+        if (any(data$offset_y != 0)) \(y) y + data$offset_y
+      )
+    },
+  )
+}
+
+fct_midpoint <- function(.f, .x) {
+  stopifnot(is.factor(.f), is.numeric(.x))
+  n <- nlevels(.f)
+  y <- sum(.x[.f == levels(.f)][1:(n %/% 2)])
+  if (n %% 2 > 0) {
+    y <- y + .x[.f == levels(.f)][n %/% 2 + 1] / 2
+  }
+  y
+}
+
+p5 <-
+  ggplot(
+    survey_data,
+    aes(x = percent, y = group, fill = answer)
+  ) +
+  geom_vline(aes(xintercept = 0, colour = from_theme(accent))) +
   geom_col(
-    aes(
-      x = group,
-      fill = answer,
-      y = display_percent
-    ),
+    aes(x = percent, offset_x = -fct_midpoint(answer, percent)),
+    position = position_stack_offset(reverse = TRUE),
     width = 0.8
   ) +
   labs(
     title = "Let's find out!",
-    subtitle = "How much do they agree with the statement \"Donuts are delicious\"?",
+    subtitle = "How much do they agree with the statement \"Doughnuts are delicious\"?",
     caption = "Totally made up data!",
-    x = "Percent",
+    x = NULL,
+    y = NULL,
     fill = "Answer"
   ) +
-  scale_y_continuous(labels = function(x) paste0(abs(x), "%")) +
-  coord_flip()
+  scale_x_continuous(labels = function(x) paste0(abs(x), "%"))
+
+p5
 ```
 
 Styling using the waratah package - removing background, changing font size:
 ```{r}
-tibble(
-  answer = factor(
-    rep(
-      c(
-        "Strongly Disagree",
-        "Disagree",
-        "Agree",
-        "Strongly Agree"
-      ),
-      2
-    ),
-    levels = c(
-      "Strongly Disagree",
-      "Disagree",
-      "Strongly Agree",
-      "Agree"
-    )
-  ),
-  percent = c(
-    8,
-    12,
-    40,
-    10,
-    6,
-    18,
-    34,
-    18
-  ),
-  group = sort(rep(c("Male", "Female"), 4))
-) |>
-  mutate(
-    display_percent = case_when(
-      grepl("Dis|Neutral", answer) ~ -percent,
-      TRUE ~ percent
-    )
-  ) |>
-  ggplot() +
-  geom_col(
-    aes(
-      x = group,
-      fill = answer,
-      y = display_percent
-    ),
-    width = 0.8
-  ) +
-  labs(
-    title = "Let's find out!",
-    subtitle = "How much do they agree with the statement \"Donuts are delicious\"?",
-    caption = "Totally made up data!",
-    x = "Percent",
-    fill = "Answer"
-  ) +
-  scale_y_continuous(labels = function(x) paste0(abs(x), "%")) +
-  coord_flip() +
-  scale_fill_waratah(
-    palette = "neg_to_pos",
-    limits = c(
-      "Strongly Disagree",
-      "Disagree",
-      "Agree",
-      "Strongly Agree"
-    )
+pal_stretch <- function(pal) {
+  cts <- scales::as_continuous_pal(pal)
+  scales::as_discrete_pal(cts)
+}
+
+p5 +
+  discrete_scale(
+    "fill",
+    palette = pal_stretch(waratah:::nsw_palettes$neg_to_pos),
+    breaks = sentiment
   ) +
   theme_waratah(
     background_colour = FALSE,
     base_text_size = 12
   ) +
   theme(
-    axis.title = element_blank(),
+    panel.grid.major.y = element_blank(),
     legend.position = "bottom"
   )
 ```
@@ -398,8 +333,10 @@ tibble(
 
 Saving plot to an object to demonstrate custom tooltip function using ggiraph:
 ```{r}
-p <- penguins |>
-  ggplot() +
+library(ggiraph)
+
+p_gir <-
+  ggplot(penguins) +
   geom_point_interactive(aes(
     x = bill_length_mm,
     y = flipper_length_mm,
@@ -415,33 +352,36 @@ p <- penguins |>
     )
   )) +
   labs(
-    x = "Bill length (mm)",
-    y = "Flipper length (mm)",
-    title = "Let's try some <i>italics</i> in the title",
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    title = "Let's try some *italics* in the title",
+    subtitle = long_text,
+    dictionary = c(
+      bill_length_mm = "Bill length (mm)",
+      flipper_length_mm = "Flipper length (mm)",
+      species = "Species",
+      body_mass_g = "Body mass (g)"
+    ),
     caption = "Data from {palmerpenguins}"
   ) +
-  guides(size = "none") +
   scale_colour_manual(
     values = c(
-      waratah_colours$blue_01,
-      waratah_colours$red_02,
-      waratah_colours$teal_02
+      nsw_colours$blue_01,
+      nsw_colours$red_02,
+      nsw_colours$teal_02
     )
   ) +
   theme_waratah()
 
 # Create the interactive plot using ggiraph and custom tooltip from waratah package (load the object to show in Viewer)
 interactive_plot <- girafe(
-  ggobj = p,
+  ggobj = p_gir,
   options = list(
     opts_tooltip(css = tooltip_css())
   )
 )
 
 # With additional styling options
-interactive_plot <- girafe(
-  ggobj = p,
+girafe(
+  ggobj = p_gir,
   options = list(
     opts_tooltip(
       css = tooltip_css(
@@ -473,17 +413,18 @@ image_read(image_path)
 
 Table styling function example - building on reactable package (should appear in your Viewer pane):
 ```{r}
+library(reactable)
 head(penguins, 10) |>
   reactable(theme = reactableTheme())
 
 # Adding styling function using waratah package
-head(palmerpenguins::penguins, 10) |>
+head(penguins, 10) |>
   reactable::reactable(
     theme = waratah::reactable_theme()
   )
 
 # Further arguments for styling
-head(palmerpenguins::penguins, 10) |>
+head(penguins, 10) |>
   reactable::reactable(
     theme = reactable_theme(
       colour = "blue_01",
