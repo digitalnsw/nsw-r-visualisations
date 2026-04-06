@@ -255,32 +255,26 @@ survey_data <- tibble(
   group = sort(rep(c("Male", "Female"), 5))
 )
 
-position_stack_offset <- function(...) {
-  stack <- position_stack(...)
-  ggproto(
-    NULL,
-    stack,
-    default_aes = c(stack$default_aes, offset_x = 0, offset_y = 0),
-    compute_layer = function(self, data, params, layout) {
-      data <- stack$compute_layer(data, params, layout)
-      transform_position(
-        data,
-        if (any(data$offset_x != 0)) \(x) x + data$offset_x,
-        if (any(data$offset_y != 0)) \(y) y + data$offset_y
-      )
-    },
-  )
-}
-
-fct_midpoint <- function(.f, .x) {
-  stopifnot(is.factor(.f), is.numeric(.x))
-  n <- nlevels(.f)
-  y <- sum(.x[.f == levels(.f)][1:(n %/% 2)])
-  if (n %% 2 > 0) {
-    y <- y + .x[.f == levels(.f)][n %/% 2 + 1] / 2
+StatLikert <- ggproto(
+  "StatLikert",
+  StatIdentity,
+  compute_layer = function(self, data, params, layout) {
+    mutate(
+      data,
+      offset = sum(x[1:(n() %/% 2)]),
+      offset = if_else(
+        rep(n() %% 2 > 0, n()),
+        offset + x[n() %/% 2 + 1] / 2,
+        offset
+      ),
+      left = cumsum(lag(x, default = 0)) - offset,
+      right = cumsum(x) - offset,
+      x = (left + right) / 2,
+      width = right - left,
+      .by = y
+    )
   }
-  y
-}
+)
 
 p5 <-
   ggplot(
@@ -288,11 +282,7 @@ p5 <-
     aes(x = percent, y = group, fill = answer)
   ) +
   geom_vline(aes(xintercept = 0, colour = from_theme(accent))) +
-  geom_col(
-    aes(x = percent, offset_x = -fct_midpoint(answer, percent)),
-    position = position_stack_offset(reverse = TRUE),
-    width = 0.8
-  ) +
+  geom_tile(stat = "likert", height = 0.8) +
   labs(
     title = "Let's find out!",
     subtitle = "How much do they agree with the statement \"Doughnuts are delicious\"?",
@@ -301,9 +291,13 @@ p5 <-
     y = NULL,
     fill = "Answer"
   ) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    legend.position = "bottom"
+  ) +
   scale_x_continuous(labels = function(x) paste0(abs(x), "%"))
 
-p5
+p5 + scale_fill_brewer(palette = "PiYG")
 ```
 
 Styling using the waratah package - removing background, changing font size:
@@ -322,10 +316,6 @@ p5 +
   theme_waratah(
     background_colour = FALSE,
     base_text_size = 12
-  ) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    legend.position = "bottom"
   )
 ```
 
