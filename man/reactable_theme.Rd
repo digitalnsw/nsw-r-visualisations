@@ -10,7 +10,7 @@ reactable_theme(
   base_font = "Public Sans",
   base_text_size = 10,
   textColor = NULL,
-  .colours = waratah_colours,
+  .colours = nsw_colours,
   backgroundColor = TRUE,
   borderColor = TRUE,
   stripedColor = NULL,
@@ -37,7 +37,7 @@ The header size is relative to the base text size.}
 \item{textColor}{You can specify a text colour if you would like it
 different to the borderColor and stripedColor.}
 
-\item{.colours}{Used to read in waratah_colours.
+\item{.colours}{Used to read in nsw_colours.
 Please leave as is!}
 
 \item{backgroundColor}{Logical. Can be specified as TRUE/FALSE.

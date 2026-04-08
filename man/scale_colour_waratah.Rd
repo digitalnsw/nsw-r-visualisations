@@ -50,7 +50,7 @@ scale_fill_waratah_c(
 \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}} or \code{\link[ggplot2:continuous_scale]{ggplot2::continuous_scale()}} to control name,
 limits, breaks, labels and so forth.}
 
-\item{palette}{Name of the palette: default, brand_default, neg_to_pos, greens, teals, blues, purples, fuchsias, reds, oranges, yellows, greys, browns, deeps, lights, warm_colours, cool_colours, colour_blind}
+\item{palette}{Name of the palette: default, brand_default, neg_to_pos, colour_blind.}
 
 \item{direction}{Set to -1 to reverse the order of colours in the palette,
 or 1 for the original order.}
