@@ -12,7 +12,7 @@ theme_waratah(
   show_grid_lines = TRUE,
   base_text_size = 11,
   background_colour = TRUE,
-  .colours = waratah_colours
+  .colours = nsw_colours
 )
 ```
 

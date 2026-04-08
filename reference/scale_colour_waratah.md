@@ -58,9 +58,7 @@ scale_fill_waratah_c(
 
 - palette:
 
-  Name of the palette: default, brand_default, neg_to_pos, greens,
-  teals, blues, purples, fuchsias, reds, oranges, yellows, greys,
-  browns, deeps, lights, warm_colours, cool_colours, colour_blind
+  Name of the palette: default, brand_default, neg_to_pos, colour_blind.
 
 - direction:
 

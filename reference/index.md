@@ -2,8 +2,9 @@
 
 ## All functions
 
-- [`pal_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_waratah.md)
-  : Waratah palettes
+- [`nsw_colours`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
+  [`pal_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
+  : NSW Design System Colour Palettes
 - [`reactable_theme()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/reactable_theme.md)
   : reactable_theme()
 - [`scale_colour_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/scale_colour_waratah.md)
@@ -15,5 +16,6 @@
   : theme_waratah()
 - [`tooltip_css()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/tooltip_css.md)
   : tooltipcss
-- [`waratah_colours`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah_colours.md)
-  : waratah_colours
+- [`waratah`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah-package.md)
+  [`waratah-package`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah-package.md)
+  : Tools for the New South Wales Design System in R

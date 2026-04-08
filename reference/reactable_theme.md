@@ -11,7 +11,7 @@ reactable_theme(
   base_font = "Public Sans",
   base_text_size = 10,
   textColor = NULL,
-  .colours = waratah_colours,
+  .colours = nsw_colours,
   backgroundColor = TRUE,
   borderColor = TRUE,
   stripedColor = NULL,
@@ -51,7 +51,7 @@ reactable_theme(
 
 - .colours:
 
-  Used to read in waratah_colours. Please leave as is!
+  Used to read in nsw_colours. Please leave as is!
 
 - backgroundColor:
 
