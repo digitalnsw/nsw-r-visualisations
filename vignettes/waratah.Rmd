@@ -62,14 +62,14 @@ p1
 Styling using waratah package - just 2 extra lines of code:
 ```{r}
 p1 +
-  scale_colour_waratah() +
+  scale_colour_discrete(palette = pal_nsw()) +
   theme_waratah()
 ```
 
 Additional styling using waratah package - specify a palette from the package:
 ```{r}
 p1 +
-  scale_colour_waratah(palette = "blues") +
+  scale_colour_discrete(palette = pal_nsw(hue = "blues")) +
   theme_waratah()
 ```
 
@@ -113,7 +113,7 @@ p2 <-
 p2 + scale_fill_brewer(palette = "Paired")
 ```
 
-Styling using waratah package - specifying the palette and filling as continous using scale_fill_waratah function:
+Styling using waratah package - specifying the palette:
 ```{r}
 pal_interleave <- function(...) {
   pals <- vctrs::vec_recycle_common(...)
@@ -141,7 +141,7 @@ p2 +
 Additional styling examples specifying font size, reversing colour palette:
 ```{r}
 p2 +
-  scale_fill_waratah(palette = "cool_colours", direction = 1) +
+  scale_fill_discrete(palette = pal_nsw(hue = "purples", variant = "aboriginal")) +
   theme_waratah(base_text_size = 14)
 ```
 
@@ -167,7 +167,7 @@ p3
 Styling using the waratah package - specifying pallete, removing the off white background and adjusting font size
 ```{r}
 p3 +
-  scale_fill_waratah(palette = "cool_colours") +
+  scale_fill_discrete(palette = pal_nsw(hue = "purples")) +
   theme_waratah(
     background_colour = FALSE,
     base_text_size = 14
@@ -225,9 +225,9 @@ p4
 Styling using the waratah package - making the background void, removing off white background, font size:
 ```{r}
 p4 +
-  scale_fill_waratah(
+  scale_fill_discrete(
     aesthetics = c("fill", "colour"),
-    palette = "warm_colours",
+    palette = pal_nsw(hue = "reds"),
     guide = "none"
   ) +
   theme_waratah(
