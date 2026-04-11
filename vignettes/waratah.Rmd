@@ -398,31 +398,3 @@ image_path <- system.file(
 )
 image_read(image_path)
 ```
-
-## Reactable
-
-Table styling function example - building on reactable package (should appear in your Viewer pane):
-```{r}
-library(reactable)
-head(penguins, 10) |>
-  reactable(theme = reactableTheme())
-
-# Adding styling function using waratah package
-head(penguins, 10) |>
-  reactable::reactable(
-    theme = waratah::reactable_theme()
-  )
-
-# Further arguments for styling
-head(penguins, 10) |>
-  reactable::reactable(
-    theme = reactable_theme(
-      colour = "blue_01",
-      base_font = "Arial",
-      textColor = "black",
-      backgroundColor = TRUE,
-      borderColor = TRUE
-    ),
-    striped = TRUE
-  )
-```
