@@ -1,8 +1,10 @@
 pandoc: 3.1.11
 pkgdown: 2.2.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2026-04-08T00:07Z
+articles:
+  articles/charts: charts.html
+  waratah: waratah.html
+last_built: 2026-04-12T09:03Z
 urls:
   reference: https://digitalnsw.github.io/nsw-r-visualisations/reference
   article: https://digitalnsw.github.io/nsw-r-visualisations/articles

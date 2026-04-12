@@ -19,16 +19,16 @@ TODO test
 
 ## All functions
 
+- [`pal_interleave()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
+  [`pal_paired()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
+  [`pal_stretch()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
+  [`col_contrasting()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
+  : Construct palette variants
 - [`nsw_colours`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
   [`pal_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
   : NSW Design System Colour Palettes
 - [`reactable_theme()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/reactable_theme.md)
   : reactable_theme()
-- [`scale_colour_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/scale_colour_waratah.md)
-  [`scale_fill_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/scale_colour_waratah.md)
-  [`scale_colour_waratah_c()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/scale_colour_waratah.md)
-  [`scale_fill_waratah_c()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/scale_colour_waratah.md)
-  : Waratah colour scales for 'ggplot2'
 - [`theme_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/theme_waratah.md)
   : theme_waratah()
 - [`tooltip_css()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/tooltip_css.md)
@@ -37,3 +37,10 @@ TODO test
   [`waratah-package`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah-package.md)
   : Tools for the New South Wales Design System in R
 
+# Articles
+
+### All vignettes
+
+- [Charts and
+  graphs](https://digitalnsw.github.io/nsw-r-visualisations/articles/charts.md):
+- [waratah](https://digitalnsw.github.io/nsw-r-visualisations/articles/waratah.md):
