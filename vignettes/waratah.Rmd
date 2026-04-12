@@ -116,21 +116,6 @@ p2 + scale_fill_brewer(palette = "Paired")
 
 Styling using waratah package - specifying the palette:
 ```{r}
-pal_interleave <- function(...) {
-  pals <- vctrs::vec_recycle_common(...)
-  n_cols <- length(pals[[1]])
-  n_pals <- length(pals)
-  idx <- rep(seq_len(n_cols), each = n_pals)
-  idx <- rep(seq_len(n_cols), each = n_pals) +
-    rep(seq_len(n_pals) - 1, times = n_cols) * n_cols
-  scales::pal_manual(unlist(pals)[idx], type = "colour")
-}
-
-pal_paired <- function(colours, amount = 50) {
-  lighter <- scales::col_lighter(colours, amount = amount)
-  pal_interleave(colours, lighter)
-}
-
 p2 +
   discrete_scale(
     "fill",
@@ -183,11 +168,6 @@ p3 +
 
 With standard ggplot output:
 ```{r}
-col_contrasting <- function(bg) {
-  Lab <- convertColor(t(col2rgb(bg)), from = "sRGB", to = "Lab", scale.in = 255)
-  ifelse(Lab[, 1] < 50, "white", "black")
-}
-
 p4 <-
   ggplot(penguins) +
   geom_bar(aes(1, fill = species)) +
@@ -240,22 +220,7 @@ p4 +
 
 ## Example 5
 
-With standard ggplot output:
-```{r}
-sentiment <- c(
-  "Strongly Disagree",
-  "Disagree",
-  "Neutral",
-  "Agree",
-  "Strongly Agree"
-)
-
-survey_data <- tibble(
-  answer = factor(rep(sentiment, 2), levels = sentiment, ordered = TRUE),
-  percent = c(8, 12, 30, 40, 10, 6, 18, 24, 34, 18),
-  group = sort(rep(c("Male", "Female"), 5))
-)
-
+```{r, echo=FALSE}
 StatLikert <- ggproto(
   "StatLikert",
   StatIdentity,
@@ -276,6 +241,23 @@ StatLikert <- ggproto(
     )
   }
 )
+```
+
+With standard ggplot output:
+```{r}
+sentiment <- c(
+  "Strongly Disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly Agree"
+)
+
+survey_data <- tibble(
+  answer = factor(rep(sentiment, 2), levels = sentiment, ordered = TRUE),
+  percent = c(8, 12, 30, 40, 10, 6, 18, 24, 34, 18),
+  group = sort(rep(c("Male", "Female"), 5))
+)
 
 p5 <-
   ggplot(
@@ -283,6 +265,7 @@ p5 <-
     aes(x = percent, y = group, fill = answer)
   ) +
   geom_vline(aes(xintercept = 0, colour = from_theme(accent))) +
+  # note: likert is not a standard stat - it's defined and hidden for this example
   geom_tile(stat = "likert", height = 0.8) +
   labs(
     title = "Let's find out!",
@@ -303,11 +286,6 @@ p5 + scale_fill_brewer(palette = "PiYG")
 
 Styling using the waratah package - removing background, changing font size:
 ```{r}
-pal_stretch <- function(pal) {
-  cts <- scales::as_continuous_pal(pal)
-  scales::as_discrete_pal(cts)
-}
-
 p5 +
   discrete_scale(
     "fill",

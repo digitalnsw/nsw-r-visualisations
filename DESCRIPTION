@@ -30,7 +30,8 @@ Imports:
     ggtext (>= 0.1.2),
     reactable (>= 0.4.4),
     scales (>= 1.4.0),
-    systemfonts
+    systemfonts,
+    vctrs
 URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests:
@@ -44,8 +45,7 @@ Suggests:
     ragg,
     rmarkdown,
     tidyr,
-    testthat (>= 3.0.0),
-    vctrs
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/Needs/website: rmarkdown
