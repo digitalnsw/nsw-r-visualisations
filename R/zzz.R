@@ -27,4 +27,8 @@
       bolditalic = bolditalic
     )
   }
+
+  # {systemfonts} doesn't handle the pdf() device, so use {extrafont} to
+  # convert the font format and register.
+  extrafont::loadfonts(device = "all", quiet = TRUE)
 }
