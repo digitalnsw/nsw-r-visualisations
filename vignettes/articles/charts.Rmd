@@ -32,13 +32,7 @@ applications <- tibble::tribble(
   "Liverpool"              ,                      198 ,
   "Penrith"                ,                      176 ,
   "Camden"                 ,                      143
-) |>
-  mutate(
-    `Local government area` = fct_reorder(
-      `Local government area`,
-      desc(`Applications assessed`)
-    )
-  )
+)
 
 support <- tibble::tribble(
   ~Quarter , ~Phone , ~Digital , ~`In person` ,
@@ -47,9 +41,64 @@ support <- tibble::tribble(
   "Q3"     ,   3600 ,     7100 ,          890 ,
   "Q4"     ,   3200 ,     8200 ,          760
 )
+
+road_incidents <- tibble::tribble(
+  ~Month      , ~Incidents ,
+  "January"   ,       3240 ,
+  "February"  ,       2980 ,
+  "March"     ,       3100 ,
+  "April"     ,       2760 ,
+  "May"       ,       2640 ,
+  "June"      ,       2580 ,
+  "July"      ,       2490 ,
+  "August"    ,       2520 ,
+  "September" ,       2710 ,
+  "October"   ,       2890 ,
+  "November"  ,       3040 ,
+  "December"  ,       3380
+)
+
+service_transactions <- tibble::tribble(
+  ~Period    , ~Web  , ~App  , ~`Assisted digital` ,
+  "Jul 2024" , 42000 , 18000 ,                6200 ,
+  "Jan 2025" , 48000 , 24000 ,                5400 ,
+  "Jun 2025" , 51000 , 31000 ,                4100
+)
+
+grants <- tibble::tribble(
+  ~Month      , ~`Cumulative total ($M)` ,
+  "July"      , 12.4                     ,
+  "August"    , 28.7                     ,
+  "September" , 41.2                     ,
+  "October"   , 58.9                     ,
+  "November"  , 74.3                     ,
+  "December"  , 89.1
+)
+
+open_cases <- tibble::tribble(
+  ~Period , ~Standard , ~High , ~Critical ,
+  "Jan"   ,       200 ,   540 ,        80 ,
+  "Feb"   ,       230 ,   620 ,        90 ,
+  "Mar"   ,       300 ,   640 ,        95 ,
+  "Apr"   ,       330 ,   680 ,       120 ,
+  "May"   ,       520 ,   690 ,       135 ,
+  "Jun"   ,       600 ,   700 ,       150
+)
+
+planning <- tibble::tribble(
+  ~Application , ~`Complexity score` , ~`Processing time (days)` ,
+           "A" ,                  24 ,                         4 ,
+           "B" ,                  31 ,                         6 ,
+           "C" ,                  45 ,                         9 ,
+           "D" ,                  62 ,                        14 ,
+           "E" ,                  74 ,                        18 ,
+           "F" ,                  86 ,                        22
+)
 ```
 
 Examples derived from the NSW Design System [guidance on charts and graphs](https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html).
+This page is intended to demonstrate how the charts from the guidance page look with minimal changes beyond setting the theme.
+There are some inevitable differences due to different defaults in chart behaviours between ggplot and other frameworks.
 
 ## Comparison and ranking
 
@@ -60,7 +109,14 @@ Examples derived from the NSW Design System [guidance on charts and graphs](http
 ### Bar (vertical)
 
 ```{r}
-ggplot(applications) +
+applications |>
+  mutate(
+    `Local government area` = fct_reorder(
+      `Local government area`,
+      desc(`Applications assessed`)
+    )
+  ) |>
+  ggplot() +
   geom_col(aes(`Local government area`, `Applications assessed`)) +
   scale_x_discrete(guide = guide_axis(angle = 30)) +
   scale_y_continuous(expand = expansion(mult = c(0, .2))) +
@@ -92,7 +148,6 @@ support |>
   ggplot() +
   geom_col(aes(Quarter, value, fill = name)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
-  theme(legend.position = "bottom") +
   labs(
     title = "Support requests by contact type",
     subtitle = "Volume by channel, 2024-25 financial year",
@@ -109,6 +164,170 @@ reactable(support, theme = reactable_theme())
 ```
 
 **Source**: Service NSW. Last updated: June 2025.
+
+</div>
+</div>
+</div>
+
+## Trends over time
+
+<div class="container">
+<div class="row">
+<div class="col">
+
+### Line
+
+```{r}
+road_incidents |>
+  mutate(Month = fct_inorder(Month, ordered = TRUE)) |>
+  ggplot(aes(Month, Incidents)) +
+  geom_line(aes(group = NA)) +
+  geom_point() +
+  scale_x_discrete(labels = \(x) substr(x, 1, 3)) +
+  scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.05))) +
+  labs(
+    title = "Road incident reports",
+    subtitle = "NSW monthly total, January to December 2024",
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: Incidents were highest in summer months, peaking in December and January. July recorded the lowest monthly total for the year.
+
+```{r}
+reactable(road_incidents, theme = reactable_theme())
+```
+
+**Source**: Transport for NSW. Last updated: December 2024.
+
+</div>
+<div class="col">
+
+### Multi-line
+
+```{r}
+service_transactions |>
+  mutate(Period = fct_inorder(Period, ordered = TRUE)) |>
+  tidyr::pivot_longer(-Period) |>
+  ggplot(aes(Period, value)) +
+  geom_line(aes(linetype = name, colour = name, group = name)) +
+  geom_point(aes(shape = name, colour = name)) +
+  scale_y_continuous(
+    limits = c(0, NA),
+    expand = expansion(mult = c(0, 0.2)),
+    labels = scales::label_comma()
+  ) +
+  labs(
+    title = "Online service transactions by channel",
+    subtitle = "Monthly volume, July 2024 to June 2025",
+    colour = NULL,
+    shape = NULL,
+    linetype = NULL,
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: App transactions grew fastest over the year, nearly doubling. Web remained the largest channel. Assisted digital declined steadily as self-service adoption increased.
+
+```{r}
+reactable(service_transactions, theme = reactable_theme())
+```
+
+**Source**: Service NSW. Last updated: June 2025.
+
+</div>
+</div>
+<div class="row">
+<div class="col">
+
+### Area
+
+```{r}
+grants |>
+  mutate(Month = fct_inorder(Month, ordered = TRUE)) |>
+  ggplot(aes(Month, `Cumulative total ($M)`)) +
+  geom_area(aes(group = NA)) +
+  geom_point() +
+  scale_x_discrete(labels = \(x) substr(x, 1, 3)) +
+  labs(
+    title = "Grant funding disbursed",
+    subtitle = "Running total by month, July to December 2024",
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: Grant disbursements accelerated from October, with the final quarter accounting for more than half of the full-year total.
+
+```{r}
+reactable(grants, theme = reactable_theme())
+```
+
+**Source**: NSW Treasury. Last updated: December 2024.
+
+</div>
+<div class="col">
+
+### Stacked area
+
+```{r}
+open_cases |>
+  mutate(Period = fct_inorder(Period, ordered = TRUE)) |>
+  tidyr::pivot_longer(-Period) |>
+  ggplot(aes(Period, value)) +
+  geom_area(aes(fill = name, group = name)) +
+  labs(
+    title = "Support cases open by priority level",
+    subtitle = "Cumulative open cases, January to June 2025",
+    fill = NULL,
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: The total number of open cases grew steadily across all priority levels. Critical cases grew fastest proportionally, nearly doubling between January and June.
+
+```{r}
+reactable(open_cases, theme = reactable_theme())
+```
+
+**Source**: Service NSW. Last updated: June 2025.
+
+</div>
+</div>
+</div>
+
+
+## Distribution and correlation
+
+<div class="container">
+<div class="row">
+<div class="col">
+
+### Scatter plot
+
+```{r}
+planning |>
+  ggplot(aes(`Complexity score`, `Processing time (days)`)) +
+  geom_point() +
+  geom_blank(aes(x = x, y = y), data = data.frame(x = 0, y = 0)) +
+  labs(
+    title = "Application complexity and processing time",
+    subtitle = "Individual applications, Q1 2025",
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: Applications with higher complexity scores consistently took longer to process. Most straightforward applications (score below 30) resolved within 5 working days. Complex applications (score above 70) averaged 18 days, with significant variation.
+
+```{r}
+reactable(planning, theme = reactable_theme())
+```
+
+**Source**: NSW Planning Portal. Last updated: March 2025.
 
 </div>
 </div>
