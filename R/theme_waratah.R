@@ -24,6 +24,27 @@
 #'
 #' @return No object is returned. Instead, the theme is applied to a ggplot plot.
 #' @export
+#' @examples
+#' library(ggplot2)
+#'
+#' p1 <-
+#'   ggplot(palmerpenguins::penguins) +
+#'   geom_point(aes(
+#'     x = bill_length_mm,
+#'     y = flipper_length_mm,
+#'     colour = species,
+#'     size = body_mass_g
+#'   )) +
+#'   labs(
+#'     dictionary = c(
+#'       bill_length_mm = "Bill length (mm)",
+#'       flipper_length_mm = "Flipper length (mm)",
+#'       species = "Species",
+#'       body_mass_g = "Body mass (g)"
+#'     ),
+#'     caption = "Data from {palmerpenguins}"
+#'   ) +
+#'   theme_waratah()
 #'
 theme_waratah <- function(
   title_font = "Public Sans",
