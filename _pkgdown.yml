@@ -1,4 +1,8 @@
 url: https://digitalnsw.github.io/nsw-r-visualisations/
 template:
   bootstrap: 5
-
+  bslib:
+    base_font: "Public Sans"
+    heading_font: "Public Sans"
+  includes:
+    in_header: <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">

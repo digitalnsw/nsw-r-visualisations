@@ -58,3 +58,27 @@ A theme to apply to a reactable object
 \description{
 reactable_theme()
 }
+\examples{
+
+library(reactable)
+head(palmerpenguins::penguins, 10) |>
+  reactable(theme = reactableTheme())
+
+# Adding NSW style:
+head(palmerpenguins::penguins, 10) |>
+  reactable(theme = reactable_theme())
+
+# Further arguments for styling
+head(palmerpenguins::penguins, 10) |>
+  reactable(
+    theme = reactable_theme(
+      colour = "blue_01",
+      base_font = "Arial",
+      textColor = "black",
+      backgroundColor = TRUE,
+      borderColor = TRUE
+    ),
+    striped = TRUE
+  )
+
+}
