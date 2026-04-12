@@ -1,0 +1,115 @@
+---
+title: "Charts and graphs"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  dev = "ragg_png",
+  collapse = TRUE,
+  echo = FALSE,
+  fig.width = 4,
+  fig.height = 4,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(waratah)
+library(ggplot2, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(forcats)
+library(reactable)
+
+set_theme(theme_waratah())
+```
+
+```{r}
+applications <- tibble::tribble(
+  ~`Local government area` , ~`Applications assessed` ,
+  "City of Sydney"         ,                      312 ,
+  "Parramatta"             ,                      284 ,
+  "Blacktown"              ,                      251 ,
+  "Liverpool"              ,                      198 ,
+  "Penrith"                ,                      176 ,
+  "Camden"                 ,                      143
+) |>
+  mutate(
+    `Local government area` = fct_reorder(
+      `Local government area`,
+      desc(`Applications assessed`)
+    )
+  )
+
+support <- tibble::tribble(
+  ~Quarter , ~Phone , ~Digital , ~`In person` ,
+  "Q1"     ,   4200 ,     5800 ,         1100 ,
+  "Q2"     ,   3900 ,     6400 ,          980 ,
+  "Q3"     ,   3600 ,     7100 ,          890 ,
+  "Q4"     ,   3200 ,     8200 ,          760
+)
+```
+
+Examples derived from the NSW Design System [guidance on charts and graphs](https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html).
+
+## Comparison and ranking
+
+<div class="container">
+<div class="row">
+<div class="col">
+
+### Bar (vertical)
+
+```{r}
+ggplot(applications) +
+  geom_col(aes(`Local government area`, `Applications assessed`)) +
+  scale_x_discrete(guide = guide_axis(angle = 30)) +
+  scale_y_continuous(expand = expansion(mult = c(0, .2))) +
+  theme(plot.margin = margin_part(l = 20)) +
+  labs(
+    title = "Development applications assessed",
+    subtitle = "By local government area, January to March 2025",
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: City of Sydney and Parramatta assessed the highest number of applications in Q1 2025, together accounting for over a third of the total.
+
+```{r}
+reactable(applications, theme = reactable_theme())
+```
+
+**Source**: NSW Planning Portal. Last updated: March 2025.
+
+</div>
+<div class="col">
+
+### Stacked bar
+
+```{r}
+support |>
+  tidyr::pivot_longer(-Quarter) |>
+  ggplot() +
+  geom_col(aes(Quarter, value, fill = name)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Support requests by contact type",
+    subtitle = "Volume by channel, 2024-25 financial year",
+    fill = NULL,
+    x = NULL,
+    y = NULL
+  )
+```
+
+**Summary**: Digital contact grew steadily across all four quarters, while phone and in-person volumes declined. By Q4, digital accounted for more than two-thirds of all requests.
+
+```{r}
+reactable(support, theme = reactable_theme())
+```
+
+**Source**: Service NSW. Last updated: June 2025.
+
+</div>
+</div>
+</div>

@@ -46,3 +46,4 @@ Suggests:
     vctrs
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Config/Needs/website: rmarkdown
