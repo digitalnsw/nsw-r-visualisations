@@ -35,6 +35,7 @@ URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.gith
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests:
     dplyr,
+    forcats,
     ggiraph,
     knitr,
     legendry,
@@ -42,6 +43,7 @@ Suggests:
     palmerpenguins,
     ragg,
     rmarkdown,
+    tidyr,
     testthat (>= 3.0.0),
     vctrs
 Config/testthat/edition: 3

@@ -30,15 +30,15 @@
 #' @examples
 #'
 #' library(reactable)
-#' head(penguins, 10) |>
+#' head(palmerpenguins::penguins, 10) |>
 #'   reactable(theme = reactableTheme())
 #'
 #' # Adding NSW style:
-#' head(penguins, 10) |>
+#' head(palmerpenguins::penguins, 10) |>
 #'   reactable(theme = reactable_theme())
 #'
 #' # Further arguments for styling
-#' head(penguins, 10) |>
+#' head(palmerpenguins::penguins, 10) |>
 #'   reactable(
 #'     theme = reactable_theme(
 #'       colour = "blue_01",
