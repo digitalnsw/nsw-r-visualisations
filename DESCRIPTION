@@ -51,4 +51,6 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/Needs/website:
     rmarkdown,
+    gdtools,
+    gfonts,
     ggiraph
