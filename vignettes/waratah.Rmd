@@ -18,6 +18,30 @@ library(dplyr, warn.conflicts = FALSE)
 library(palmerpenguins, warn.conflicts = FALSE)
 ```
 
+## Fonts
+
+The NSW Government typeface is Public Sans.
+Recommendations:
+
+  - [Install the font](https://digitalnsw.github.io/public-sans/download/) on your computer. This package will attempt to register an embedded copy of the font so that it can be used even without installing the font first.
+  - If possible you should use a graphics device that supports modern features such as `ragg::agg_png()`. These devices should be used by default by RStudio if {ragg} is installed.
+  - If using HTML output (such as for interactive plots of tables), ensure that the document loads [Public Sans from Google Fonts](https://fonts.google.com/specimen/Public+Sans?preview.script=Latn) (see below).
+
+<details><summary>Show font import code for HTML documents.</summary>
+  Either add this to `<head>`:
+
+  ```html
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  ```
+
+  or add this to your CSS:
+
+  ```css
+  @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+  ```
+</details>
+
+
 ## Example 1
 
 With standard ggplot output:
