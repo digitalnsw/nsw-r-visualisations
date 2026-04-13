@@ -28,7 +28,7 @@ Imports:
     cli,
     rlang,
     ggplot2 (>= 3.5.1),
-    marquee (>= 1.2.1),
+    ggtext (>= 0.1.2),
     reactable (>= 0.4.4),
     scales (>= 1.4.0),
     systemfonts,

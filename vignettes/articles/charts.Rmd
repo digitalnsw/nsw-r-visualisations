@@ -7,8 +7,8 @@ knitr::opts_chunk$set(
   dev = "ragg_png",
   collapse = TRUE,
   echo = FALSE,
-  fig.width = 4,
-  fig.height = 4,
+  fig.width = 3.5,
+  fig.height = 3.5,
   comment = "#>"
 )
 ```
@@ -183,7 +183,10 @@ road_incidents |>
   ggplot(aes(Month, Incidents)) +
   geom_line(aes(group = NA)) +
   geom_point() +
-  scale_x_discrete(labels = \(x) substr(x, 1, 3)) +
+  scale_x_discrete(
+    labels = \(x) substr(x, 1, 3),
+    guide = guide_axis(angle = 45)
+  ) +
   scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.05))) +
   labs(
     title = "Road incident reports",
@@ -248,7 +251,7 @@ reactable(service_transactions, theme = reactable_theme())
 grants |>
   mutate(Month = fct_inorder(Month, ordered = TRUE)) |>
   ggplot(aes(Month, `Cumulative total ($M)`)) +
-  geom_area(aes(group = NA)) +
+  geom_area(aes(group = NA, fill = after_scale(alpha(fill, 0.3)))) +
   geom_point() +
   scale_x_discrete(labels = \(x) substr(x, 1, 3)) +
   labs(
@@ -328,6 +331,9 @@ reactable(planning, theme = reactable_theme())
 ```
 
 **Source**: NSW Planning Portal. Last updated: March 2025.
+
+</div>
+<div class="col">
 
 </div>
 </div>

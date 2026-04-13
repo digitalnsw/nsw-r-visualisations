@@ -6,13 +6,14 @@
 \usage{
 theme_waratah(
   base_size = 11,
-  base_family = "Arial",
+  base_family = "Public Sans",
   header_family = "Public Sans",
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
   ink = "black",
-  paper = "off_white",
-  accent = "blue_01",
+  paper = "white",
+  geom_ink = "blue_01",
+  accent = "blue_02",
   show_grid_lines = TRUE,
   void = FALSE
 )
@@ -31,6 +32,8 @@ legend titles, the plot title and tag text.}
 \item{base_rect_size}{base size for rect elements}
 
 \item{ink, paper, accent}{colour for foreground, background, and accented elements respectively.}
+
+\item{geom_ink}{default ink colour used by geoms for points, lines and fills.}
 
 \item{show_grid_lines}{whether to show grid lines.
 If \code{FALSE}, all grid lines are removed but the axis text is retained.
@@ -59,46 +62,13 @@ ggplot(palmerpenguins::penguins) +
     size = body_mass_g
   )) +
   labs(
-    title = "Let's try some *italics* in the title",
-    subtitle = paste0(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do",
-      " eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
-      " enim ad minim veniam, quis nostrud exercitation ullamco laboris",
-      " nisi ut aliquip ex ea commodo consequat."
-    ),
     caption = "Data from {palmerpenguins}",
-    dictionary = c(
-      bill_length_mm = "Bill length (mm)",
-      flipper_length_mm = "Flipper length (mm)",
-      species = "Species"
-    )
-  ) +
-  scale_size(
-    "Body mass (kg)",
-    labels = scales::label_number(scale = 1/1000)
-  )
-
-}
-\examples{
-library(ggplot2)
-
-p1 <-
-  ggplot(palmerpenguins::penguins) +
-  geom_point(aes(
-    x = bill_length_mm,
-    y = flipper_length_mm,
-    colour = species,
-    size = body_mass_g
-  )) +
-  labs(
     dictionary = c(
       bill_length_mm = "Bill length (mm)",
       flipper_length_mm = "Flipper length (mm)",
       species = "Species",
       body_mass_g = "Body mass (g)"
-    ),
-    caption = "Data from {palmerpenguins}"
-  ) +
-  theme_waratah()
+    )
+  )
 
 }

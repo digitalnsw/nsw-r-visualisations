@@ -84,18 +84,19 @@ p1 <-
 p1
 ```
 
-Styling using waratah package - just 2 extra lines of code:
+Style with waratah:
 ```{r}
 p1 +
-  scale_colour_discrete(palette = pal_nsw()) +
-  theme_waratah()
+  theme_waratah() +
+  theme(legend.position = "right")
 ```
 
-Additional styling using waratah package - specify a palette from the package:
+Change to a different NSW palette:
 ```{r}
 p1 +
   scale_colour_discrete(palette = pal_nsw(hue = "blues")) +
-  theme_waratah()
+  theme_waratah() +
+  theme(legend.position = "right")
 ```
 
 
@@ -141,10 +142,7 @@ p2 + scale_fill_brewer(palette = "Paired")
 Styling using waratah package - specifying the palette:
 ```{r}
 p2 +
-  discrete_scale(
-    "fill",
-    palette = pal_paired(waratah:::nsw_palettes$default)
-  ) +
+  discrete_scale("fill", palette = pal_paired(pal_nsw())) +
   theme_waratah()
 ```
 

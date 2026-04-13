@@ -3,6 +3,7 @@
 #' A 'ggplot2' theme compatible with the NSW design system.
 #' It sets default colour scales, fonts, and some other styles.
 #'
+#' @param geom_ink default ink colour used by geoms for points, lines and fills.
 #' @param void whether to hide grid lines and axes.
 #'   If `TRUE`, all grid lines and axes are removed. This is useful when creating
 #'   pie/donut charts.
@@ -12,7 +13,7 @@
 #' @inheritParams ggplot2::theme_minimal
 #' @returns ggplot theme specification to add to a plot
 #' @export
-#' @importFrom ggplot2 theme element_blank element_text element_geom element_line element_rect %+replace%
+#' @importFrom ggplot2 theme element_blank element_text element_geom element_line element_rect %+replace% rel
 #' @examples
 #' library(ggplot2)
 #' set_theme(theme_waratah())
@@ -36,17 +37,20 @@
 #'
 theme_waratah <- function(
   base_size = 11,
-  base_family = "Arial",
+  base_family = "Public Sans",
   header_family = "Public Sans",
   base_line_size = base_size / 22,
   base_rect_size = base_size / 22,
   ink = "black",
-  paper = "off_white",
-  accent = "blue_01",
+  paper = "white",
+  geom_ink = "blue_01",
+  accent = "blue_02",
   show_grid_lines = TRUE,
   void = FALSE
 ) {
+  # support using NSW colour names
   ink <- resolve_colours(ink)
+  geom_ink <- resolve_colours(geom_ink)
   paper <- resolve_colours(paper)
   accent <- resolve_colours(accent)
 
@@ -75,13 +79,61 @@ theme_waratah <- function(
       #   family = header_family,
       #   margin = ggplot2::margin_part(t = base_size, b = base_size)
       # ),
-      legend.background = element_rect(fill = "transparent"),
-      panel.grid.major = element_line(color = "#cdd3d6"),
-      panel.grid.minor = element_line(color = "#cdd3d6", linetype = "dotted"),
+      plot.title.position = "plot",
+      plot.title = ggtext::element_markdown(
+        family = header_family,
+        face = "bold",
+        size = base_size + 2,
+        color = ink,
+        hjust = 0,
+        halign = 0,
+        vjust = 1,
+        valign = 0
+      ),
+      plot.subtitle = ggtext::element_textbox_simple(
+        margin = ggplot2::margin_part(t = base_size, b = base_size * 2),
+        lineheight = 1,
+        hjust = 0,
+        halign = 0,
+        vjust = 1,
+        valign = 0
+      ),
+      plot.caption.position = "plot",
+      plot.caption = ggtext::element_markdown(
+        hjust = 0,
+        halign = 0,
+        vjust = 1,
+        valign = 0
+      ),
+      legend.position = "bottom",
+      legend.key = element_rect(colour = ink),
+      panel.grid.major = element_line(
+        colour = nsw_colours$grey_03,
+        linewidth = rel(0.3)
+      ),
+      panel.grid.minor = element_line(
+        color = nsw_colours$grey_03,
+        linetype = "dotted",
+        linewidth = rel(0.3)
+      ),
       strip.background = element_rect(fill = "transparent"),
-      axis.ticks.x = element_blank(),
-      axis.line = element_line(color = "transparent"),
-      geom = element_geom(ink = ink, paper = paper, accent = accent),
+      axis.line = element_line(
+        colour = nsw_colours$grey_02,
+        linewidth = rel(0.3)
+      ),
+      axis.ticks = element_line(
+        colour = nsw_colours$grey_03,
+        linewidth = rel(0.3)
+      ),
+      axis.ticks.length = rel(1),
+      geom = element_geom(
+        ink = ink,
+        paper = paper,
+        accent = accent,
+        colour = geom_ink,
+        fill = geom_ink,
+        pointsize = 2,
+      ),
       palette.colour.discrete = pal_nsw("default"),
       palette.fill.discrete = pal_nsw("default"),
       palette.colour.continuous = scales::as_continuous_pal(pal_nsw(
@@ -96,6 +148,7 @@ theme_waratah <- function(
   if (!show_grid_lines) {
     new_theme <- new_theme %+replace%
       ggplot2::theme(
+        axis.ticks = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         complete = TRUE
@@ -119,19 +172,4 @@ theme_waratah <- function(
   }
 
   new_theme
-}
-
-# replaces NSW colours with their hex codes, leaving others unchanged
-resolve_colours <- function(x) {
-  if (is.character(x)) {
-    hex_colours <- setdiff(names(nsw_colours), colors())
-    hex <- rlang::env_get_list(
-      x,
-      env = as.environment(nsw_colours),
-      default = NA_character_
-    )
-    ifelse(x %in% hex_colours, as.character(hex), x)
-  } else {
-    x
-  }
 }
