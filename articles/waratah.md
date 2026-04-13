@@ -1,5 +1,37 @@
 # waratah
 
+## Fonts
+
+The NSW Government typeface is Public Sans. Recommendations:
+
+- [Install the font](https://digitalnsw.github.io/public-sans/download/)
+  on your computer. This package will attempt to register an embedded
+  copy of the font so that it can be used even without installing the
+  font first.
+- If possible you should use a graphics device that supports modern
+  features such as
+  [`ragg::agg_png()`](https://ragg.r-lib.org/reference/agg_png.html).
+  These devices should be used by default by RStudio if {ragg} is
+  installed.
+- If using HTML output (such as for interactive plots of tables), ensure
+  that the document loads [Public Sans from Google
+  Fonts](https://fonts.google.com/specimen/Public+Sans?preview.script=Latn)
+  (see below).
+
+Show font import code for HTML documents.
+
+Either add this to `<head>`:
+
+``` html
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+```
+
+or add this to your CSS:
+
+``` css
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+```
+
 ## Example 1
 
 With standard ggplot output:
@@ -305,78 +337,6 @@ p5 +
 
 ![](waratah_files/figure-html/unnamed-chunk-14-1.png)
 
-## Example 6
-
-Saving plot to an object to demonstrate custom tooltip function using
-ggiraph:
-
-``` r
-library(ggiraph)
-
-p_gir <-
-  ggplot(penguins) +
-  geom_point_interactive(aes(
-    x = bill_length_mm,
-    y = flipper_length_mm,
-    colour = species,
-    size = body_mass_g,
-    tooltip = paste0(
-      "Species: ",
-      species,
-      "<br>Bill length: ",
-      bill_length_mm,
-      "<br>Flipper length: ",
-      flipper_length_mm
-    )
-  )) +
-  labs(
-    title = "Let's try some *italics* in the title",
-    subtitle = long_text,
-    dictionary = c(
-      bill_length_mm = "Bill length (mm)",
-      flipper_length_mm = "Flipper length (mm)",
-      species = "Species",
-      body_mass_g = "Body mass (g)"
-    ),
-    caption = "Data from {palmerpenguins}"
-  ) +
-  scale_colour_manual(
-    values = c(
-      nsw_colours$blue_01,
-      nsw_colours$red_02,
-      nsw_colours$teal_02
-    )
-  ) +
-  theme_waratah()
-
-# Create the interactive plot using ggiraph and custom tooltip from waratah package (load the object to show in Viewer)
-interactive_plot <- girafe(
-  ggobj = p_gir,
-  options = list(
-    opts_tooltip(css = tooltip_css())
-  )
-)
-#> Warning: Removed 2 rows containing missing values or values outside the scale range
-#> (`geom_interactive_point()`).
-
-# With additional styling options
-girafe(
-  ggobj = p_gir,
-  options = list(
-    opts_tooltip(
-      css = tooltip_css(
-        font_family = "Arial",
-        font_size = "18px",
-        background_color = "blue_04",
-        text_color = "blue_01"
-      )
-    )
-  )
-)
-#> Warning: Removed 2 rows containing missing values or values outside the scale range
-#> (`geom_interactive_point()`).
-```
-
 ## NSW Government logo
 
 The logo is in the package as a PNG file - to view it use the following
@@ -396,4 +356,4 @@ image_path <- system.file(
 image_read(image_path)
 ```
 
-![](waratah_files/figure-html/unnamed-chunk-16-1.png)
+![](waratah_files/figure-html/unnamed-chunk-15-1.png)
