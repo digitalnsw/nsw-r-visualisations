@@ -44,6 +44,7 @@ Suggests:
     legendry,
     magick,
     palmerpenguins,
+    pkgload,
     ragg,
     rmarkdown,
     svglite,
