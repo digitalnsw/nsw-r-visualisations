@@ -136,20 +136,20 @@ Show font import code for HTML documents.
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="700"></p>
-<p>Styling using waratah package - just 2 extra lines of code:</p>
+<p>Style with waratah:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_colour_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="700"></p>
-<p>Additional styling using waratah package - specify a palette from the
-package:</p>
+<p>Change to a different NSW palette:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_colour_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"blues"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
@@ -196,18 +196,17 @@ package:</p>
 <p>Styling using waratah package - specifying the palette:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p2</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/discrete_scale.html" class="external-link">discrete_scale</a></span><span class="op">(</span></span>
-<span>    <span class="st">"fill"</span>,</span>
-<span>    palette <span class="op">=</span> <span class="fu"><a href="../reference/ggplot_palettes.html">pal_paired</a></span><span class="op">(</span><span class="fu">waratah</span><span class="fu">:::</span><span class="va">nsw_palettes</span><span class="op">$</span><span class="va">default</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/discrete_scale.html" class="external-link">discrete_scale</a></span><span class="op">(</span><span class="st">"fill"</span>, palette <span class="op">=</span> <span class="fu"><a href="../reference/ggplot_palettes.html">pal_paired</a></span><span class="op">(</span><span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
 <p>Additional styling examples specifying font size, reversing colour
 palette:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p2</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"purples"</span>, variant <span class="op">=</span> <span class="st">"aboriginal"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_text_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span></span>
+<span>    palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"purples"</span>, variant <span class="op">=</span> <span class="st">"aboriginal"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: This manual palette can handle a maximum of 4 values. You have</span></span>
 <span><span class="co">#&gt; supplied 6</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
@@ -236,10 +235,7 @@ off white background and adjusting font size</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p3</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"purples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span></span>
-<span>    background_colour <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    base_text_size <span class="op">=</span> <span class="fl">14</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html" class="external-link">guide_axis</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">70</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -285,8 +281,7 @@ off white background and adjusting font size</p>
 <span></span>
 <span><span class="va">p4</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
-<p>Styling using the waratah package - making the background void,
-removing off white background, font size:</p>
+<p>Styling using the waratah package with options:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p4</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span></span>
@@ -296,8 +291,7 @@ removing off white background, font size:</p>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span></span>
 <span>    void <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    base_text_size <span class="op">=</span> <span class="fl">14</span>,</span>
-<span>    background_colour <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    base_size <span class="op">=</span> <span class="fl">14</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
 </div>
@@ -353,10 +347,7 @@ font size:</p>
 <span>    palette <span class="op">=</span> <span class="fu"><a href="../reference/ggplot_palettes.html">pal_stretch</a></span><span class="op">(</span><span class="fu">waratah</span><span class="fu">:::</span><span class="va">nsw_palettes</span><span class="op">$</span><span class="va">neg_to_pos</span><span class="op">)</span>,</span>
 <span>    breaks <span class="op">=</span> <span class="va">sentiment</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span></span>
-<span>    background_colour <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    base_text_size <span class="op">=</span> <span class="fl">12</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">

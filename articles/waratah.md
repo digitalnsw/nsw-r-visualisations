@@ -79,25 +79,25 @@ p1
 
 ![](waratah_files/figure-html/unnamed-chunk-2-1.png)
 
-Styling using waratah package - just 2 extra lines of code:
+Style with waratah:
 
 ``` r
 p1 +
-  scale_colour_discrete(palette = pal_nsw()) +
-  theme_waratah()
+  theme_waratah() +
+  theme(legend.position = "right")
 #> Warning: Removed 2 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```
 
 ![](waratah_files/figure-html/unnamed-chunk-3-1.png)
 
-Additional styling using waratah package - specify a palette from the
-package:
+Change to a different NSW palette:
 
 ``` r
 p1 +
   scale_colour_discrete(palette = pal_nsw(hue = "blues")) +
-  theme_waratah()
+  theme_waratah() +
+  theme(legend.position = "right")
 #> Warning: Removed 2 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```
@@ -150,10 +150,7 @@ Styling using waratah package - specifying the palette:
 
 ``` r
 p2 +
-  discrete_scale(
-    "fill",
-    palette = pal_paired(waratah:::nsw_palettes$default)
-  ) +
+  discrete_scale("fill", palette = pal_paired(pal_nsw())) +
   theme_waratah()
 ```
 
@@ -164,8 +161,10 @@ palette:
 
 ``` r
 p2 +
-  scale_fill_discrete(palette = pal_nsw(hue = "purples", variant = "aboriginal")) +
-  theme_waratah(base_text_size = 14)
+  scale_fill_discrete(
+    palette = pal_nsw(hue = "purples", variant = "aboriginal")
+  ) +
+  theme_waratah(base_size = 14)
 #> Warning: This manual palette can handle a maximum of 4 values. You have
 #> supplied 6
 ```
@@ -200,10 +199,7 @@ white background and adjusting font size
 ``` r
 p3 +
   scale_fill_discrete(palette = pal_nsw(hue = "purples")) +
-  theme_waratah(
-    background_colour = FALSE,
-    base_text_size = 14
-  ) +
+  theme_waratah(base_size = 14) +
   guides(x = guide_axis(angle = 70)) +
   theme(
     panel.grid.major.x = element_blank()
@@ -254,8 +250,7 @@ p4
 
 ![](waratah_files/figure-html/unnamed-chunk-10-1.png)
 
-Styling using the waratah package - making the background void, removing
-off white background, font size:
+Styling using the waratah package with options:
 
 ``` r
 p4 +
@@ -266,8 +261,7 @@ p4 +
   ) +
   theme_waratah(
     void = TRUE,
-    base_text_size = 14,
-    background_colour = FALSE
+    base_size = 14
   )
 ```
 
@@ -329,10 +323,7 @@ p5 +
     palette = pal_stretch(waratah:::nsw_palettes$neg_to_pos),
     breaks = sentiment
   ) +
-  theme_waratah(
-    background_colour = FALSE,
-    base_text_size = 12
-  )
+  theme_waratah(base_size = 12)
 ```
 
 ![](waratah_files/figure-html/unnamed-chunk-14-1.png)

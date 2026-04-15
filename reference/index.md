@@ -13,7 +13,7 @@
 - [`reactable_theme()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/reactable_theme.md)
   : reactable_theme()
 - [`theme_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/theme_waratah.md)
-  : theme_waratah()
+  : Theme plots using NSW colours and fonts
 - [`tooltip_css()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/tooltip_css.md)
   : tooltipcss
 - [`waratah`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah-package.md)

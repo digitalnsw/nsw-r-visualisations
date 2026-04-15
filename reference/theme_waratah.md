@@ -1,73 +1,79 @@
-# theme_waratah()
+# Theme plots using NSW colours and fonts
 
-theme_waratah()
+A 'ggplot2' theme compatible with the NSW design system. It sets default
+colour scales, fonts, and some other styles.
 
 ## Usage
 
 ``` r
 theme_waratah(
-  title_font = "Public Sans",
-  base_font = "Arial",
-  void = FALSE,
+  base_size = 11,
+  base_family = "Public Sans",
+  header_family = "Public Sans",
+  base_line_size = base_size/22,
+  base_rect_size = base_size/22,
+  ink = "black",
+  paper = "white",
+  geom_ink = "blue_01",
+  accent = "blue_02",
   show_grid_lines = TRUE,
-  base_text_size = 11,
-  background_colour = TRUE,
-  .colours = nsw_colours
+  void = FALSE
 )
 ```
 
 ## Arguments
 
-- title_font:
+- base_size:
 
-  The default title is \\Public Sans\\. To change to a different font
-  (e.g. to match up with an external publication requirement), simply
-  change as desired (e.g. \\Arial\\). Make sure you've installed the
-  fonts you want to use on your device first!
+  base font size, given in pts.
 
-- base_font:
+- base_family:
 
-  The default font is \\Arial\\). If you want to use a different font
-  (e.g. to match up with an external publication requirement), simply
-  change as desired (e.g. \\Times New Roman\\). Make sure you've
-  installed the fonts you want to use on your device first!
+  base font family
 
-- void:
+- header_family:
 
-  Logical (TRUE/FALSE). If TRUE, all grid lines and axes are removed.
-  This is useful when creating pie/donut charts.
+  font family for titles and headers. The default, `NULL`, uses theme
+  inheritance to set the font. This setting affects axis titles, legend
+  titles, the plot title and tag text.
+
+- base_line_size:
+
+  base size for line elements
+
+- base_rect_size:
+
+  base size for rect elements
+
+- ink, paper, accent:
+
+  colour for foreground, background, and accented elements respectively.
+
+- geom_ink:
+
+  default ink colour used by geoms for points, lines and fills.
 
 - show_grid_lines:
 
-  Logical (TRUE/FALSE). If FALSE, all grid lines are removed but the
-  axis text is retained.
+  whether to show grid lines. If `FALSE`, all grid lines are removed but
+  the axis text is retained. Ignored when `void` is `TRUE`.
 
-- base_text_size:
+- void:
 
-  Base text size in pt. The relative size of the title / subtitle text
-  and of the margins is derived from this.
-
-- background_colour:
-
-  Logical. The default (TRUE) adds an off white colour to the background
-  in line with the ophelia colour palette. Change to FALSE for a white
-  background.
-
-- .colours:
-
-  Used to read in waratah_colours. Please leave as is!
+  whether to hide grid lines and axes. If `TRUE`, all grid lines and
+  axes are removed. This is useful when creating pie/donut charts.
 
 ## Value
 
-No object is returned. Instead, the theme is applied to a ggplot plot.
+ggplot theme specification to add to a plot
 
 ## Examples
 
 ``` r
 library(ggplot2)
+set_theme(theme_waratah())
 
-p1 <-
-  ggplot(palmerpenguins::penguins) +
+ggplot(palmerpenguins::penguins) +
   geom_point(aes(
     x = bill_length_mm,
     y = flipper_length_mm,
@@ -75,13 +81,15 @@ p1 <-
     size = body_mass_g
   )) +
   labs(
+    caption = "Data from {palmerpenguins}",
     dictionary = c(
       bill_length_mm = "Bill length (mm)",
       flipper_length_mm = "Flipper length (mm)",
       species = "Species",
       body_mass_g = "Body mass (g)"
-    ),
-    caption = "Data from {palmerpenguins}"
-  ) +
-  theme_waratah()
+    )
+  )
+#> Warning: Removed 2 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
+
 ```
