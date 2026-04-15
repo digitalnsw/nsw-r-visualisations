@@ -26,6 +26,7 @@ Depends:
     R (>= 4.1)
 Imports:
     cli,
+    rlang,
     ggplot2 (>= 3.5.1),
     ggtext (>= 0.1.2),
     reactable (>= 0.4.4),
@@ -43,8 +44,10 @@ Suggests:
     legendry,
     magick,
     palmerpenguins,
+    pkgload,
     ragg,
     rmarkdown,
+    svglite,
     tidyr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

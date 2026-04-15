@@ -134,3 +134,18 @@ calc_pal_hue <- function(config, shade) {
   end <- start + n_colours - 1L
   unlist(nsw_colours[seq(start, end, by = n_shades) + shade - 1L])
 }
+
+# replaces NSW colours with their hex codes, leaving others unchanged
+resolve_colours <- function(x) {
+  if (is.character(x)) {
+    hex_colours <- setdiff(names(nsw_colours), grDevices::colors())
+    hex <- rlang::env_get_list(
+      x,
+      env = as.environment(nsw_colours),
+      default = NA_character_
+    )
+    ifelse(x %in% hex_colours, as.character(hex), x)
+  } else {
+    x
+  }
+}

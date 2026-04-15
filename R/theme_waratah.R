@@ -1,34 +1,24 @@
-#' theme_waratah()
+#' Theme plots using NSW colours and fonts
 #'
-#' @param title_font The default title is \"Public Sans\".
-#'   To change to a different font (e.g. to match up with an external publication
-#'   requirement), simply change as desired (e.g. \"Arial\"). Make sure you've
-#'   installed the fonts you want to use on your device first!
-#' @param base_font The default font is \"Arial\").
-#'   If you want to use a different font (e.g. to match up with an external
-#'   publication requirement), simply change as desired (e.g. \"Times New Roman\").
-#'   Make sure you've installed the fonts you want to use on your device first!
-#' @param void Logical (TRUE/FALSE).
-#'   If TRUE, all grid lines and axes are removed. This is useful when creating
+#' A 'ggplot2' theme compatible with the NSW design system.
+#' It sets default colour scales, fonts, and some other styles.
+#'
+#' @param geom_ink default ink colour used by geoms for points, lines and fills.
+#' @param void whether to hide grid lines and axes.
+#'   If `TRUE`, all grid lines and axes are removed. This is useful when creating
 #'   pie/donut charts.
-#' @param show_grid_lines Logical (TRUE/FALSE).
-#'   If FALSE, all grid lines are removed but the axis text is retained.
-#' @param base_text_size Base text size in pt.
-#'   The relative size of the title / subtitle text and of the margins is derived
-#'   from this.
-#' @param background_colour Logical.
-#'   The default (TRUE) adds an off white colour to the background in line with
-#'   the ophelia colour palette. Change to FALSE for a white background.
-#' @param .colours Used to read in waratah_colours.
-#'   Please leave as is!
-#'
-#' @return No object is returned. Instead, the theme is applied to a ggplot plot.
+#' @param show_grid_lines whether to show grid lines.
+#'   If `FALSE`, all grid lines are removed but the axis text is retained.
+#'   Ignored when `void` is `TRUE`.
+#' @inheritParams ggplot2::theme_minimal
+#' @returns ggplot theme specification to add to a plot
 #' @export
+#' @importFrom ggplot2 theme element_blank element_text element_geom element_line element_rect %+replace% rel
 #' @examples
 #' library(ggplot2)
+#' set_theme(theme_waratah())
 #'
-#' p1 <-
-#'   ggplot(palmerpenguins::penguins) +
+#' ggplot(palmerpenguins::penguins) +
 #'   geom_point(aes(
 #'     x = bill_length_mm,
 #'     y = flipper_length_mm,
@@ -36,115 +26,150 @@
 #'     size = body_mass_g
 #'   )) +
 #'   labs(
+#'     caption = "Data from {palmerpenguins}",
 #'     dictionary = c(
 #'       bill_length_mm = "Bill length (mm)",
 #'       flipper_length_mm = "Flipper length (mm)",
 #'       species = "Species",
 #'       body_mass_g = "Body mass (g)"
-#'     ),
-#'     caption = "Data from {palmerpenguins}"
-#'   ) +
-#'   theme_waratah()
+#'     )
+#'   )
 #'
 theme_waratah <- function(
-  title_font = "Public Sans",
-  base_font = "Arial",
-  void = FALSE,
+  base_size = 11,
+  base_family = "Public Sans",
+  header_family = "Public Sans",
+  base_line_size = base_size / 22,
+  base_rect_size = base_size / 22,
+  ink = "black",
+  paper = "white",
+  geom_ink = "blue_01",
+  accent = "blue_02",
   show_grid_lines = TRUE,
-  base_text_size = 11,
-  background_colour = TRUE,
-  .colours = nsw_colours
+  void = FALSE
 ) {
-  theme_elements <- list(
-    text = ggplot2::element_text(
-      family = base_font,
-      size = base_text_size,
-      color = .colours$text
-    ),
-    plot.title = ggtext::element_markdown(
-      family = title_font,
-      size = base_text_size + 2,
-      color = .colours$text,
-      hjust = 0,
-      face = "bold"
-    ),
-    plot.subtitle = ggtext::element_textbox_simple(
-      margin = ggplot2::margin(5, 5, 10, 0)
-    ),
-    axis.title = ggplot2::element_text(
-      family = base_font,
-      size = base_text_size,
-      color = .colours$text
-    ),
-    axis.text = ggplot2::element_text(
-      family = base_font,
-      size = base_text_size - 1,
-      color = .colours$text
-    ),
-    legend.title = ggplot2::element_text(
-      family = base_font,
-      size = base_text_size,
-      color = .colours$text
-    ),
-    legend.text = ggplot2::element_text(
-      family = base_font,
-      size = base_text_size - 1,
-      color = .colours$text
-    ),
-    legend.background = ggplot2::element_rect(fill = "transparent"),
-    plot.background = if (background_colour) {
-      ggplot2::element_rect(fill = .colours$background)
-    } else {
-      ggplot2::element_blank()
-    },
-    panel.background = if (background_colour) {
-      ggplot2::element_rect(fill = .colours$background)
-    } else {
-      ggplot2::element_blank()
-    },
-    panel.grid.major = if (show_grid_lines) {
-      ggplot2::element_line(color = "#cdd3d6")
-    } else {
-      ggplot2::element_blank()
-    },
-    panel.grid.minor = if (show_grid_lines) {
-      ggplot2::element_line(color = "#cdd3d6", linetype = "dotted")
-    } else {
-      ggplot2::element_blank()
-    },
-    strip.background = ggplot2::element_rect(fill = "transparent"),
-    axis.ticks.x = ggplot2::element_blank(),
-    axis.line = ggplot2::element_line(color = "transparent")
-  )
+  # support using NSW colour names
+  ink <- resolve_colours(ink)
+  geom_ink <- resolve_colours(geom_ink)
+  paper <- resolve_colours(paper)
+  accent <- resolve_colours(accent)
 
-  if (void) {
-    theme_elements$plot.background <- ggplot2::element_blank()
-    theme_elements$panel.background <- ggplot2::element_blank()
-    theme_elements$panel.grid.major <- ggplot2::element_blank()
-    theme_elements$panel.grid.minor <- ggplot2::element_blank()
-    theme_elements$axis.title <- ggplot2::element_blank()
-    theme_elements$axis.text <- ggplot2::element_blank()
-    theme_elements$axis.ticks <- ggplot2::element_blank()
-    theme_elements$axis.line <- ggplot2::element_blank()
-    theme_elements$axis.ticks.x <- ggplot2::element_blank()
+  new_theme <-
+    ggplot2::theme_minimal(
+      base_size = base_size,
+      base_family = base_family,
+      header_family = header_family,
+      base_line_size = base_line_size,
+      base_rect_size = base_rect_size,
+      ink = ink,
+      paper = paper,
+      accent = accent
+    ) %+replace%
+    theme(
+      # plot.title = marquee::element_marquee(
+      #   width = 1,
+      #   family = header_family,
+      #   size = base_size + 2,
+      #   style = marquee::classic_style(weight = "bold"),
+      #   colour = ink,
+      #   hjust = 0,
+      # ),
+      # plot.subtitle = marquee::element_marquee(
+      #   width = 1,
+      #   family = header_family,
+      #   margin = ggplot2::margin_part(t = base_size, b = base_size)
+      # ),
+      plot.title.position = "plot",
+      plot.title = ggtext::element_markdown(
+        family = header_family,
+        face = "bold",
+        size = base_size + 2,
+        color = ink,
+        hjust = 0,
+        halign = 0,
+        vjust = 1,
+        valign = 0
+      ),
+      plot.subtitle = ggtext::element_textbox_simple(
+        margin = ggplot2::margin_part(t = base_size, b = base_size * 2),
+        lineheight = 1,
+        hjust = 0,
+        halign = 0,
+        vjust = 1,
+        valign = 0
+      ),
+      plot.caption.position = "plot",
+      plot.caption = ggtext::element_markdown(
+        hjust = 0,
+        halign = 0,
+        vjust = 1,
+        valign = 0
+      ),
+      legend.position = "bottom",
+      legend.key = element_rect(colour = ink),
+      panel.grid.major = element_line(
+        colour = nsw_colours$grey_03,
+        linewidth = rel(0.3)
+      ),
+      panel.grid.minor = element_line(
+        color = nsw_colours$grey_03,
+        linetype = "dotted",
+        linewidth = rel(0.3)
+      ),
+      strip.background = element_rect(fill = "transparent"),
+      axis.line = element_line(
+        colour = nsw_colours$grey_02,
+        linewidth = rel(0.3)
+      ),
+      axis.ticks = element_line(
+        colour = nsw_colours$grey_03,
+        linewidth = rel(0.3)
+      ),
+      axis.ticks.length = rel(1),
+      geom = element_geom(
+        ink = ink,
+        paper = paper,
+        accent = accent,
+        colour = geom_ink,
+        fill = geom_ink,
+        pointsize = 2,
+      ),
+      palette.colour.discrete = pal_nsw("default"),
+      palette.fill.discrete = pal_nsw("default"),
+      palette.colour.continuous = scales::as_continuous_pal(pal_nsw(
+        hue = "blues"
+      )),
+      palette.fill.continuous = scales::as_continuous_pal(pal_nsw(
+        hue = "blues"
+      )),
+      complete = TRUE
+    )
+
+  if (!show_grid_lines) {
+    new_theme <- new_theme %+replace%
+      ggplot2::theme(
+        axis.ticks = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        complete = TRUE
+      )
   }
 
-  ggplot2::theme(
-    text = theme_elements$text,
-    plot.title = theme_elements$plot.title,
-    plot.subtitle = theme_elements$plot.subtitle,
-    axis.title = theme_elements$axis.title,
-    axis.text = theme_elements$axis.text,
-    legend.title = theme_elements$legend.title,
-    legend.text = theme_elements$legend.text,
-    legend.background = theme_elements$legend.background,
-    plot.background = theme_elements$plot.background,
-    panel.background = theme_elements$panel.background,
-    panel.grid.major = theme_elements$panel.grid.major,
-    panel.grid.minor = theme_elements$panel.grid.minor,
-    strip.background = theme_elements$strip.background,
-    axis.ticks = theme_elements$axis.ticks,
-    axis.ticks.x = theme_elements$axis.ticks.x,
-    axis.line = theme_elements$axis.line
-  )
+  if (void) {
+    new_theme <- new_theme %+replace%
+      ggplot2::theme(
+        plot.background = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks.x = element_blank(),
+        complete = TRUE
+      )
+  }
+
+  new_theme
 }

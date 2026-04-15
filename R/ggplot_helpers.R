@@ -20,6 +20,7 @@
 #'
 pal_interleave <- function(...) {
   pals <- vctrs::vec_recycle_common(...)
+  pals <- Map(as_colour_vector, pals)
   n_cols <- length(pals[[1]])
   n_pals <- length(pals)
   idx <- rep(seq_len(n_cols), each = n_pals)
@@ -31,8 +32,17 @@ pal_interleave <- function(...) {
 #' @export
 #' @rdname ggplot_palettes
 pal_paired <- function(colours, amount = 50) {
+  colours <- as_colour_vector(colours)
   lighter <- scales::col_lighter(colours, amount = amount)
   pal_interleave(colours, lighter)
+}
+
+as_colour_vector <- function(x) {
+  if (scales::is_discrete_pal(x)) {
+    x(scales::palette_nlevels(x))
+  } else {
+    x
+  }
 }
 
 #' @export
