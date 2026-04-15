@@ -10,3 +10,4 @@
 ^doc$
 ^Meta$
 ^vignettes/articles$
+^font_convert.sh

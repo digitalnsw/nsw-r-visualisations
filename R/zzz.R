@@ -27,15 +27,14 @@
       bolditalic = bolditalic
     )
   }
+}
 
+.onAttach <- function(libname, pkgname) {
   # {systemfonts} doesn't handle the pdf() device, so use {extrafont} to
   # convert the font format and register.
   if (!"Public Sans" %in% extrafont::fonts()) {
     cli::cli_inform("Installing Public Sans in {.pkg extrafont} database")
-    extrafont::ttf_import(
-      paths = system.file("fonts/Public_Sans/static", package = "waratah"),
-      recursive = FALSE
-    )
+    extrafont::font_addpackage(pkgname)
   }
   extrafont::loadfonts(device = "all", quiet = TRUE)
 }
