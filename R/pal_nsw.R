@@ -97,6 +97,10 @@ nsw_named_palettes <- rlang::new_environment(list(
     nsw_colours$blue_02,
     nsw_colours$red_02
   ),
+  core = c(
+    nsw_colours$blue_01,
+    nsw_colours$red_02
+  ),
   neg_to_pos = c(
     nsw_colours$purple_01,
     nsw_colours$teal_04,
