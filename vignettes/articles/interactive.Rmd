@@ -48,12 +48,8 @@ p_gir <-
     ),
     caption = "Data from {palmerpenguins}"
   ) +
-  scale_colour_manual(
-    values = c(
-      nsw_colours$blue_01,
-      nsw_colours$red_02,
-      nsw_colours$teal_02
-    )
+  scale_colour_discrete(
+    palette = pal_nsw_manual(c("blue_01", "red_02", "teal_02"))
   ) +
   theme_waratah()
 

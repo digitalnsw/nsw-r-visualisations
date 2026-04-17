@@ -34,7 +34,8 @@
 #' Unambiguous shortened forms are accepted, e.g. `pal_nsw(h = "red", v = "a")`.
 #'
 #' Anchor colours used to create the NSW colour palettes can also be used
-#' stand-alone (e.g. `nsw_colours$blue_01` returns the hex code `"#002664"`).
+#' stand-alone (e.g. `nsw_colours$blue_01` returns the hex code `"#002664"`),
+#' or named with `pal_nsw_manual()`.
 #'
 #' @examples
 #' library(scales)
@@ -81,6 +82,16 @@ pal_nsw <- function(
   }
 
   scales::pal_manual(unlist(colours), type = "colour")
+}
+
+#' @rdname pal_nsw
+#'
+#' @param colours Vector of colour names corresponding to [nsw_colours].
+#'
+#' @export
+pal_nsw_manual <- function(colours) {
+  colours <- rlang::env_get_list(colours, env = as.environment(nsw_colours))
+  scales::pal_manual(colours, type = "colour")
 }
 
 nsw_named_palettes <- rlang::new_environment(list(

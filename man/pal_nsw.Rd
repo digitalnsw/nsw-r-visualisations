@@ -4,6 +4,7 @@
 \name{nsw_colours}
 \alias{nsw_colours}
 \alias{pal_nsw}
+\alias{pal_nsw_manual}
 \title{NSW Design System Colour Palettes}
 \usage{
 nsw_colours
@@ -15,6 +16,8 @@ pal_nsw(
   variant = c("base", "aboriginal"),
   direction = 1
 )
+
+pal_nsw_manual(colours)
 }
 \arguments{
 \item{palette}{Name of the palette: default, brand_default, neg_to_pos, colour_blind, core.}
@@ -30,6 +33,8 @@ Ignored unless \code{hue} or \code{shade} is specified.}
 
 \item{direction}{Set to -1 to reverse the order of colours in the palette,
 or 1 for the original order.}
+
+\item{colours}{Vector of colour names corresponding to \link{nsw_colours}.}
 }
 \value{
 A palette object (see \link[scales:new_continuous_palette]{palette constructors})
@@ -59,7 +64,8 @@ The \code{"aboriginal"} variant supports:
 Unambiguous shortened forms are accepted, e.g. \code{pal_nsw(h = "red", v = "a")}.
 
 Anchor colours used to create the NSW colour palettes can also be used
-stand-alone (e.g. \code{nsw_colours$blue_01} returns the hex code \code{"#002664"}).
+stand-alone (e.g. \code{nsw_colours$blue_01} returns the hex code \code{"#002664"}),
+or named with \code{pal_nsw_manual()}.
 }
 \examples{
 library(scales)
