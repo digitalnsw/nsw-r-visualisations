@@ -76,7 +76,7 @@ pal_nsw(tone = "light") |> show_col()
 pal_nsw(tone = "normal", variant = "aboriginal") |> show_col()
 
 # you can interpolate colours by converting to a continuous scale
-pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col()
+pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col(labels = FALSE)
 }
 \seealso{
 \code{\link[=col_nsw]{col_nsw()}}
