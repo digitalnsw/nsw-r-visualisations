@@ -20,7 +20,7 @@ library(dplyr, warn.conflicts = FALSE)
 library(forcats)
 library(reactable)
 
-set_theme(theme_waratah())
+set_theme(theme_waratah() + theme(legend.position = "bottom"))
 ```
 
 ```{r}

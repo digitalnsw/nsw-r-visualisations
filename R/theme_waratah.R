@@ -105,7 +105,6 @@ theme_waratah <- function(
         vjust = 1,
         valign = 0
       ),
-      legend.position = "bottom",
       legend.key = element_rect(colour = ink),
       panel.grid.major = element_line(
         colour = nsw_colours$grey_03,

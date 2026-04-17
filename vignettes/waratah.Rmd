@@ -87,16 +87,14 @@ p1
 Style with waratah:
 ```{r}
 p1 +
-  theme_waratah() +
-  theme(legend.position = "right")
+  theme_waratah()
 ```
 
 Change to a different NSW palette:
 ```{r}
 p1 +
   scale_colour_discrete(palette = pal_nsw(hue = "blues")) +
-  theme_waratah() +
-  theme(legend.position = "right")
+  theme_waratah()
 ```
 
 
@@ -180,9 +178,7 @@ p3 +
   scale_fill_discrete(palette = pal_nsw(hue = "purples")) +
   theme_waratah(base_size = 14) +
   guides(x = guide_axis(angle = 70)) +
-  theme(
-    panel.grid.major.x = element_blank()
-  )
+  theme(panel.grid.major.x = element_blank())
 ```
 
 ## Example 4
