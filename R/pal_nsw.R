@@ -11,38 +11,27 @@
 #'
 #' @export
 #'
-#' @param palette Name of the palette: `r rev(names(nsw_named_palettes))`.
-#' @param hue Name or index of the hue - see Details.
+#' @param palette Name of a predefined palette: `r rev(names(nsw_named_palettes))`.
+#' @param hue Name or index of the hue - see below.
 #'   Ignored if `palette` is specified.
-#' @param tone Name or index of the tone - see Details.
+#' @param tone Name or index of the tone - see below.
 #'   Ignored if `palette` is specified.
 #' @param variant Name of palette variant.
 #'   Ignored unless `hue` or `tone` is specified.
+#'   Available options are: `r rev(names(nsw_colour_grids))`.
 #' @param direction Set to -1 to reverse the order of colours in the palette,
 #'   or 1 for the original order.
 #' @returns A palette object (see [palette constructors][scales::new_continuous_palette])
 #'
-#' @details
-#' The `"base"` variant supports:
-#'   - **hue**: `r colnames(nsw_colour_grids$base)`
-#'   - **tone**: `r rownames(nsw_colour_grids$base)`
-#'
-#' The `"aboriginal"` variant supports:
-#'   - **hue**: `r colnames(nsw_colour_grids$aboriginal)`
-#'   - **tone**: `r rownames(nsw_colour_grids$aboriginal)`
-#'
-#' Unambiguous shortened forms are accepted, e.g. `pal_nsw(h = "red", v = "a")`.
-#'
-#' Anchor colours used to create the NSW colour palettes can also be used
-#' stand-alone (e.g. `nsw_colours$blue_01` returns the hex code `"#002664"`),
-#' or named with `pal_nsw_manual()`.
+#' @inheritSection col_nsw Colour columns and tonal rows
+#' @seealso [col_nsw()]
 #'
 #' @examples
 #' library(scales)
 #'
 #' pal_nsw() |> show_col()
 #' pal_nsw(hue = "blues") |> show_col()
-#' pal_nsw(hue = "reds", direction = -1) |> show_col()
+#' pal_nsw(tone = 1:2, variant = "corporate") |> show_col()
 #' pal_nsw(tone = "light") |> show_col()
 #' pal_nsw(tone = "normal", variant = "aboriginal") |> show_col()
 #'
@@ -52,26 +41,29 @@ pal_nsw <- function(
   palette = waiver(),
   hue = NA,
   tone = NA,
-  variant = c("base", "aboriginal"),
+  variant = getOption("waratah.colour_theme", default = "base"),
   direction = 1
 ) {
-  if (!missing(variant) && all(is.na(hue), is.na(tone))) {
-    cli::cli_warn(
-      "{.arg variant} is ignored unless used with {.arg hue} or {.arg tone}"
-    )
+  if (all(identical(hue, NA), identical(tone, NA))) {
+    if (!missing(variant)) {
+      cli::cli_warn(
+        "{.arg variant} is ignored unless used with {.arg hue} or {.arg tone}"
+      )
+    }
   }
   rlang::check_exclusive(hue, tone, .require = FALSE)
   if (
-    !is_waiver(palette) && any(!missing(variant), !is.na(hue), !is.na(tone))
+    !is_waiver(palette) &&
+      any(!missing(variant), !identical(hue, NA), !identical(tone, NA))
   ) {
     cli::cli_warn(
       "{.arg variant}, {.arg hue} and {.arg tone} are ignored when {.arg palette} is specified"
     )
   }
 
-  if (!is.na(hue)) {
+  if (!identical(hue, NA)) {
     colours <- col_nsw(hue = hue, variant = variant)
-  } else if (!is.na(tone)) {
+  } else if (!identical(tone, NA)) {
     colours <- col_nsw(tone = tone, variant = variant)
   } else if (!is_waiver(palette)) {
     colours <- get(palette, envir = nsw_named_palettes)
@@ -148,23 +140,21 @@ display_pal_nsw <- function() {
     NA,
     NA,
     Map(
-      \(x) unlist(col_nsw(hue = x, variant = "base"), use.names = FALSE),
+      \(x) unname(unlist(col_nsw(hue = x, variant = "base"))),
       colnames(nsw_colour_grids$base)
     ),
     Map(
-      \(x) unlist(col_nsw(tone = x, variant = "base"), use.names = FALSE),
+      \(x) unname(unlist(col_nsw(tone = x, variant = "base"))),
       rownames(nsw_colour_grids$base)
     ),
     NA,
     NA,
     Map(
-      \(x) unlist(col_nsw(hue = x, variant = "aboriginal"), use.names = FALSE),
+      \(x) unname(unlist(col_nsw(hue = x, variant = "aboriginal"))),
       colnames(nsw_colour_grids$aboriginal)
     ),
     Map(
-      \(x) {
-        unlist(col_nsw(tone = x, variant = "aboriginal"), use.names = FALSE)
-      },
+      \(x) unname(unlist(col_nsw(tone = x, variant = "aboriginal"))),
       rownames(nsw_colour_grids$aboriginal)
     )
   ))
