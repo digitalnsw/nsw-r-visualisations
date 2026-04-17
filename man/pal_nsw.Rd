@@ -12,7 +12,7 @@ nsw_colours
 pal_nsw(
   palette = waiver(),
   hue = NA,
-  shade = NA,
+  tone = NA,
   variant = c("base", "aboriginal"),
   direction = 1
 )
@@ -25,11 +25,11 @@ pal_nsw_manual(colours)
 \item{hue}{Name or index of the hue - see Details.
 Ignored if \code{palette} is specified.}
 
-\item{shade}{Name or index of the shade - see Details.
+\item{tone}{Name or index of the tone - see Details.
 Ignored if \code{palette} is specified.}
 
 \item{variant}{Name of palette variant.
-Ignored unless \code{hue} or \code{shade} is specified.}
+Ignored unless \code{hue} or \code{tone} is specified.}
 
 \item{direction}{Set to -1 to reverse the order of colours in the palette,
 or 1 for the original order.}
@@ -43,7 +43,7 @@ A palette object (see \link[scales:new_continuous_palette]{palette constructors}
 Palettes created using the \href{https://designsystem.nsw.gov.au/docs/content/design/theming.html}{NSW Design System}.
 There are several named palettes which can be specified with \code{palette}.
 To use palettes based on the NSW Design System colour grid, either
-specify \code{hue} and allow the shade to vary, or specify \code{shade} to allow the
+specify \code{hue} and allow the tone to vary, or specify \code{tone} to allow the
 hue to vary.
 To use the Aboriginal colour grid, specify \code{variant = "aboriginal"}.
 \if{html}{\figure{nsw_palette.svg}{options: width=95\%}}
@@ -52,13 +52,13 @@ To use the Aboriginal colour grid, specify \code{variant = "aboriginal"}.
 The \code{"base"} variant supports:
 \itemize{
 \item \strong{hue}: greys, greens, teals, blues, purples, fucshias, reds, oranges, yellows, browns
-\item \strong{shade}: dark, normal, light, pale
+\item \strong{tone}: dark, normal, light, pale
 }
 
 The \code{"aboriginal"} variant supports:
 \itemize{
 \item \strong{hue}: reds, oranges, browns, yellows, greens, blues, purples, greys
-\item \strong{shade}: dark, normal, light, pale
+\item \strong{tone}: dark, normal, light, pale
 }
 
 Unambiguous shortened forms are accepted, e.g. \code{pal_nsw(h = "red", v = "a")}.
@@ -73,8 +73,8 @@ library(scales)
 pal_nsw() |> show_col()
 pal_nsw(hue = "blues") |> show_col()
 pal_nsw(hue = "reds", direction = -1) |> show_col()
-pal_nsw(shade = "light") |> show_col()
-pal_nsw(shade = "normal", variant = "aboriginal") |> show_col()
+pal_nsw(tone = "light") |> show_col()
+pal_nsw(tone = "normal", variant = "aboriginal") |> show_col()
 
 # you can interpolate colours by converting to a continuous scale
 pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col()

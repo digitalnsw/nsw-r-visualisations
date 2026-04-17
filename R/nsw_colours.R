@@ -84,12 +84,12 @@ nsw_colours <- list(
 
 # defines the offsets and dimensions of each colour grid,
 # used to index into the above vector
-new_grid <- function(offset, hues, shades) {
-  n_cols <- length(hues) * length(shades)
+new_grid <- function(offset, hues, tones) {
+  n_cols <- length(hues) * length(tones)
   idx <- seq_len(n_cols) + offset
   cols <- matrix(nsw_colours[idx], ncol = length(hues))
   labs <- matrix(names(nsw_colours)[idx], ncol = length(hues))
-  dimnames(cols) <- dimnames(labs) <- list(shades, hues)
+  dimnames(cols) <- dimnames(labs) <- list(tones, hues)
   attr(cols, "labels") <- labs
   class(cols) <- c("col_grid", class(cols))
   cols
@@ -109,7 +109,7 @@ nsw_colour_grids <- rlang::new_environment(list(
       "yellows",
       "browns"
     ),
-    shades = c("dark", "normal", "light", "pale")
+    tones = c("dark", "normal", "light", "pale")
   ),
   aboriginal = new_grid(
     offset = 43L,
@@ -123,22 +123,24 @@ nsw_colour_grids <- rlang::new_environment(list(
       "purples",
       "greys"
     ),
-    shades = c("dark", "normal", "light", "pale")
+    tones = c("dark", "normal", "light", "pale")
   )
 ))
 
 # accesses a grid by row and/or column
-col_nsw <- function(hue, shade, variant = c("base", "aboriginal")) {
+col_nsw <- function(hue, tone, variant = c("base", "aboriginal")) {
   variant <- match.arg(variant)
   col_grid <- get(variant, envir = nsw_colour_grids, inherits = FALSE)
-  if (missing(hue) && missing(shade)) cli::cli_abort("Must specify {.arg hue} and/or {.arg shade}")
+  if (missing(hue) && missing(tone)) {
+    cli::cli_abort("Must specify {.arg hue} and/or {.arg tone}")
+  }
   if (!missing(hue) && is.character(hue)) {
     hue <- match.arg(hue, colnames(col_grid))
   }
-  if (!missing(shade) && is.character(shade)) {
-    shade <- match.arg(shade, rownames(col_grid))
+  if (!missing(tone) && is.character(tone)) {
+    tone <- match.arg(tone, rownames(col_grid))
   }
-  rlang::set_names(col_grid[shade, hue], attr(col_grid, "labels")[shade, hue])
+  rlang::set_names(col_grid[tone, hue], attr(col_grid, "labels")[tone, hue])
 }
 
 # replaces NSW colours with their hex codes, leaving others unchanged

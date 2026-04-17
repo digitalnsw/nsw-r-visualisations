@@ -218,10 +218,10 @@
 <text x='76.00' y='245.93' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='39.94px' lengthAdjust='spacingAndGlyphs'>h=oranges</text>
 <text x='76.00' y='261.17' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='37.11px' lengthAdjust='spacingAndGlyphs'>h=yellows</text>
 <text x='76.00' y='277.24' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='36.66px' lengthAdjust='spacingAndGlyphs'>h=browns</text>
-<text x='76.00' y='292.48' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='25.45px' lengthAdjust='spacingAndGlyphs'>s=dark</text>
-<text x='76.00' y='307.72' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='34.77px' lengthAdjust='spacingAndGlyphs'>s=normal</text>
-<text x='76.00' y='322.12' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='24.50px' lengthAdjust='spacingAndGlyphs'>s=light</text>
-<text x='76.00' y='337.41' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='24.98px' lengthAdjust='spacingAndGlyphs'>s=pale</text>
+<text x='76.00' y='292.48' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='23.58px' lengthAdjust='spacingAndGlyphs'>t=dark</text>
+<text x='76.00' y='307.72' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='32.89px' lengthAdjust='spacingAndGlyphs'>t=normal</text>
+<text x='76.00' y='322.12' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='22.62px' lengthAdjust='spacingAndGlyphs'>t=light</text>
+<text x='76.00' y='337.41' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='23.11px' lengthAdjust='spacingAndGlyphs'>t=pale</text>
 <text x='76.00' y='350.48' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='2.33px' lengthAdjust='spacingAndGlyphs'> </text>
 <text x='76.00' y='367.83' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='47.84px' lengthAdjust='spacingAndGlyphs'> v=aboriginal</text>
 <text x='76.00' y='383.91' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='25.92px' lengthAdjust='spacingAndGlyphs'>h=reds</text>
@@ -232,10 +232,10 @@
 <text x='76.00' y='460.10' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='29.66px' lengthAdjust='spacingAndGlyphs'>h=blues</text>
 <text x='76.00' y='474.55' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='37.12px' lengthAdjust='spacingAndGlyphs'>h=purples</text>
 <text x='76.00' y='489.74' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='30.12px' lengthAdjust='spacingAndGlyphs'>h=greys</text>
-<text x='76.00' y='505.81' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='25.45px' lengthAdjust='spacingAndGlyphs'>s=dark</text>
-<text x='76.00' y='521.05' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='34.77px' lengthAdjust='spacingAndGlyphs'>s=normal</text>
-<text x='76.00' y='535.45' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='24.50px' lengthAdjust='spacingAndGlyphs'>s=light</text>
-<text x='76.00' y='550.74' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='24.98px' lengthAdjust='spacingAndGlyphs'>s=pale</text>
+<text x='76.00' y='505.81' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='23.58px' lengthAdjust='spacingAndGlyphs'>t=dark</text>
+<text x='76.00' y='521.05' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='32.89px' lengthAdjust='spacingAndGlyphs'>t=normal</text>
+<text x='76.00' y='535.45' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='22.62px' lengthAdjust='spacingAndGlyphs'>t=light</text>
+<text x='76.00' y='550.74' text-anchor='end' style='font-size: 8.40px; font-family: "Arial";' textLength='23.11px' lengthAdjust='spacingAndGlyphs'>t=pale</text>
 </g>
 </g>
 </svg>
