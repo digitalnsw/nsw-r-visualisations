@@ -100,6 +100,7 @@ theme_waratah <- function(
       ),
       plot.caption.position = "plot",
       plot.caption = ggtext::element_markdown(
+        margin = ggplot2::margin(t = 12),
         hjust = 0,
         halign = 0,
         vjust = 1,
