@@ -140,7 +140,7 @@ p2 + scale_fill_brewer(palette = "Paired")
 Styling using waratah package - specifying the palette:
 ```{r}
 p2 +
-  discrete_scale("fill", palette = pal_paired(pal_nsw())) +
+  discrete_scale("fill", palette = pal_nsw(t = 2:3)) +
   theme_waratah()
 ```
 
@@ -148,7 +148,11 @@ Additional styling examples specifying font size, reversing colour palette:
 ```{r}
 p2 +
   scale_fill_discrete(
-    palette = pal_nsw(hue = "purples", variant = "aboriginal")
+    palette = pal_nsw(
+      t = 2:3,
+      h = c("purple", "blue", "red"),
+      var = "aboriginal"
+    )
   ) +
   theme_waratah(base_size = 14)
 ```

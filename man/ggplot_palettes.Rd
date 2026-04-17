@@ -2,14 +2,11 @@
 % Please edit documentation in R/ggplot_helpers.R
 \name{pal_interleave}
 \alias{pal_interleave}
-\alias{pal_paired}
 \alias{pal_stretch}
 \alias{col_contrasting}
 \title{Construct palette variants}
 \usage{
 pal_interleave(...)
-
-pal_paired(colours, amount = 50)
 
 pal_stretch(pal)
 
@@ -17,8 +14,6 @@ col_contrasting(bg)
 }
 \arguments{
 \item{...}{two or more vectors of colours}
-
-\item{amount}{amount to lighten then colours for the paired set}
 
 \item{pal}{palette object}
 
@@ -33,7 +28,7 @@ col_contrasting(bg)
 \description{
 Depending on the structure of your data you may wish to combine palettes
 according to some pattern. These helpers may come in handy.
-\code{pal_interleave()} and \code{pal_paired()} are for grouped data.
+\code{pal_interleave()} is for grouped data.
 \code{pal_stretch()} interpolates a palette into a new discrete palette.
 \code{col_contrasting()} chooses colours based on the given background colours.
 }

@@ -51,7 +51,6 @@ pal_nsw <- function(
       )
     }
   }
-  rlang::check_exclusive(hue, tone, .require = FALSE)
   if (
     !is_waiver(palette) &&
       any(!missing(variant), !identical(hue, NA), !identical(tone, NA))
@@ -61,7 +60,9 @@ pal_nsw <- function(
     )
   }
 
-  if (!identical(hue, NA)) {
+  if (!identical(hue, NA) && !identical(tone, NA)) {
+    colours <- col_nsw(hue = hue, tone = tone, variant = variant)
+  } else if (!identical(hue, NA)) {
     colours <- col_nsw(hue = hue, variant = variant)
   } else if (!identical(tone, NA)) {
     colours <- col_nsw(tone = tone, variant = variant)

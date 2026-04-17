@@ -5,13 +5,12 @@ NULL
 #'
 #' Depending on the structure of your data you may wish to combine palettes
 #' according to some pattern. These helpers may come in handy.
-#' `pal_interleave()` and `pal_paired()` are for grouped data.
+#' `pal_interleave()` is for grouped data.
 #' `pal_stretch()` interpolates a palette into a new discrete palette.
 #' `col_contrasting()` chooses colours based on the given background colours.
 #'
 #' @param ... two or more vectors of colours
 #' @param bg,colours vector of colours
-#' @param amount amount to lighten then colours for the paired set
 #' @param pal palette object
 #'
 #' @return
@@ -30,14 +29,6 @@ pal_interleave <- function(...) {
   idx <- rep(seq_len(n_cols), each = n_pals) +
     rep(seq_len(n_pals) - 1, times = n_cols) * n_cols
   scales::pal_manual(unlist(pals)[idx], type = "colour")
-}
-
-#' @export
-#' @rdname ggplot_palettes
-pal_paired <- function(colours, amount = 50) {
-  colours <- as_colour_vector(colours)
-  lighter <- scales::col_lighter(colours, amount = amount)
-  pal_interleave(colours, lighter)
 }
 
 as_colour_vector <- function(x) {

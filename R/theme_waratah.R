@@ -133,13 +133,21 @@ theme_waratah <- function(
         fill = geom_ink,
         pointsize = 2,
       ),
-      palette.colour.discrete = pal_nsw("default"),
-      palette.fill.discrete = pal_nsw("default"),
+      palette.colour.discrete = pal_nsw(
+        tone = 1:2,
+        variant = getOption("waratah.colour_theme", default = "corporate")
+      ),
+      palette.fill.discrete = pal_nsw(
+        tone = 1:2,
+        variant = getOption("waratah.colour_theme", default = "corporate")
+      ),
       palette.colour.continuous = scales::as_continuous_pal(pal_nsw(
-        hue = "blues"
+        hue = 1,
+        variant = getOption("waratah.colour_theme", default = "corporate")
       )),
       palette.fill.continuous = scales::as_continuous_pal(pal_nsw(
-        hue = "blues"
+        hue = 1,
+        variant = getOption("waratah.colour_theme", default = "corporate")
       )),
       complete = TRUE
     )
