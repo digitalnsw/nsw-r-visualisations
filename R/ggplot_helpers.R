@@ -1,3 +1,6 @@
+#' @importFrom ggplot2 waiver is_waiver
+NULL
+
 #' Construct palette variants
 #'
 #' Depending on the structure of your data you may wish to combine palettes

@@ -84,8 +84,18 @@ nsw_colours <- list(
 
 # defines the offsets and dimensions of each colour grid,
 # used to index into the above vector
-nsw_colour_grids <- list(
-  base = list(
+new_grid <- function(offset, hues, shades) {
+  n_cols <- length(hues) * length(shades)
+  idx <- seq_len(n_cols) + offset
+  cols <- matrix(nsw_colours[idx], ncol = length(hues))
+  labs <- matrix(names(nsw_colours)[idx], ncol = length(hues))
+  dimnames(cols) <- dimnames(labs) <- list(shades, hues)
+  attr(cols, "labels") <- labs
+  class(cols) <- c("col_grid", class(cols))
+  cols
+}
+nsw_colour_grids <- rlang::new_environment(list(
+  base = new_grid(
     offset = 3L,
     hues = c(
       "greys",
@@ -101,7 +111,7 @@ nsw_colour_grids <- list(
     ),
     shades = c("dark", "normal", "light", "lighter")
   ),
-  aboriginal = list(
+  aboriginal = new_grid(
     offset = 43L,
     hues = c(
       "reds",
@@ -115,24 +125,20 @@ nsw_colour_grids <- list(
     ),
     shades = c("dark", "normal", "light", "lighter")
   )
-)
+))
 
-calc_pal_shade <- function(config, hue) {
-  n_hues <- length(config$hues)
-  stopifnot(length(hue) == 1L, hue > 0L, hue <= n_hues)
-  n_shades <- length(config$shades)
-  start <- 1L + config$offset + (n_shades * (hue - 1L))
-  end <- start + n_shades - 1L
-  unlist(nsw_colours[seq(start, end, by = 1L)])
-}
-
-calc_pal_hue <- function(config, shade) {
-  n_shades <- length(config$shades)
-  stopifnot(all(shade > 0L), all(shade <= n_shades))
-  n_colours <- length(config$hues) * n_shades
-  start <- 1L + config$offset
-  end <- start + n_colours - 1L
-  unlist(nsw_colours[seq(start, end, by = n_shades) + shade - 1L])
+# accesses a grid by row and/or column
+col_nsw <- function(hue, shade, variant = c("base", "aboriginal")) {
+  variant <- match.arg(variant)
+  col_grid <- get(variant, envir = nsw_colour_grids, inherits = FALSE)
+  if (missing(hue) && missing(shade)) cli::cli_abort("Must specify {.arg hue} and/or {.arg shade}")
+  if (!missing(hue) && is.character(hue)) {
+    hue <- match.arg(hue, colnames(col_grid))
+  }
+  if (!missing(shade) && is.character(shade)) {
+    shade <- match.arg(shade, rownames(col_grid))
+  }
+  rlang::set_names(col_grid[shade, hue], attr(col_grid, "labels")[shade, hue])
 }
 
 # replaces NSW colours with their hex codes, leaving others unchanged

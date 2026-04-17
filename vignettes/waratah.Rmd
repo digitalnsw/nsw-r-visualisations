@@ -309,7 +309,7 @@ Styling using the waratah package - removing background, changing font size:
 p5 +
   discrete_scale(
     "fill",
-    palette = pal_stretch(waratah:::nsw_palettes$neg_to_pos),
+    palette = pal_stretch(pal_nsw("neg_to_pos")),
     breaks = sentiment
   ) +
   theme_waratah(base_size = 12)
