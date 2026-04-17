@@ -47,14 +47,16 @@ To use the Aboriginal colour grid, specify \code{variant = "aboriginal"}.
 The \code{"base"} variant supports:
 \itemize{
 \item \strong{hue}: greys, greens, teals, blues, purples, fucshias, reds, oranges, yellows, browns
-\item \strong{shade}: dark, normal, light, lighter
+\item \strong{shade}: dark, normal, light, pale
 }
 
 The \code{"aboriginal"} variant supports:
 \itemize{
 \item \strong{hue}: reds, oranges, browns, yellows, greens, blues, purples, greys
-\item \strong{shade}: dark, normal, light, lighter
+\item \strong{shade}: dark, normal, light, pale
 }
+
+Unambiguous shortened forms are accepted, e.g. \code{pal_nsw(h = "red", v = "a")}.
 
 Anchor colours used to create the NSW colour palettes can also be used
 stand-alone (e.g. \code{nsw_colours$blue_01} returns the hex code \code{"#002664"}).

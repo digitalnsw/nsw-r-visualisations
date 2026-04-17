@@ -31,6 +31,8 @@
 #'   - **hue**: `r colnames(nsw_colour_grids$aboriginal)`
 #'   - **shade**: `r rownames(nsw_colour_grids$aboriginal)`
 #'
+#' Unambiguous shortened forms are accepted, e.g. `pal_nsw(h = "red", v = "a")`.
+#'
 #' Anchor colours used to create the NSW colour palettes can also be used
 #' stand-alone (e.g. `nsw_colours$blue_01` returns the hex code `"#002664"`).
 #'

@@ -109,7 +109,7 @@ nsw_colour_grids <- rlang::new_environment(list(
       "yellows",
       "browns"
     ),
-    shades = c("dark", "normal", "light", "lighter")
+    shades = c("dark", "normal", "light", "pale")
   ),
   aboriginal = new_grid(
     offset = 43L,
@@ -123,7 +123,7 @@ nsw_colour_grids <- rlang::new_environment(list(
       "purples",
       "greys"
     ),
-    shades = c("dark", "normal", "light", "lighter")
+    shades = c("dark", "normal", "light", "pale")
   )
 ))
 
