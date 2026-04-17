@@ -10,8 +10,16 @@ Authors@R:
       person(given = "Carl",
              family = "Suster",
              email = "carl.suster@sydney.edu.au",
-             role = "ctb",
-             comment = c(ORCID = "0000-0001-7021-9380")))
+             role = "aut",
+             comment = c(ORCID = "0000-0001-7021-9380")),
+      person(given = "Shaun",
+             family = "Nielsen",
+             email = "Shaun.Nielsen@health.nsw.gov.au",
+             role = "ctb"),
+      person(given = "Tyson",
+             family = "Goddard",
+             email = "tyson.goddard@treasury.nsw.gov.au",
+             role = "ctb"))
 Description: This package allows NSW Government R users to create data visualisations
     in keeping with the NSW Design System. This ensures a consistent approach to data
     visualisations with appropriate colours and fonts.

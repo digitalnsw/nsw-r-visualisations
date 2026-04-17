@@ -20,9 +20,15 @@ Useful links:
 \author{
 \strong{Maintainer}: Zoe Baldwin \email{zoe.baldwin@health.nsw.gov.au} (\href{https://orcid.org/0000-0002-6010-9361}{ORCID})
 
+Authors:
+\itemize{
+  \item Carl Suster \email{carl.suster@sydney.edu.au} (\href{https://orcid.org/0000-0001-7021-9380}{ORCID})
+}
+
 Other contributors:
 \itemize{
-  \item Carl Suster \email{carl.suster@sydney.edu.au} (\href{https://orcid.org/0000-0001-7021-9380}{ORCID}) [contributor]
+  \item Shaun Nielsen \email{Shaun.Nielsen@health.nsw.gov.au} [contributor]
+  \item Tyson Goddard \email{tyson.goddard@treasury.nsw.gov.au} [contributor]
 }
 
 }
