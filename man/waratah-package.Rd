@@ -6,7 +6,8 @@
 \alias{waratah-package}
 \title{Tools for the New South Wales Design System in R}
 \description{
-This package allows NSW Government R users to create data visualisations in keeping with the NSW Design System. This ensures a consistent approach to data visualisations with appropriate colours and fonts. This package was inspired by the data viz work of Cara Thompson \url{https://github.com/cararthompson}.
+This package was inspired by the data viz work of Cara Thompson
+(\url{https://github.com/cararthompson}).
 }
 \seealso{
 Useful links:

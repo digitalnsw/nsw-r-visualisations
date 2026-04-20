@@ -23,8 +23,6 @@ Authors@R:
 Description: This package allows NSW Government R users to create data visualisations
     in keeping with the NSW Design System. This ensures a consistent approach to data
     visualisations with appropriate colours and fonts.
-    This package was inspired by the data viz work of Cara Thompson
-    <https://github.com/cararthompson>.
 License: MIT + file LICENSE
 Copyright: file COPYRIGHTS + file LICENSE
 Encoding: UTF-8
