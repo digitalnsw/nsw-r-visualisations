@@ -4,6 +4,8 @@
 #' It sets default colour scales, fonts, and some other styles.
 #'
 #' @param geom_ink default ink colour used by geoms for points, lines and fills.
+#' @param variant name of palette variant.
+#'   Available options are: `r rev(names(nsw_colour_grids))`.
 #' @param void whether to hide grid lines and axes.
 #'   If `TRUE`, all grid lines and axes are removed. This is useful when creating
 #'   pie/donut charts.
@@ -46,6 +48,7 @@ theme_waratah <- function(
   paper = "white",
   geom_ink = "blue_01",
   accent = "blue_02",
+  variant = getOption("waratah.colour_theme", default = "base"),
   show_grid_lines = TRUE,
   void = FALSE
 ) {
@@ -135,22 +138,10 @@ theme_waratah <- function(
         fill = geom_ink,
         pointsize = 2,
       ),
-      palette.colour.discrete = pal_nsw(
-        tone = 1:2,
-        variant = getOption("waratah.colour_theme", default = "corporate")
-      ),
-      palette.fill.discrete = pal_nsw(
-        tone = 1:2,
-        variant = getOption("waratah.colour_theme", default = "corporate")
-      ),
-      palette.colour.continuous = scales::as_continuous_pal(pal_nsw(
-        hue = 1,
-        variant = getOption("waratah.colour_theme", default = "corporate")
-      )),
-      palette.fill.continuous = scales::as_continuous_pal(pal_nsw(
-        hue = 1,
-        variant = getOption("waratah.colour_theme", default = "corporate")
-      )),
+      palette.colour.discrete = pal_waratah(type = "qual", variant = variant),
+      palette.fill.discrete = pal_waratah(type = "qual", variant = variant),
+      palette.colour.continuous = pal_waratah(type = "seq", variant = variant),
+      palette.fill.continuous = pal_waratah(type = "seq", variant = variant),
       complete = TRUE
     )
 
