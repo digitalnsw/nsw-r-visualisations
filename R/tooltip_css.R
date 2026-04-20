@@ -1,55 +1,42 @@
-#' tooltipcss
+#' Style interactive plot tooltips
 #'
-#'CSS code required to add waratah-styled tooltips to interactive graphs created using ggiraph
+#' CSS code required to add waratah-styled tooltips to interactive graphs
+#' created using ggiraph.
 #'
 #' @export
 #'
-#' @param font_family Font family for text in tooltips (default: "Public Sans")
-#' @param font_size Font size for text in tooltips (default: "11px")
-#' @param text_color Hover text colour (default: #F2F2F2)
-#' @param background_color Hover background colour (default: #22272b)
+#' @param background_colour tooltip background colour
+#' @param text_colour tooltip text colour
+#' @param font_family font family for text in tooltips
+#' @param font_size font size for text in tooltips
 #'
-#' @return A character vector containing CSS styles for tooltips
-tooltip_css <- function(font_family = NULL,
-                        font_size = NULL,
-                        background_color = NULL,
-                        text_color = NULL) {
+#' @details
+#' As normal with HTML elements, you must make sure that the final document
+#' loads the necessary fonts. See `vignette("waratah")` for instructions.
+#'
+#' @return A character vector containing CSS rules
+#' @examples
+#' tooltip_css()
+#'
+tooltip_css <- function(
+  background_colour = "grey_01",
+  text_colour = "off_white",
+  font_family = '"Public Sans", Arial, sans',
+  font_size = "11pt"
+) {
+  background_colour <- resolve_colours(background_colour)
+  text_colour <- resolve_colours(text_colour)
 
-  if (is.null(font_family)) {
-    font_family <- "Public Sans"
-  }
-  if (is.null(font_size)) {
-    font_size <- "11px"
-  }
-  if (is.null(background_color)) {
-    background_color <- "#22272b"
-  }
-  if (is.null(text_color)) {
-    text_color <- "#F2F2F2"
-  }
-
-  if (is.character(background_color) && exists("waratah_colours", envir = asNamespace("waratah"))) {
-    waratah_colours <- get("waratah_colours", envir = asNamespace("waratah"))
-    if (background_color %in% names(waratah_colours)) {
-      background_color <- waratah_colours[[background_color]]
-    }
-  }
-
-  if (is.character(text_color) && exists("waratah_colours", envir = asNamespace("waratah"))) {
-    waratah_colours <- get("waratah_colours", envir = asNamespace("waratah"))
-    if (text_color %in% names(waratah_colours)) {
-      text_color <- waratah_colours[[text_color]]
-    }
-  }
-
-  css <- sprintf('
-    max-width: 300px;
-    background-color: %s;
-    color: %s; /* Text color */
-    font-family: "%s";
-    font-size: %s;
-    padding: 10px;
-  ', background_color, text_color, font_family, font_size)
-
-  css
+  css <- paste0(
+    c(
+      "max-width: 300px;",
+      "padding: 10px;",
+      sprintf("background-color: %s;", background_colour),
+      sprintf("color: %s;", text_colour),
+      sprintf("font-family: %s", font_family),
+      sprintf("font-size: %s;", font_size)
+    ),
+    collapse = " "
+  )
+  invisible(css)
 }

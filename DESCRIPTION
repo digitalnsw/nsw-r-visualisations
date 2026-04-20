@@ -35,7 +35,6 @@ Imports:
     rlang,
     ggplot2 (>= 3.5.1),
     ggtext (>= 0.1.2),
-    reactable (>= 0.4.4),
     scales (>= 1.4.0),
     systemfonts,
     extrafont,
@@ -47,6 +46,7 @@ Suggests:
     dplyr,
     forcats,
     ggiraph,
+    reactable (>= 0.4.4),
     knitr,
     legendry,
     magick,
@@ -63,5 +63,4 @@ VignetteBuilder: knitr
 Config/Needs/website:
     rmarkdown,
     gdtools,
-    gfonts,
-    ggiraph
+    gfonts

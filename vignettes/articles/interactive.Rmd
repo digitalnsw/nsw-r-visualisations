@@ -55,7 +55,7 @@ p_gir <-
   ) +
   theme_waratah()
 
-# Create the interactive plot using ggiraph and custom tooltip from waratah package (load the object to show in Viewer)
+# Create the interactive plot using ggiraph
 girafe(
   ggobj = p_gir,
   font_set = nsw_fonts,
@@ -72,8 +72,8 @@ girafe(
     opts_tooltip(
       css = tooltip_css(
         font_size = "18px",
-        background_color = "blue_04",
-        text_color = "blue_01"
+        background_colour = "blue_04",
+        text_colour = "blue_01"
       )
     )
   )

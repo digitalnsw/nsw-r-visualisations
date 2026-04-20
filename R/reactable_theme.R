@@ -1,98 +1,90 @@
-#' reactable_theme()
+#' Theme for reactable interactive tables
 #'
-#' @param colour The starting colour for the table.
-#'   It can be any of the ophelia_colours (e.g. "blue_01", "green_01", "purple_02").
-#' @param title_font The default title is "Public Sans".
-#'   To change to a different font (e.g. to match up with an external publication
-#'   requirement), simply change as desired (e.g. "Times New Roman"). Make sure you've
-#'   installed the fonts you want to use on your device first!
-#' @param base_font The default font is also "Public Sans".
-#'   If you want to use a different font (e.g. to match up with an external publication
-#'   requirement), simply change as desired (e.g. "Arial"). Make sure you've installed
-#'   the fonts you want to use on your device first!
-#' @param base_text_size Base text size.
+#' If using reactable, this helper constructs a theme.
+#'
+#' @param colour starting colour used only to set a common default for other
+#'   colour parameters.
+#' @param text_colour colour of all text.
+#' @param backgroundColor background colour.
+#' @param borderColor colour for the horizontal lines between rows.
+#' @param stripedColor fill colour for alternate rows.
+#'   When `NA`, this is set to a blend of `borderColor` and `backgroundColor`.
+#' @param title_family font family for title text.
+#' @param base_family font family for normal text.
+#' @param base_text_size base text size in pt.
 #'   The header size is relative to the base text size.
-#' @param .colours Used to read in nsw_colours.
-#'   Please leave as is!
-#' @param ... Other parameters to pass to reactable::reactableTheme().
-#'   See ?reactable::reactableTheme for documentation.
+#' @param ... other parameters to pass to [`reactable::reactableTheme()`].
 #'   For examples of what can be done with reactable, see
-#'   https://glin.github.io/reactable/articles/cookbook/cookbook.html.
-#' @param textColor You can specify a text colour if you would like it
-#'   different to the borderColor and stripedColor.
-#' @param backgroundColor Logical. Can be specified as TRUE/FALSE.
-#'   The colour is off_white #F2F2F2
-#' @param borderColor The colour for the horizontal lines between rows.
-#' @param stripedColor The fill colour for alternate rows.
+#'   <https://glin.github.io/reactable/articles/cookbook/cookbook.html>.
 #'
-#' @return A theme to apply to a reactable object
+#' @details
+#' Colours can be specified as named NSW colours as in [`nsw_colours`].
+#'
+#' As normal with HTML elements, you must make sure that the final document
+#' loads the necessary fonts. See `vignette("waratah")` for instructions.
+#'
+#' @return A reactable theme object
 #' @export
 #' @examples
-#'
 #' library(reactable)
+#'
+#' # The default theme
 #' head(palmerpenguins::penguins, 10) |>
 #'   reactable(theme = reactableTheme())
 #'
-#' # Adding NSW style:
+#' # Adding waratah style
 #' head(palmerpenguins::penguins, 10) |>
 #'   reactable(theme = reactable_theme())
 #'
-#' # Further arguments for styling
+#' # More customised styling
 #' head(palmerpenguins::penguins, 10) |>
 #'   reactable(
 #'     theme = reactable_theme(
 #'       colour = "blue_01",
-#'       base_font = "Arial",
-#'       textColor = "black",
-#'       backgroundColor = TRUE,
-#'       borderColor = TRUE
+#'       base_family = "Arial",
+#'       text_colour = "black",
+#'       backgroundColor = NULL
 #'     ),
 #'     striped = TRUE
 #'   )
 #'
 reactable_theme <- function(
   colour = "blue_01",
-  title_font = "Public Sans",
-  base_font = "Public Sans",
+  text_colour = colour,
+  borderColor = colour,
+  backgroundColor = "white",
+  base_family = "Public Sans",
+  title_family = "Public Sans",
   base_text_size = 10,
-  textColor = NULL,
-  .colours = nsw_colours,
-  backgroundColor = TRUE,
-  borderColor = TRUE,
-  stripedColor = NULL,
+  stripedColor = NA,
   ...
 ) {
-  primary_colour <- .colours[[colour]]
+  rlang::check_installed("reactable")
+
+  text_colour <- resolve_colours(text_colour)
+  backgroundColor <- resolve_colours(backgroundColor)
+  borderColor <- resolve_colours(borderColor)
 
   style_list <- list(
-    color = ifelse(is.null(textColor), primary_colour, textColor),
-    fontFamily = base_font,
-    fontSize = paste0(base_text_size, "px")
+    color = text_colour,
+    fontFamily = base_family,
+    fontSize = paste0(base_text_size, "pt")
   )
   table_style_list <- list(
-    fontFamily = base_font,
-    fontSize = paste0(base_text_size, "px")
+    fontFamily = base_family,
+    fontSize = paste0(base_text_size, "pt")
   )
   header_style_list <- list(
-    fontFamily = title_font,
-    fontSize = paste0(base_text_size + 2, "px")
+    fontFamily = title_family,
+    fontSize = paste0(base_text_size + 2, "pt")
   )
   cell_style_list <- list(
-    fontFamily = base_font,
-    fontSize = paste0(base_text_size, "px")
+    fontFamily = base_family,
+    fontSize = paste0(base_text_size, "pt")
   )
 
-  if (!backgroundColor) {
-    style_list$backgroundColor <- NULL
-  }
-  if (!borderColor) {
-    style_list$borderColor <- NULL
-  }
-
-  if (is.null(stripedColor)) {
-    striped_color <- scales::alpha(primary_colour, 0.3)
-  } else {
-    striped_color <- scales::alpha(stripedColor, 0.3)
+  if (is.na(stripedColor)) {
+    stripedColor <- scales::col_mix(backgroundColor, borderColor, amount = 0.3)
   }
 
   reactable::reactableTheme(
@@ -100,10 +92,9 @@ reactable_theme <- function(
     tableStyle = table_style_list,
     headerStyle = header_style_list,
     cellStyle = cell_style_list,
-    # Additional parameters from reactable::reactableTheme()
-    backgroundColor = if (backgroundColor) .colours$background else NULL,
-    borderColor = if (borderColor) primary_colour else NULL,
-    stripedColor = striped_color,
+    backgroundColor = backgroundColor,
+    borderColor = borderColor,
+    stripedColor = stripedColor,
     ...
   )
 }
