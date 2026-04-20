@@ -6,3 +6,28 @@ template:
     heading_font: "Public Sans"
   includes:
     in_header: <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+reference:
+- title: Plot theming
+  desc: >
+    Main theme and colour palettes.
+  contents:
+  - theme_waratah
+  - pal_waratah
+  - pal_nsw
+- title: Colour utilities
+  desc: >
+    More specialised utilities for customising palettes within the design system.
+  contents:
+  - col_nsw
+  - pal_interleave
+  - col_distinct
+- title: HTML elements
+  desc: >
+    Themes for interactive HTML tables and plots.
+  contents:
+  - tooltip_css
+  - reactable_theme
+- title: Other
+  contents:
+  - waratah

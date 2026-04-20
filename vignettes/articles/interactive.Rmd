@@ -8,6 +8,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(palmerpenguins, warn.conflicts = FALSE)
+library(gdtools, warn.conflicts = FALSE)
+library(ggiraph, warn.conflicts = FALSE)
 ```
 
 ```{r setup}
@@ -69,7 +71,6 @@ girafe(
   options = list(
     opts_tooltip(
       css = tooltip_css(
-        font_family = "Arial",
         font_size = "18px",
         background_color = "blue_04",
         text_color = "blue_01"

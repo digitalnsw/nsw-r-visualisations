@@ -216,7 +216,7 @@ p4 <-
     rotate.angle = TRUE
   ) +
   labs(
-    title = "Does anyone know if penguins like donuts?",
+    title = "Does anyone know if penguins like doughnuts?",
     subtitle = "Not sure, but we know there are three species in the dataset",
     caption = "Data from {palmerpenguins}"
   )

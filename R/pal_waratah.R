@@ -27,7 +27,8 @@
 #' pal_waratah("qual") |> show_col()
 #' pal_waratah("pairs") |> show_col()
 #' pal_waratah("seq", hue = "red") |> show_col(labels = FALSE)
-#' pal_waratah("div", hue = "yellow", variant = "aboriginal") |> show_col(labels = FALSE)
+#' pal_waratah("div", hue = "yellow", variant = "aboriginal") |>
+#'   show_col(labels = FALSE)
 #'
 pal_waratah <- function(
   type = c("qual", "seq", "div", "pairs", "triples"),
