@@ -16,7 +16,7 @@ pal_nsw(
 pal_nsw_manual(colours)
 }
 \arguments{
-\item{palette}{name of a predefined palette: default, brand_default, neg_to_pos, colour_blind, core.}
+\item{palette}{name of a predefined palette: default, brand_default, core.}
 
 \item{hue}{name or index of the hue - see below.
 Ignored if \code{palette} is specified.}

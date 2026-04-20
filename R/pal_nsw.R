@@ -117,19 +117,6 @@ nsw_named_palettes <- rlang::new_environment(list(
   core = c(
     nsw_colours$blue_01,
     nsw_colours$red_02
-  ),
-  neg_to_pos = c(
-    nsw_colours$purple_01,
-    nsw_colours$teal_04,
-    nsw_colours$yellow_02
-  ),
-  colour_blind = c(
-    nsw_colours$blue_01,
-    nsw_colours$blue_02,
-    nsw_colours$teal_03,
-    nsw_colours$orange_01,
-    nsw_colours$brown_02,
-    nsw_colours$orange_03
   )
 ))
 
