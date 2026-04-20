@@ -17,7 +17,7 @@ col_contrasting(bg)
 
 \item{pal}{palette object}
 
-\item{bg, colours}{vector of colours}
+\item{bg}{vector of colours}
 }
 \value{
 \itemize{

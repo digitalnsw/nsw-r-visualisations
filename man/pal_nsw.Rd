@@ -3,7 +3,7 @@
 \name{pal_nsw}
 \alias{pal_nsw}
 \alias{pal_nsw_manual}
-\title{NSW Design System Colour Palettes}
+\title{NSW Design System colour palettes}
 \usage{
 pal_nsw(
   palette = waiver(),
@@ -16,34 +16,41 @@ pal_nsw(
 pal_nsw_manual(colours)
 }
 \arguments{
-\item{palette}{Name of a predefined palette: default, brand_default, neg_to_pos, colour_blind, core.}
+\item{palette}{name of a predefined palette: default, brand_default, neg_to_pos, colour_blind, core.}
 
-\item{hue}{Name or index of the hue - see below.
+\item{hue}{name or index of the hue - see below.
 Ignored if \code{palette} is specified.}
 
-\item{tone}{Name or index of the tone - see below.
+\item{tone}{name or index of the tone - see below.
 Ignored if \code{palette} is specified.}
 
-\item{variant}{Name of palette variant.
-Ignored unless \code{hue} or \code{tone} is specified.
-Available options are: base, aboriginal, corporate, treasury.}
+\item{variant}{name of palette variant.
+Available options are: base, aboriginal, corporate, treasury.
+Ignored unless \code{hue} or \code{tone} is specified.}
 
-\item{direction}{Set to -1 to reverse the order of colours in the palette,
+\item{direction}{set to -1 to reverse the order of colours in the palette,
 or 1 for the original order.}
 
-\item{colours}{Vector of colour names corresponding to \link{nsw_colours}.}
+\item{colours}{vector of colour names corresponding to \link{nsw_colours}.}
 }
 \value{
 A palette object (see \link[scales:new_continuous_palette]{palette constructors})
 }
 \description{
 Palettes created using the \href{https://designsystem.nsw.gov.au/docs/content/design/theming.html}{NSW Design System}.
-There are several named palettes which can be specified with \code{palette}.
-To use palettes based on the NSW Design System colour grid, either
-specify \code{hue} and allow the tone to vary, or specify \code{tone} to allow the
-hue to vary.
 To use the Aboriginal colour grid, specify \code{variant = "aboriginal"}.
 \if{html}{\figure{nsw_palette.svg}{options: width=95\%}}
+}
+\details{
+To use palettes based on the NSW Design System colour grids, either
+specify \code{hue} and allow the tone to vary, or specify \code{tone} to allow the
+hue to vary.
+The recommendation is to use the first two tonal rows going one colour at a
+time from a set of colours; this can be achieved by specifying \code{tone = 1:2}.
+
+There are several named palettes which can be specified with \code{palette}.
+To create custom combinations of named colours from the design system, use
+\code{pal_nsw_manual()}.
 }
 \section{Colour columns and tonal rows}{
 
@@ -74,10 +81,15 @@ pal_nsw(hue = "blues") |> show_col()
 pal_nsw(tone = 1:2, variant = "corporate") |> show_col()
 pal_nsw(tone = "light") |> show_col()
 pal_nsw(tone = "normal", variant = "aboriginal") |> show_col()
+pal_nsw_manual(c("blue_02", "red_01", "green_03")) |> show_col()
 
 # you can interpolate colours by converting to a continuous scale
 pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col(labels = FALSE)
 }
 \seealso{
 \code{\link[=col_nsw]{col_nsw()}}
+
+Other palettes: 
+\code{\link{pal_waratah}()}
 }
+\concept{palettes}

@@ -41,7 +41,8 @@ Imports:
     scales (>= 1.4.0),
     systemfonts,
     extrafont,
-    vctrs
+    vctrs,
+    farver
 URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests:
@@ -57,7 +58,8 @@ Suggests:
     rmarkdown,
     svglite,
     tidyr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    colorBlindness
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/Needs/website:

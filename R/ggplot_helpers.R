@@ -10,7 +10,7 @@ NULL
 #' `col_contrasting()` chooses colours based on the given background colours.
 #'
 #' @param ... two or more vectors of colours
-#' @param bg,colours vector of colours
+#' @param bg vector of colours
 #' @param pal palette object
 #'
 #' @return
