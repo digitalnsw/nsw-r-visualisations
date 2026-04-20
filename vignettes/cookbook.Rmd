@@ -72,7 +72,7 @@ p1 +
 Change to a different NSW palette:
 ```{r}
 p1 +
-  scale_colour_discrete(palette = pal_nsw(hue = "blues")) +
+  scale_colour_discrete(palette = pal_waratah("qual", var = "aboriginal")) +
   theme_waratah()
 ```
 
@@ -116,14 +116,15 @@ p2 <-
 p2 + scale_fill_brewer(palette = "Paired")
 ```
 
-Styling using waratah package - specifying the palette:
+Styling using waratah package - here we want a paired colour palette:
 ```{r}
 p2 +
-  discrete_scale("fill", palette = pal_nsw(t = 2:3)) +
+  discrete_scale("fill", palette = pal_waratah("pairs")) +
   theme_waratah()
 ```
 
-Additional styling examples specifying font size, reversing colour palette:
+More manual control of the palette is possible, for example specifying the rows
+and columns of the colour grid to use:
 ```{r}
 p2 +
   scale_fill_discrete(
@@ -155,7 +156,7 @@ p3 <-
 p3
 ```
 
-Styling using the waratah package - specifying pallete, removing the off white background and adjusting font size
+Styling using the waratah package - specifying pallete
 ```{r}
 p3 +
   scale_fill_discrete(palette = pal_nsw(hue = "purples")) +
@@ -208,7 +209,7 @@ Styling using the waratah package with options:
 p4 +
   scale_fill_discrete(
     aesthetics = c("fill", "colour"),
-    palette = pal_nsw(hue = "reds"),
+    palette = pal_waratah("qual"),
     guide = "none"
   ) +
   theme_waratah(
@@ -287,12 +288,14 @@ p5 <-
 p5 + scale_fill_brewer(palette = "PiYG")
 ```
 
-Styling using the waratah package - removing background, changing font size:
+Styling using the waratah package.
+Note that the diverging palette is continuous, so we need `pal_stretch()` to discretise it here.
+We specify `"red"` as our starting hue.  Without `cvd = TRUE` the second colour ends up being green.
 ```{r}
 p5 +
   discrete_scale(
     "fill",
-    palette = pal_stretch(pal_nsw("neg_to_pos")),
+    palette = pal_waratah("div", "red", cvd = TRUE) |> pal_stretch(),
     breaks = sentiment
   ) +
   theme_waratah(base_size = 12)
