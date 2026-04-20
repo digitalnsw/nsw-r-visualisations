@@ -1,5 +1,5 @@
 ---
-title: "Charts and graphs"
+title: "Demonstration gallery"
 ---
 
 ```{r, include = FALSE}
@@ -19,7 +19,9 @@ library(ggplot2, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 library(forcats)
 library(reactable)
+```
 
+```{r, echo = TRUE}
 set_theme(
   theme_waratah(variant = "corporate") + theme(legend.position = "bottom")
 )
