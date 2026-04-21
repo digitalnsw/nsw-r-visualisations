@@ -37,8 +37,7 @@ pak::pak('digitalnsw/nsw-r-visualisations')
 ```
 
 ## Usage
-In many instances it may be sufficient to set the global theme.
-More control is available through palette functions.
+In many instances it may be sufficient to set the global theme:
 
 ```{r}
 library(ggplot2)
@@ -49,3 +48,6 @@ set_theme(theme_waratah())
 ggplot(mpg, aes(displ, hwy, colour = class)) +
   geom_point()
 ```
+
+More control is available through palette functions such as [`pal_waratah()`].
+See `vignette("waratah")` for usage guidelines.
