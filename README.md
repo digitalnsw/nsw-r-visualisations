@@ -42,4 +42,4 @@ ggplot(mpg, aes(displ, hwy, colour = class)) +
 <img src="man/figures/README-unnamed-chunk-2-1.png" alt="" width="100%" />
 
 More control is available through palette functions such as
-\[`pal_waratah()`\]. See `vignette("waratah")` for usage guidelines.
+`pal_waratah()`. See `vignette("waratah")` for usage guidelines.

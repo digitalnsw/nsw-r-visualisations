@@ -21,7 +21,7 @@ library(palmerpenguins, warn.conflicts = FALSE)
 This article contains some recipes for different plot styles and how to apply
 waratah styles. Each example shows the base plot then the themed version.
 
-## Example 1
+## Example 1: markdown text
 
 With standard ggplot output:
 ```{r}
@@ -76,8 +76,10 @@ p1 +
   theme_waratah()
 ```
 
+The markdown handling is done with `ggtext`.
+See `vignette("theme_elements", package = "ggtext")` for details.
 
-## Example 2
+## Example 2: grouped points
 
 With standard ggplot output:
 ```{r}
@@ -137,7 +139,7 @@ p2 +
   theme_waratah(base_size = 14)
 ```
 
-## Example 3
+## Example 3: stacked bars
 
 With standard ggplot output
 ```{r}
@@ -165,7 +167,7 @@ p3 +
   theme(panel.grid.major.x = element_blank())
 ```
 
-## Example 4
+## Example 4: doughnut
 
 With standard ggplot output:
 ```{r}
@@ -218,9 +220,9 @@ p4 +
   )
 ```
 
-## Example 5
+## Example 5: Likert scale
 
-Likert-scale survey responses can be handled with dedicated tools like [`ggstats::gglikert()`].
+Likert-scale survey responses can be handled with dedicated tools like `ggstats::gglikert()`.
 Here is a self-contained ggplot stat that achieves a limited version of the same
 result for the purposes of demonstrating styling.
 
@@ -269,7 +271,7 @@ p5 <-
     aes(x = percent, y = group, fill = answer)
   ) +
   geom_vline(aes(xintercept = 0, colour = from_theme(accent))) +
-  # note: likert is not a standard stat - it's defined and hidden for this example
+  # note: likert is not a standard stat - it's defined above
   geom_tile(stat = "likert", height = 0.8) +
   labs(
     title = "Let's find out!",

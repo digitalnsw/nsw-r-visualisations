@@ -49,5 +49,5 @@ ggplot(mpg, aes(displ, hwy, colour = class)) +
   geom_point()
 ```
 
-More control is available through palette functions such as [`pal_waratah()`].
+More control is available through palette functions such as `pal_waratah()`.
 See `vignette("waratah")` for usage guidelines.

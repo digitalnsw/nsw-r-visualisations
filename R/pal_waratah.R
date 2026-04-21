@@ -10,7 +10,7 @@
 #'   - `"seq"` continuous sequential palette: a gradient spanning extreme tones of `hue`
 #'   - `"div"` continuous diverging palette: a gradient spanning extreme tones of `hue`
 #'     and a second distinct colour.
-#'   - `"pairs"`, `"triples"` like `"qual"`` but in sets of 2 or 2 tones of each hue.
+#'   - `"pairs"`, `"triples"` like `"qual"`` but in sets of 2 or 3 tones per hue.
 #' @param hue main hue, either by name of index.
 #'   See [`col_nsw()`] for supported values.
 #'   Only used when `type` is `"seq"` or `"div"`.

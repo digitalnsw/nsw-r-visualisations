@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(ggplot2, warn.conflicts = FALSE)
+library(waratah)
 ```
 
 ## Fonts
@@ -40,9 +41,86 @@ Recommendations:
 </details>
 
 
+## Theme for ggplot2
+
+`theme_waratah()` sets default fonts, styles, and colour palettes for plots.
+You can set the theme globally with `ggplot2::set_theme()` or add it to an individual plot.
+If using any global options like `options(waratah.colour_theme = "aboriginal")`, make sure
+to do this before setting the theme.
+
+See `vignette("cookbook")` for some examples of using the theme.
+
+## Colours
+
+The NSW palettes are designed around two grids consisting of colour columns and tonal rows.
+[Guidelines for charts](https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html)
+suggest techniques for ensuring good contrast so that your charts are accessible.
+
+Individual colours are available by name, e.g. `nsw_colours$blue_01`.
+
+### Grid-based method
+
+To access colours using the grid system, use `pal_nsw()`.
+We can visualise the colours with a utility from the scales package:
+
+```{r}
+pal_nsw(hue = c("blue", "red"), tone = 1:2) |> scales::show_col()
+```
+
+This gave us the first two tones of blue followed by the first two tones of red.
+Importantly, `pal_nsw()` always provides a discrete colour palette.
+
+To use that with ggplot as a discrete colour scale, you can use:
+
+```R
+scale_colour_discrete(palette = pal_nsw(hue = c("blue", "red"), tone = 1:2))
+```
+
+or `scale_fill_discrete()` to set the fill scale.
+In case you need a continuous scale, ggplot will automatically interpolate the colours:
+
+```R
+scale_colour_continuous(palette = pal_nsw(hue = "blue"))
+```
+
+### Flexible palettes
+
+Instead of working directly with the grid, you can instead use `pal_waratah()`.
+Specify the pattern of your data and you will get a reasonable discrete or continous scale.
+Note that this makes it harder to follow the chat recommendations mentioned above, but it can be more convenient for scientific data visualisation.
+
+For qualitative data, a mix of tonal rows 1 and 2 are chosen to avoid overly-similar colours:
+
+```{r}
+pal_waratah("qual") |> scales::show_col()
+```
+
+There are also palettes for sequential and diverging continuous data that allow a choice of the base hue:
+
+```{r}
+pal_waratah("div", hue = "green") |> scales::show_col(labels = FALSE)
+```
+
+Because `pal_waratah()` considers colour similarity, you can request that it also take into account colour vision disorders:
+
+```{r}
+pal_waratah("div", hue = "green", cvd = TRUE) |> scales::show_col(labels = FALSE)
+```
+
+To make that choice globally, set:
+
+```R
+options(waratah.cvd = TRUE)
+```
+
+### Colour themes
+
+Colour palettes in waratah allow a variant to be specified, including the default `variant = "base"` and the Aboriginal palette `variant = "aboriginal"`.
+See `pal_nsw()` for details.
+
 ## NSW Government logo
 
-The logo included in PNG format:
+The logo is included in PNG format:
 
 ```{r}
 library(magick)
