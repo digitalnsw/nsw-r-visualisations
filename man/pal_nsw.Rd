@@ -66,9 +66,14 @@ The \code{"aboriginal"} variant supports:
 \item \strong{tone}: dark, normal, light, pale
 }
 
-Other variants (treasury, corporate)
-are colour themes, which are subsets of the main two grids using only certain
-colour columns.
+Colour themes support subsets of the hues from one of the main grids in a specific order.
+These themes are built in:
+\itemize{
+\item \code{"treasury"}: teals, greys, oranges, greens
+\item \code{"corporate"}: blues, reds, greys
+}
+
+The default variant can be specified globally with \code{options(waratah.colour_theme)}.
 
 Unambiguous shortened forms are accepted, e.g. \code{pal_nsw(h = "red", v = "a")}.
 }

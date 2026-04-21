@@ -148,26 +148,46 @@ nsw_colour_grids[["aboriginal"]] <- new_grid(
   tones = c("dark", "normal", "light", "pale")
 )
 
+#' @param name name for the new colour theme.
+#' @param parent name of the parent grid or theme, usually `"base"` or `"aboriginal"`.
+#' @param colours character vector of colour column names.
+#' @export
+#' @rdname col_nsw
 define_colour_theme <- function(name, parent, colours) {
   parent <- match.arg(parent, names(nsw_colour_grids))
   col_grid <- get(parent, envir = nsw_colour_grids, inherits = FALSE)
   nsw_colour_grids[[name]] <- grid_slice(col_grid, hue = colours)
+  NULL
 }
 
 define_colour_theme("corporate", "base", c("blue", "red", "grey"))
 define_colour_theme("treasury", "base", c("teal", "grey", "orange", "green"))
 
+doc_themes <- function() {
+  names(nsw_colour_grids) |>
+    setdiff(c("base", "aboriginal")) |>
+    sapply(function(x) {
+      hues <- paste0(
+        colnames(get(x, envir = nsw_colour_grids)),
+        collapse = ", "
+      )
+      sprintf('  - `"%s"`: %s', x, hues)
+    }) |>
+    paste0(collapse = "\n")
+}
 #' Access NSW palette grids by rows and/or columns
 #'
 #' The NSW design system colours work in grids of colour columns and tonal rows.
-#' This function allows accessing a colour grid like a matrix.
-#' For ggplot colour palettes, you'll normally want [pal_nsw()] instead.
+#'   - `col_nsw()` allows accessing a colour grid like a matrix.
+#'     For ggplot colour palettes, you'll normally want [pal_nsw()] instead.
+#'   - `define_colour_theme()` defines a new colour theme that can be used
+#'     in any waratah function that accepts a `variant` parameter.
 #'
-#' @param hue Name or index of the hue - see below.
-#' @param tone Name or index of the tone - see below.
-#' @param variant Name of palette variant.
+#' @param hue name or index of the hue - see below.
+#' @param tone name or index of the tone - see below.
+#' @param variant name of palette variant.
 #'   Available options are: `r rev(names(nsw_colour_grids))`.
-#' @param byrow Vary `tone` faster than `hue` if `TRUE`.
+#' @param byrow vary `tone` faster than `hue` if `TRUE`.
 #'
 #' @details
 #' `hue` and `tone` work the same way as matrix indexing with `[` in that they
@@ -186,13 +206,17 @@ define_colour_theme("treasury", "base", c("teal", "grey", "orange", "green"))
 #'   - **hue**: `r colnames(nsw_colour_grids$aboriginal)`
 #'   - **tone**: `r rownames(nsw_colour_grids$aboriginal)`
 #'
-#' Other variants (`r setdiff(names(nsw_colour_grids), c("base", "aboriginal"))`)
-#' are colour themes, which are subsets of the main two grids using only certain
-#' colour columns.
+#' Colour themes support subsets of the hues from one of the main grids in a specific order.
+#' These themes are built in:
+#' `r doc_themes()`
+#'
+#' The default variant can be specified globally with `options(waratah.colour_theme)`.
 #'
 #' Unambiguous shortened forms are accepted, e.g. `pal_nsw(h = "red", v = "a")`.
 #'
-#' @return Named vector of colours
+#' @return
+#'   - for `col_nsw()` a named vector of colours,
+#'   - for `define_colour_theme()` nothing: this is called for its side effects.
 #' @export
 #' @seealso [pal_nsw()]
 #'

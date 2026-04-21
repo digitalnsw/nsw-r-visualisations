@@ -2,6 +2,7 @@
 
 export(col_contrasting)
 export(col_nsw)
+export(define_colour_theme)
 export(nsw_colours)
 export(pal_c)
 export(pal_interleave)

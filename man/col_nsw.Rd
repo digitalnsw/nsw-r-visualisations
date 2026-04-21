@@ -3,10 +3,13 @@
 \docType{data}
 \name{nsw_colours}
 \alias{nsw_colours}
+\alias{define_colour_theme}
 \alias{col_nsw}
 \title{Access NSW palette grids by rows and/or columns}
 \usage{
 nsw_colours
+
+define_colour_theme(name, parent, colours)
 
 col_nsw(
   hue,
@@ -16,22 +19,35 @@ col_nsw(
 )
 }
 \arguments{
-\item{hue}{Name or index of the hue - see below.}
+\item{name}{name for the new colour theme.}
 
-\item{tone}{Name or index of the tone - see below.}
+\item{parent}{name of the parent grid or theme, usually \code{"base"} or \code{"aboriginal"}.}
 
-\item{variant}{Name of palette variant.
+\item{colours}{character vector of colour column names.}
+
+\item{hue}{name or index of the hue - see below.}
+
+\item{tone}{name or index of the tone - see below.}
+
+\item{variant}{name of palette variant.
 Available options are: base, aboriginal, corporate, treasury.}
 
-\item{byrow}{Vary \code{tone} faster than \code{hue} if \code{TRUE}.}
+\item{byrow}{vary \code{tone} faster than \code{hue} if \code{TRUE}.}
 }
 \value{
-Named vector of colours
+\itemize{
+\item for \code{col_nsw()} a named vector of colours,
+\item for \code{define_colour_theme()} nothing: this is called for its side effects.
+}
 }
 \description{
 The NSW design system colours work in grids of colour columns and tonal rows.
-This function allows accessing a colour grid like a matrix.
+\itemize{
+\item \code{col_nsw()} allows accessing a colour grid like a matrix.
 For ggplot colour palettes, you'll normally want \code{\link[=pal_nsw]{pal_nsw()}} instead.
+\item \code{define_colour_theme()} defines a new colour theme that can be used
+in any waratah function that accepts a \code{variant} parameter.
+}
 }
 \details{
 \code{hue} and \code{tone} work the same way as matrix indexing with \code{[} in that they
@@ -55,9 +71,14 @@ The \code{"aboriginal"} variant supports:
 \item \strong{tone}: dark, normal, light, pale
 }
 
-Other variants (treasury, corporate)
-are colour themes, which are subsets of the main two grids using only certain
-colour columns.
+Colour themes support subsets of the hues from one of the main grids in a specific order.
+These themes are built in:
+\itemize{
+\item \code{"treasury"}: teals, greys, oranges, greens
+\item \code{"corporate"}: blues, reds, greys
+}
+
+The default variant can be specified globally with \code{options(waratah.colour_theme)}.
 
 Unambiguous shortened forms are accepted, e.g. \code{pal_nsw(h = "red", v = "a")}.
 }
