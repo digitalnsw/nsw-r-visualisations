@@ -1,4 +1,10 @@
-# Charts and graphs
+# Demonstration gallery
+
+``` r
+set_theme(
+  theme_waratah(variant = "corporate") + theme(legend.position = "bottom")
+)
+```
 
 Examples derived from the NSW Design System [guidance on charts and
 graphs](https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html).
@@ -11,7 +17,7 @@ between ggplot and other frameworks.
 
 ### Bar (vertical)
 
-![](charts_files/figure-html/unnamed-chunk-3-1.png)
+![](charts_files/figure-html/unnamed-chunk-4-1.png)
 
 **Summary**: City of Sydney and Parramatta assessed the highest number
 of applications in Q1 2025, together accounting for over a third of the
@@ -21,7 +27,7 @@ total.
 
 ### Stacked bar
 
-![](charts_files/figure-html/unnamed-chunk-5-1.png)
+![](charts_files/figure-html/unnamed-chunk-6-1.png)
 
 **Summary**: Digital contact grew steadily across all four quarters,
 while phone and in-person volumes declined. By Q4, digital accounted for
@@ -33,7 +39,7 @@ more than two-thirds of all requests.
 
 ### Line
 
-![](charts_files/figure-html/unnamed-chunk-7-1.png)
+![](charts_files/figure-html/unnamed-chunk-8-1.png)
 
 **Summary**: Incidents were highest in summer months, peaking in
 December and January. July recorded the lowest monthly total for the
@@ -43,7 +49,7 @@ year.
 
 ### Multi-line
 
-![](charts_files/figure-html/unnamed-chunk-9-1.png)
+![](charts_files/figure-html/unnamed-chunk-10-1.png)
 
 **Summary**: App transactions grew fastest over the year, nearly
 doubling. Web remained the largest channel. Assisted digital declined
@@ -53,7 +59,7 @@ steadily as self-service adoption increased.
 
 ### Area
 
-![](charts_files/figure-html/unnamed-chunk-11-1.png)
+![](charts_files/figure-html/unnamed-chunk-12-1.png)
 
 **Summary**: Grant disbursements accelerated from October, with the
 final quarter accounting for more than half of the full-year total.
@@ -62,7 +68,7 @@ final quarter accounting for more than half of the full-year total.
 
 ### Stacked area
 
-![](charts_files/figure-html/unnamed-chunk-13-1.png)
+![](charts_files/figure-html/unnamed-chunk-14-1.png)
 
 **Summary**: The total number of open cases grew steadily across all
 priority levels. Critical cases grew fastest proportionally, nearly
@@ -74,7 +80,7 @@ doubling between January and June.
 
 ### Scatter plot
 
-![](charts_files/figure-html/unnamed-chunk-15-1.png)
+![](charts_files/figure-html/unnamed-chunk-16-1.png)
 
 **Summary**: Applications with higher complexity scores consistently
 took longer to process. Most straightforward applications (score below

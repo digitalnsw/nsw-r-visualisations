@@ -35,7 +35,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/charts.html">Charts and graphs</a></li>
+<li><a class="dropdown-item" href="../articles/charts.html">Demonstration gallery</a></li>
+    <li><a class="dropdown-item" href="../articles/cookbook.html">cookbook</a></li>
     <li><a class="dropdown-item" href="../articles/interactive.html">Interactive plots</a></li>
   </ul>
 </li>
@@ -93,269 +94,87 @@ Show font import code for HTML documents.
 </details>
 </div>
 <div class="section level2">
-<h2 id="example-1">Example 1<a class="anchor" aria-label="anchor" href="#example-1"></a>
+<h2 id="theme-for-ggplot2">Theme for ggplot2<a class="anchor" aria-label="anchor" href="#theme-for-ggplot2"></a>
 </h2>
-<p>With standard ggplot output:</p>
+<p><code><a href="../reference/theme_waratah.html">theme_waratah()</a></code> sets default fonts, styles, and colour
+palettes for plots. You can set the theme globally with
+<code><a href="https://ggplot2.tidyverse.org/reference/get_theme.html" class="external-link">ggplot2::set_theme()</a></code> or add it to an individual plot. If
+using any global options like
+<code>options(waratah.colour_theme = "aboriginal")</code>, make sure to
+do this before setting the theme.</p>
+<p>See <code><a href="../articles/cookbook.html">vignette("cookbook")</a></code> for some examples of using the
+theme.</p>
+</div>
+<div class="section level2">
+<h2 id="colours">Colours<a class="anchor" aria-label="anchor" href="#colours"></a>
+</h2>
+<p>The NSW palettes are designed around two grids consisting of colour
+columns and tonal rows. <a href="https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html" class="external-link">Guidelines
+for charts</a> suggest techniques for ensuring good contrast so that
+your charts are accessible.</p>
+<p>Individual colours are available by name,
+e.g. <code>nsw_colours$blue_01</code>.</p>
+<div class="section level3">
+<h3 id="grid-based-method">Grid-based method<a class="anchor" aria-label="anchor" href="#grid-based-method"></a>
+</h3>
+<p>To access colours using the grid system, use <code><a href="../reference/pal_nsw.html">pal_nsw()</a></code>.
+We can visualise the colours with a utility from the scales package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/digitalnsw/nsw-r-visualisations" class="external-link">waratah</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/" class="external-link">palmerpenguins</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">long_text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do"</span>,</span>
-<span>    <span class="st">"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim"</span>,</span>
-<span>    <span class="st">"ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"</span>,</span>
-<span>    <span class="st">"aliquip ex ea commodo consequat."</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  collapse <span class="op">=</span> <span class="st">" "</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">bill_length_mm</span>,</span>
-<span>    y <span class="op">=</span> <span class="va">flipper_length_mm</span>,</span>
-<span>    colour <span class="op">=</span> <span class="va">species</span>,</span>
-<span>    size <span class="op">=</span> <span class="va">body_mass_g</span></span>
-<span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Let's try some *italics* in the title"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="va">long_text</span>,</span>
-<span>    dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>      bill_length_mm <span class="op">=</span> <span class="st">"Bill length (mm)"</span>,</span>
-<span>      flipper_length_mm <span class="op">=</span> <span class="st">"Flipper length (mm)"</span>,</span>
-<span>      species <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span>      body_mass_g <span class="op">=</span> <span class="st">"Body mass (g)"</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Data from {palmerpenguins}"</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">p1</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span>, tone <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/show_col.html" class="external-link">show_col</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="waratah_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="700"></p>
-<p>Style with waratah:</p>
+<p>This gave us the first two tones of blue followed by the first two
+tones of red. Importantly, <code><a href="../reference/pal_nsw.html">pal_nsw()</a></code> always provides a
+discrete colour palette.</p>
+<p>To use that with ggplot as a discrete colour scale, you can use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="700"></p>
-<p>Change to a different NSW palette:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_colour_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span>, tone <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>or <code><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete()</a></code> to set the fill scale. In case
+you need a continuous scale, ggplot will automatically interpolate the
+colours:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_colour_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"blues"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_colour_continuous</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="example-2">Example 2<a class="anchor" aria-label="anchor" href="#example-2"></a>
-</h2>
-<p>With standard ggplot output:</p>
+<div class="section level3">
+<h3 id="flexible-palettes">Flexible palettes<a class="anchor" aria-label="anchor" href="#flexible-palettes"></a>
+</h3>
+<p>Instead of working directly with the grid, you can instead use
+<code><a href="../reference/pal_waratah.html">pal_waratah()</a></code>. Specify the pattern of your data and you
+will get a reasonable discrete or continous scale. Note that this makes
+it harder to follow the chat recommendations mentioned above, but it can
+be more convenient for scientific data visualisation.</p>
+<p>For qualitative data, a mix of tonal rows 1 and 2 are chosen to avoid
+overly-similar colours:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter_out</a></span><span class="op">(</span><span class="va">penguins</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>      x <span class="op">=</span> <span class="va">bill_length_mm</span>,</span>
-<span>      y <span class="op">=</span> <span class="va">bill_depth_mm</span>,</span>
-<span>      fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">species</span><span class="op">)</span>,</span>
-<span>    <span class="op">)</span>,</span>
-<span>    shape <span class="op">=</span> <span class="fl">21</span>,</span>
-<span>    size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.8</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Penguin bill dimensions"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Separated by *species* and *sex*"</span>,</span>
-<span>    dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>      bill_length_mm <span class="op">=</span> <span class="st">"Bill length (mm)"</span>,</span>
-<span>      bill_depth_mm <span class="op">=</span> <span class="st">"Bill depth (mm)"</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Data from {palmerpenguins}"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span></span>
-<span>    fill <span class="op">=</span> <span class="fu">legendry</span><span class="fu">::</span><span class="fu"><a href="https://teunbrand.github.io/legendry/reference/guide_legend_group.html" class="external-link">guide_legend_group</a></span><span class="op">(</span></span>
-<span>      title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>      ncol <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>      direction <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
-<span>      override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
-<p>Styling using waratah package - specifying the palette:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/pal_waratah.html">pal_waratah</a></span><span class="op">(</span><span class="st">"qual"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/show_col.html" class="external-link">show_col</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="waratah_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="700"></p>
+<p>There are also palettes for sequential and diverging continuous data
+that allow a choice of the base hue:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/discrete_scale.html" class="external-link">discrete_scale</a></span><span class="op">(</span><span class="st">"fill"</span>, palette <span class="op">=</span> <span class="fu"><a href="../reference/ggplot_palettes.html">pal_paired</a></span><span class="op">(</span><span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
-<p>Additional styling examples specifying font size, reversing colour
-palette:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/pal_waratah.html">pal_waratah</a></span><span class="op">(</span><span class="st">"div"</span>, hue <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/show_col.html" class="external-link">show_col</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="waratah_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
+<p>Because <code><a href="../reference/pal_waratah.html">pal_waratah()</a></code> considers colour similarity, you
+can request that it also take into account colour vision disorders:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span></span>
-<span>    palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"purples"</span>, variant <span class="op">=</span> <span class="st">"aboriginal"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: This manual palette can handle a maximum of 4 values. You have</span></span>
-<span><span class="co">#&gt; supplied 6</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
-</div>
-<div class="section level2">
-<h2 id="example-3">Example 3<a class="anchor" aria-label="anchor" href="#example-3"></a>
-</h2>
-<p>With standard ggplot output</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/pal_waratah.html">pal_waratah</a></span><span class="op">(</span><span class="st">"div"</span>, hue <span class="op">=</span> <span class="st">"green"</span>, cvd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/show_col.html" class="external-link">show_col</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="waratah_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
+<p>To make that choice globally, set:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p3</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter_out</a></span><span class="op">(</span><span class="va">penguins</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">species</span>, fill <span class="op">=</span> <span class="va">island</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>species <span class="op">=</span> <span class="st">"Species"</span>, island <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Perfectly proportional penguins"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Where do they all live?"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Data from {palmerpenguins}"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p3</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
-<p>Styling using the waratah package - specifying pallete, removing the
-off white background and adjusting font size</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p3</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"purples"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html" class="external-link">guide_axis</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">70</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>waratah.cvd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="example-4">Example 4<a class="anchor" aria-label="anchor" href="#example-4"></a>
-</h2>
-<p>With standard ggplot output:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p4</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fl">1</span>, fill <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>      <span class="fl">1</span>,</span>
-<span>      y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span>,</span>
-<span>      label <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stage</a></span><span class="op">(</span></span>
-<span>        <span class="va">species</span>,</span>
-<span>        after_stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s\n%.0f%%"</span>, <span class="va">label</span>, <span class="fl">100</span> <span class="op">*</span> <span class="va">count</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stage</a></span><span class="op">(</span></span>
-<span>        <span class="va">species</span>,</span>
-<span>        after_scale <span class="op">=</span> <span class="fu"><a href="../reference/ggplot_palettes.html">col_contrasting</a></span><span class="op">(</span><span class="va">colour</span><span class="op">)</span></span>
-<span>      <span class="op">)</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    stat <span class="op">=</span> <span class="st">"count"</span>,</span>
-<span>    position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html" class="external-link">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>,</span>
-<span>    show.legend <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_radial</a></span><span class="op">(</span></span>
-<span>    theta <span class="op">=</span> <span class="st">"y"</span>,</span>
-<span>    inner.radius <span class="op">=</span> <span class="fl">.5</span>,</span>
-<span>    expand <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    rotate.angle <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Does anyone know if penguins like donuts?"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Not sure, but we know there are three species in the dataset"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Data from {palmerpenguins}"</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">p4</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
-<p>Styling using the waratah package with options:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p4</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_fill_discrete</a></span><span class="op">(</span></span>
-<span>    aesthetics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"colour"</span><span class="op">)</span>,</span>
-<span>    palette <span class="op">=</span> <span class="fu"><a href="../reference/pal_nsw.html">pal_nsw</a></span><span class="op">(</span>hue <span class="op">=</span> <span class="st">"reds"</span><span class="op">)</span>,</span>
-<span>    guide <span class="op">=</span> <span class="st">"none"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span></span>
-<span>    void <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    base_size <span class="op">=</span> <span class="fl">14</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
+<div class="section level3">
+<h3 id="colour-themes">Colour themes<a class="anchor" aria-label="anchor" href="#colour-themes"></a>
+</h3>
+<p>Colour palettes in waratah allow a variant to be specified, including
+the default <code>variant = "base"</code> and the Aboriginal palette
+<code>variant = "aboriginal"</code>. See <code><a href="../reference/pal_nsw.html">pal_nsw()</a></code> for
+details.</p>
 </div>
-<div class="section level2">
-<h2 id="example-5">Example 5<a class="anchor" aria-label="anchor" href="#example-5"></a>
-</h2>
-<p>With standard ggplot output:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sentiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Strongly Disagree"</span>,</span>
-<span>  <span class="st">"Disagree"</span>,</span>
-<span>  <span class="st">"Neutral"</span>,</span>
-<span>  <span class="st">"Agree"</span>,</span>
-<span>  <span class="st">"Strongly Agree"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">survey_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>  answer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sentiment</span>, <span class="fl">2</span><span class="op">)</span>, levels <span class="op">=</span> <span class="va">sentiment</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">12</span>, <span class="fl">30</span>, <span class="fl">40</span>, <span class="fl">10</span>, <span class="fl">6</span>, <span class="fl">18</span>, <span class="fl">24</span>, <span class="fl">34</span>, <span class="fl">18</span><span class="op">)</span>,</span>
-<span>  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p5</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
-<span>    <span class="va">survey_data</span>,</span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">percent</span>, y <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">answer</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">from_theme</a></span><span class="op">(</span><span class="va">accent</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># note: likert is not a standard stat - it's defined and hidden for this example</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"likert"</span>, height <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Let's find out!"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"How much do they agree with the statement \"Doughnuts are delicious\"?"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Totally made up data!"</span>,</span>
-<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    fill <span class="op">=</span> <span class="st">"Answer"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p5</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PiYG"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
-<p>Styling using the waratah package - removing background, changing
-font size:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p5</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/discrete_scale.html" class="external-link">discrete_scale</a></span><span class="op">(</span></span>
-<span>    <span class="st">"fill"</span>,</span>
-<span>    palette <span class="op">=</span> <span class="fu"><a href="../reference/ggplot_palettes.html">pal_stretch</a></span><span class="op">(</span><span class="fu">waratah</span><span class="fu">:::</span><span class="va">nsw_palettes</span><span class="op">$</span><span class="va">neg_to_pos</span><span class="op">)</span>,</span>
-<span>    breaks <span class="op">=</span> <span class="va">sentiment</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_waratah.html">theme_waratah</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="nsw-government-logo">NSW Government logo<a class="anchor" aria-label="anchor" href="#nsw-government-logo"></a>
 </h2>
-<p>The logo is in the package as a PNG file - to view it use the
-following code:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p>The logo is included in PNG format:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/" class="external-link">magick</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linking to ImageMagick 6.9.12.98</span></span>
 <span><span class="co">#&gt; Enabled features: fontconfig, freetype, fftw, heic, lcms, pango, raw, webp, x11</span></span>
@@ -367,7 +186,7 @@ following code:</p>
 <span>  package <span class="op">=</span> <span class="st">"waratah"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="va">image_path</span><span class="op">)</span></span></code></pre></div>
-<p><img src="waratah_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="130"></p>
+<p><img src="waratah_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="130"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -376,7 +195,7 @@ following code:</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Zoe Baldwin.</p>
+  <p>Developed by Zoe Baldwin, Carl Suster.</p>
 </div>
 
 <div class="pkgdown-footer-right">

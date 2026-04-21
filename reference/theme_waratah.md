@@ -16,6 +16,7 @@ theme_waratah(
   paper = "white",
   geom_ink = "blue_01",
   accent = "blue_02",
+  variant = getOption("waratah.colour_theme", default = "base"),
   show_grid_lines = TRUE,
   void = FALSE
 )
@@ -52,6 +53,11 @@ theme_waratah(
 - geom_ink:
 
   default ink colour used by geoms for points, lines and fills.
+
+- variant:
+
+  name of palette variant. Available options are: base, aboriginal,
+  corporate, treasury.
 
 - show_grid_lines:
 

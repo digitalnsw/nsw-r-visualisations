@@ -1,10 +1,7 @@
 # Tools for the New South Wales Design System in R
 
-This package allows NSW Government R users to create data visualisations
-in keeping with the NSW Design System. This ensures a consistent
-approach to data visualisations with appropriate colours and fonts. This
-package was inspired by the data viz work of Cara Thompson
-<https://github.com/cararthompson>.
+This package was inspired by the data viz work of Cara Thompson
+(<https://github.com/cararthompson>).
 
 ## See also
 
@@ -22,7 +19,13 @@ Useful links:
 **Maintainer**: Zoe Baldwin <zoe.baldwin@health.nsw.gov.au>
 ([ORCID](https://orcid.org/0000-0002-6010-9361))
 
-Other contributors:
+Authors:
 
 - Carl Suster <carl.suster@sydney.edu.au>
-  ([ORCID](https://orcid.org/0000-0001-7021-9380)) \[contributor\]
+  ([ORCID](https://orcid.org/0000-0001-7021-9380))
+
+Other contributors:
+
+- Shaun Nielsen <Shaun.Nielsen@health.nsw.gov.au> \[contributor\]
+
+- Tyson Goddard <tyson.goddard@treasury.nsw.gov.au> \[contributor\]

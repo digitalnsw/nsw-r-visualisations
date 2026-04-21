@@ -21,7 +21,8 @@ It sets default colour scales, fonts, and some other styles."><link href="https:
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/charts.html">Charts and graphs</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/charts.html">Demonstration gallery</a></li>
+    <li><a class="dropdown-item" href="../articles/cookbook.html">cookbook</a></li>
     <li><a class="dropdown-item" href="../articles/interactive.html">Interactive plots</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -57,6 +58,7 @@ It sets default colour scales, fonts, and some other styles.</p>
 <span>  paper <span class="op">=</span> <span class="st">"white"</span>,</span>
 <span>  geom_ink <span class="op">=</span> <span class="st">"blue_01"</span>,</span>
 <span>  accent <span class="op">=</span> <span class="st">"blue_02"</span>,</span>
+<span>  variant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"waratah.colour_theme"</span>, default <span class="op">=</span> <span class="st">"base"</span><span class="op">)</span>,</span>
 <span>  show_grid_lines <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  void <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -94,6 +96,11 @@ legend titles, the plot title and tag text.</p></dd>
 
 <dt id="arg-geom-ink">geom_ink<a class="anchor" aria-label="anchor" href="#arg-geom-ink"></a></dt>
 <dd><p>default ink colour used by geoms for points, lines and fills.</p></dd>
+
+
+<dt id="arg-variant">variant<a class="anchor" aria-label="anchor" href="#arg-variant"></a></dt>
+<dd><p>name of palette variant.
+Available options are: base, aboriginal, corporate, treasury.</p></dd>
 
 
 <dt id="arg-show-grid-lines">show_grid_lines<a class="anchor" aria-label="anchor" href="#arg-show-grid-lines"></a></dt>
@@ -145,7 +152,7 @@ pie/donut charts.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Zoe Baldwin.</p>
+  <p>Developed by Zoe Baldwin, Carl Suster.</p>
 </div>
 
 <div class="pkgdown-footer-right">

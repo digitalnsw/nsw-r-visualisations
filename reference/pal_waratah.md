@@ -1,35 +1,83 @@
-# Waratah palettes
+# Flexible colour palettes
 
-Palettes created using the waratah anchor colours. Note that the
-palettes used in plots interpolate between the anchor colours, allowing
-each palette to be used with any number of colours (within reason!)
+Unlike
+[`pal_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md),
+`pal_waratah()` is not based strictly on the NSW colour palette grids.
+It tries to choose colours that are perceptually distinct, optionally
+taking into account colour-blindness when doing so.
 
 ## Usage
 
 ``` r
-pal_waratah(palette = "default", direction = 1)
+pal_waratah(
+  type = c("qual", "seq", "div", "pairs", "triples"),
+  hue = 1,
+  cvd = getOption("waratah.cvd", default = FALSE),
+  variant = getOption("waratah.colour_theme", default = "base"),
+  direction = 1
+)
 ```
 
 ## Arguments
 
-- palette:
+- type:
 
-  Name of the palette: default, brand_default, neg_to_pos, greens,
-  teals, blues, purples, fuchsias, reds, oranges, yellows, greys,
-  browns, deeps, lights, warm_colours, cool_colours, colour_blind
+  type of palette that should be generated:
+
+  - `"qual"` discrete qualitative palette
+
+  - `"seq"` continuous sequential palette: a gradient spanning extreme
+    tones of `hue`
+
+  - `"div"` continuous diverging palette: a gradient spanning extreme
+    tones of `hue` and a second distinct colour.
+
+  - `"pairs"`, `"triples"` like \`"qual"“ but in sets of 2 or 2 tones of
+    each hue.
+
+- hue:
+
+  main hue, either by name of index. See
+  [`col_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/col_nsw.md)
+  for supported values. Only used when `type` is `"seq"` or `"div"`.
+
+- cvd:
+
+  when `TRUE` account for colour vision disorders. Requires the
+  `colorBlindness` package.
+
+- variant:
+
+  name of palette variant. Available options are: base, aboriginal,
+  corporate, treasury. Ignored unless `hue` or `tone` is specified.
 
 - direction:
 
-  Set to -1 to reverse the order of colours in the palette, or 1 for the
+  set to -1 to reverse the order of colours in the palette, or 1 for the
   original order.
+
+## Value
+
+A palette object (see [palette
+constructors](https://scales.r-lib.org/reference/new_continuous_palette.html))
+
+## See also
+
+Other palettes:
+[`pal_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
 
 ## Examples
 
 ``` r
 library(scales)
 
-show_col(pal_waratah()(8))
-#> Warning: At most 7 colours are supported by the "default" palette
+pal_waratah("qual") |> show_col()
 
-show_col(pal_waratah("colour_blind")(6))
+pal_waratah("pairs") |> show_col()
+
+pal_waratah("seq", hue = "red") |> show_col(labels = FALSE)
+
+pal_waratah("div", hue = "yellow", variant = "aboriginal") |>
+  show_col(labels = FALSE)
+
 ```

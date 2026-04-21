@@ -1,37 +1,50 @@
-# tooltipcss
+# Style interactive plot tooltips
 
 CSS code required to add waratah-styled tooltips to interactive graphs
-created using ggiraph
+created using ggiraph.
 
 ## Usage
 
 ``` r
 tooltip_css(
-  font_family = NULL,
-  font_size = NULL,
-  background_color = NULL,
-  text_color = NULL
+  background_colour = "grey_01",
+  text_colour = "off_white",
+  font_family = "\"Public Sans\", Arial, sans",
+  font_size = "11pt"
 )
 ```
 
 ## Arguments
 
+- background_colour:
+
+  tooltip background colour
+
+- text_colour:
+
+  tooltip text colour
+
 - font_family:
 
-  Font family for text in tooltips (default: "Public Sans")
+  font family for text in tooltips
 
 - font_size:
 
-  Font size for text in tooltips (default: "11px")
-
-- background_color:
-
-  Hover background colour (default: \#22272b)
-
-- text_color:
-
-  Hover text colour (default: \#F2F2F2)
+  font size for text in tooltips
 
 ## Value
 
-A character vector containing CSS styles for tooltips
+A character vector containing CSS rules
+
+## Details
+
+As normal with HTML elements, you must make sure that the final document
+loads the necessary fonts. See
+[`vignette("waratah")`](https://digitalnsw.github.io/nsw-r-visualisations/articles/waratah.md)
+for instructions.
+
+## Examples
+
+``` r
+tooltip_css()
+```

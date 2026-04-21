@@ -6,33 +6,79 @@ System](https://github.com/digitalnsw/nsw-design-system)
 
 ## Installation
 
-You can install the development version of waratah from
-[GitHub](https://github.com/) with:
+You can install waratah like so:
 
 ``` r
-TODO test
+# CRAN release (not yet!)
+# install.packages('waratah')
+
+# development version
+install.packages('pak')
+pak::pak('digitalnsw/nsw-r-visualisations')
 ```
 
-## 
+## Usage
+
+In many instances it may be sufficient to set the global theme:
+
+``` r
+library(ggplot2)
+library(waratah)
+
+set_theme(theme_waratah())
+
+ggplot(mpg, aes(displ, hwy, colour = class)) +
+  geom_point()
+```
+
+![](reference/figures/README-unnamed-chunk-2-1.png)
+
+More control is available through palette functions such as
+[`pal_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_waratah.md).
+See
+[`vignette("waratah")`](https://digitalnsw.github.io/nsw-r-visualisations/articles/waratah.md)
+for usage guidelines.
 
 # Package index
 
-## All functions
+## Plot theming
 
+Main theme and colour palettes.
+
+- [`theme_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/theme_waratah.md)
+  : Theme plots using NSW colours and fonts
+- [`pal_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_waratah.md)
+  : Flexible colour palettes
+- [`pal_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
+  [`pal_nsw_manual()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
+  : NSW Design System colour palettes
+
+## Colour utilities
+
+More specialised utilities for customising palettes within the design
+system.
+
+- [`nsw_colours`](https://digitalnsw.github.io/nsw-r-visualisations/reference/col_nsw.md)
+  [`define_colour_theme()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/col_nsw.md)
+  [`col_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/col_nsw.md)
+  : Access NSW palette grids by rows and/or columns
 - [`pal_interleave()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
-  [`pal_paired()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
+  [`pal_c()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
   [`pal_stretch()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
   [`col_contrasting()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/ggplot_palettes.md)
   : Construct palette variants
-- [`nsw_colours`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
-  [`pal_nsw()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/pal_nsw.md)
-  : NSW Design System Colour Palettes
-- [`reactable_theme()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/reactable_theme.md)
-  : reactable_theme()
-- [`theme_waratah()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/theme_waratah.md)
-  : Theme plots using NSW colours and fonts
+
+## HTML elements
+
+Themes for interactive HTML tables and plots.
+
 - [`tooltip_css()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/tooltip_css.md)
-  : tooltipcss
+  : Style interactive plot tooltips
+- [`reactable_theme()`](https://digitalnsw.github.io/nsw-r-visualisations/reference/reactable_theme.md)
+  : Theme for reactable interactive tables
+
+## Other
+
 - [`waratah`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah-package.md)
   [`waratah-package`](https://digitalnsw.github.io/nsw-r-visualisations/reference/waratah-package.md)
   : Tools for the New South Wales Design System in R
@@ -41,8 +87,9 @@ TODO test
 
 ### All vignettes
 
-- [Charts and
-  graphs](https://digitalnsw.github.io/nsw-r-visualisations/articles/charts.md):
+- [Demonstration
+  gallery](https://digitalnsw.github.io/nsw-r-visualisations/articles/charts.md):
+- [cookbook](https://digitalnsw.github.io/nsw-r-visualisations/articles/cookbook.md):
 - [Interactive
   plots](https://digitalnsw.github.io/nsw-r-visualisations/articles/interactive.md):
 - [waratah](https://digitalnsw.github.io/nsw-r-visualisations/articles/waratah.md):
