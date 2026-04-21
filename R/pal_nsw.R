@@ -95,7 +95,7 @@ pal_nsw <- function(
 #' @export
 pal_nsw_manual <- function(colours) {
   colours <- rlang::env_get_list(colours, env = as.environment(nsw_colours))
-  scales::pal_manual(colours, type = "colour")
+  scales::pal_manual(unlist(unname(colours)), type = "colour")
 }
 
 nsw_named_palettes <- rlang::new_environment(list(
