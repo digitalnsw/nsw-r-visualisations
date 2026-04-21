@@ -4,6 +4,8 @@
 #' It sets default colour scales, fonts, and some other styles.
 #'
 #' @param geom_ink default ink colour used by geoms for points, lines and fills.
+#' @param variant name of palette variant.
+#'   Available options are: `r rev(names(nsw_colour_grids))`.
 #' @param void whether to hide grid lines and axes.
 #'   If `TRUE`, all grid lines and axes are removed. This is useful when creating
 #'   pie/donut charts.
@@ -14,6 +16,7 @@
 #' @returns ggplot theme specification to add to a plot
 #' @export
 #' @importFrom ggplot2 theme element_blank element_text element_geom element_line element_rect %+replace% rel
+#' @importFrom scales as_continuous_pal
 #' @examples
 #' library(ggplot2)
 #' set_theme(theme_waratah())
@@ -45,6 +48,7 @@ theme_waratah <- function(
   paper = "white",
   geom_ink = "blue_01",
   accent = "blue_02",
+  variant = getOption("waratah.colour_theme", default = "base"),
   show_grid_lines = TRUE,
   void = FALSE
 ) {
@@ -100,12 +104,12 @@ theme_waratah <- function(
       ),
       plot.caption.position = "plot",
       plot.caption = ggtext::element_markdown(
+        margin = ggplot2::margin(t = 12),
         hjust = 0,
         halign = 0,
         vjust = 1,
         valign = 0
       ),
-      legend.position = "bottom",
       legend.key = element_rect(colour = ink),
       panel.grid.major = element_line(
         colour = nsw_colours$grey_03,
@@ -134,14 +138,10 @@ theme_waratah <- function(
         fill = geom_ink,
         pointsize = 2,
       ),
-      palette.colour.discrete = pal_nsw("default"),
-      palette.fill.discrete = pal_nsw("default"),
-      palette.colour.continuous = scales::as_continuous_pal(pal_nsw(
-        hue = "blues"
-      )),
-      palette.fill.continuous = scales::as_continuous_pal(pal_nsw(
-        hue = "blues"
-      )),
+      palette.colour.discrete = pal_waratah(type = "qual", variant = variant),
+      palette.fill.discrete = pal_waratah(type = "qual", variant = variant),
+      palette.colour.continuous = pal_waratah(type = "seq", variant = variant),
+      palette.fill.continuous = pal_waratah(type = "seq", variant = variant),
       complete = TRUE
     )
 

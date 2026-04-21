@@ -2,38 +2,45 @@
 % Please edit documentation in R/ggplot_helpers.R
 \name{pal_interleave}
 \alias{pal_interleave}
-\alias{pal_paired}
+\alias{pal_c}
 \alias{pal_stretch}
 \alias{col_contrasting}
 \title{Construct palette variants}
 \usage{
 pal_interleave(...)
 
-pal_paired(colours, amount = 50)
+pal_c(...)
 
 pal_stretch(pal)
 
-col_contrasting(bg)
+col_contrasting(colour, light = "white", dark = "black")
 }
 \arguments{
-\item{...}{two or more vectors of colours}
+\item{...}{two or more vectors of colours.}
 
-\item{amount}{amount to lighten then colours for the paired set}
+\item{pal}{palette object.}
 
-\item{pal}{palette object}
+\item{colour}{vector of colours.}
 
-\item{bg, colours}{vector of colours}
+\item{light, dark}{colours to output when \code{colour} is dark or light respectively.}
 }
 \value{
 \itemize{
-\item for \code{col_contrasting()} a vector of colours the same length as \code{bg},
+\item for \code{col_contrasting()} a vector of colours the same length as \code{colour},
 \item for \verb{pal_*()} a palette object.
 }
 }
 \description{
 Depending on the structure of your data you may wish to combine palettes
 according to some pattern. These helpers may come in handy.
-\code{pal_interleave()} and \code{pal_paired()} are for grouped data.
-\code{pal_stretch()} interpolates a palette into a new discrete palette.
-\code{col_contrasting()} chooses colours based on the given background colours.
+\itemize{
+\item \code{pal_c()} concatenates multiple discrtee palettes.
+\item \code{pal_interleave()} interleaves colours from multiple palettes of the same size.
+It helps when your data are grouped and you need more flexibility than the colour grid.
+\item \code{pal_stretch()} interpolates a palette into a new discrete palette.
+It's useful for stretching the 4 tones into 5 or 6, at the expense of straying from
+the NSW grid.
+\item \code{col_contrasting()} chooses colours based on the given background colours.
+It helps when drawing text on top of a mapped (i.e. variable) fill aesthetic
+}
 }

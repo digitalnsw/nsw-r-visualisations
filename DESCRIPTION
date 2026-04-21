@@ -10,13 +10,19 @@ Authors@R:
       person(given = "Carl",
              family = "Suster",
              email = "carl.suster@sydney.edu.au",
-             role = "ctb",
-             comment = c(ORCID = "0000-0001-7021-9380")))
+             role = "aut",
+             comment = c(ORCID = "0000-0001-7021-9380")),
+      person(given = "Shaun",
+             family = "Nielsen",
+             email = "Shaun.Nielsen@health.nsw.gov.au",
+             role = "ctb"),
+      person(given = "Tyson",
+             family = "Goddard",
+             email = "tyson.goddard@treasury.nsw.gov.au",
+             role = "ctb"))
 Description: This package allows NSW Government R users to create data visualisations
     in keeping with the NSW Design System. This ensures a consistent approach to data
     visualisations with appropriate colours and fonts.
-    This package was inspired by the data viz work of Cara Thompson
-    <https://github.com/cararthompson>.
 License: MIT + file LICENSE
 Copyright: file COPYRIGHTS + file LICENSE
 Encoding: UTF-8
@@ -29,17 +35,18 @@ Imports:
     rlang,
     ggplot2 (>= 3.5.1),
     ggtext (>= 0.1.2),
-    reactable (>= 0.4.4),
     scales (>= 1.4.0),
     systemfonts,
     extrafont,
-    vctrs
+    vctrs,
+    farver
 URL: https://github.com/digitalnsw/nsw-r-visualisations, https://digitalnsw.github.io/nsw-r-visualisations/
 BugReports: https://github.com/digitalnsw/nsw-r-visualisations/issues
 Suggests:
     dplyr,
     forcats,
     ggiraph,
+    reactable (>= 0.4.4),
     knitr,
     legendry,
     magick,
@@ -49,11 +56,11 @@ Suggests:
     rmarkdown,
     svglite,
     tidyr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    colorBlindness
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Config/Needs/website:
     rmarkdown,
     gdtools,
-    gfonts,
-    ggiraph
+    gfonts

@@ -2,27 +2,36 @@
 % Please edit documentation in R/tooltip_css.R
 \name{tooltip_css}
 \alias{tooltip_css}
-\title{tooltipcss}
+\title{Style interactive plot tooltips}
 \usage{
 tooltip_css(
-  font_family = NULL,
-  font_size = NULL,
-  background_color = NULL,
-  text_color = NULL
+  background_colour = "grey_01",
+  text_colour = "off_white",
+  font_family = "\\"Public Sans\\", Arial, sans",
+  font_size = "11pt"
 )
 }
 \arguments{
-\item{font_family}{Font family for text in tooltips (default: "Public Sans")}
+\item{background_colour}{tooltip background colour}
 
-\item{font_size}{Font size for text in tooltips (default: "11px")}
+\item{text_colour}{tooltip text colour}
 
-\item{background_color}{Hover background colour (default: #22272b)}
+\item{font_family}{font family for text in tooltips}
 
-\item{text_color}{Hover text colour (default: #F2F2F2)}
+\item{font_size}{font size for text in tooltips}
 }
 \value{
-A character vector containing CSS styles for tooltips
+A character vector containing CSS rules
 }
 \description{
-CSS code required to add waratah-styled tooltips to interactive graphs created using ggiraph
+CSS code required to add waratah-styled tooltips to interactive graphs
+created using ggiraph.
+}
+\details{
+As normal with HTML elements, you must make sure that the final document
+loads the necessary fonts. See \code{vignette("waratah")} for instructions.
+}
+\examples{
+tooltip_css()
+
 }

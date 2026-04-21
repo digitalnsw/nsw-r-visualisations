@@ -14,6 +14,7 @@ theme_waratah(
   paper = "white",
   geom_ink = "blue_01",
   accent = "blue_02",
+  variant = getOption("waratah.colour_theme", default = "base"),
   show_grid_lines = TRUE,
   void = FALSE
 )
@@ -34,6 +35,9 @@ legend titles, the plot title and tag text.}
 \item{ink, paper, accent}{colour for foreground, background, and accented elements respectively.}
 
 \item{geom_ink}{default ink colour used by geoms for points, lines and fills.}
+
+\item{variant}{name of palette variant.
+Available options are: base, aboriginal, corporate, treasury.}
 
 \item{show_grid_lines}{whether to show grid lines.
 If \code{FALSE}, all grid lines are removed but the axis text is retained.

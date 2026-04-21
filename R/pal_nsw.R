@@ -1,127 +1,104 @@
-#' NSW Design System Colour Palettes
+#' NSW Design System colour palettes
 #'
 #' Palettes created using the [NSW Design System](https://designsystem.nsw.gov.au/docs/content/design/theming.html).
-#' There are several named palettes which can be specified with `palette`.
-#' To use palettes based on the NSW Design System colour grid, either
-#' specify `hue` and allow the shade to vary, or specify `shade` to allow the
-#' hue to vary.
 #' To use the Aboriginal colour grid, specify `variant = "aboriginal"`.
 #' \if{html}{\figure{nsw_palette.svg}{options: width=95%}}
 #' `r svglite::svglite("man/figures/nsw_palette.svg"); display_pal_nsw(); invisible(dev.off())`
 #'
 #' @export
 #'
-#' @param palette Name of the palette: `r names(nsw_palettes_manual)`.
-#' @param hue Name or index of the hue - see Details.
+#' @param palette name of a predefined palette: `r rev(names(nsw_named_palettes))`.
+#' @param hue name or index of the hue - see below.
 #'   Ignored if `palette` is specified.
-#' @param shade Name or index of the shade - see Details.
+#' @param tone name or index of the tone - see below.
 #'   Ignored if `palette` is specified.
-#' @param variant Name of palette variant.
-#'   Ignored unless `hue` or `shade` is specified.
-#' @param direction Set to -1 to reverse the order of colours in the palette,
+#' @param variant name of palette variant.
+#'   Available options are: `r rev(names(nsw_colour_grids))`.
+#'   Ignored unless `hue` or `tone` is specified.
+#' @param direction set to -1 to reverse the order of colours in the palette,
 #'   or 1 for the original order.
 #' @returns A palette object (see [palette constructors][scales::new_continuous_palette])
 #'
 #' @details
-#' The `"base"` variant supports:
-#'   - **hue**: `r nsw_colour_grids$base$hues`
-#'   - **shade**: `r nsw_colour_grids$base$shades`
+#' To use palettes based on the NSW Design System colour grids, either
+#' specify `hue` and allow the tone to vary, or specify `tone` to allow the
+#' hue to vary.
+#' The recommendation is to use the first two tonal rows going one colour at a
+#' time from a set of colours; this can be achieved by specifying `tone = 1:2`.
 #'
-#' The `"aboriginal"` variant supports:
-#'   - **hue**: `r nsw_colour_grids$aboriginal$hues`
-#'   - **shade**: `r nsw_colour_grids$aboriginal$shades`
+#' There are several named palettes which can be specified with `palette`.
+#' To create custom combinations of named colours from the design system, use
+#' `pal_nsw_manual()`.
 #'
-#' Anchor colours used to create the NSW colour palettes can also be used
-#' stand-alone (e.g. `nsw_colours$blue_01` returns the hex code `"#002664"`).
+#' @inheritSection col_nsw Colour columns and tonal rows
+#' @family palettes
+#' @seealso [col_nsw()]
 #'
 #' @examples
 #' library(scales)
 #'
 #' pal_nsw() |> show_col()
 #' pal_nsw(hue = "blues") |> show_col()
-#' pal_nsw(hue = "reds", direction = -1) |> show_col()
-#' pal_nsw(shade = "light") |> show_col()
-#' pal_nsw(shade = "normal", variant = "aboriginal") |> show_col()
+#' pal_nsw(tone = 1:2, variant = "corporate") |> show_col()
+#' pal_nsw(tone = "light") |> show_col()
+#' pal_nsw(tone = "normal", variant = "aboriginal") |> show_col()
+#' pal_nsw_manual(c("blue_02", "red_01", "green_03")) |> show_col()
 #'
 #' # you can interpolate colours by converting to a continuous scale
-#' pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col()
+#' pal_nsw(hue = "blues") |> as_continuous_pal() |> show_col(labels = FALSE)
 pal_nsw <- function(
   palette = waiver(),
   hue = NA,
-  shade = NA,
-  variant = c("base", "aboriginal"),
+  tone = NA,
+  variant = getOption("waratah.colour_theme", default = "base"),
   direction = 1
 ) {
+  if (all(identical(hue, NA), identical(tone, NA))) {
+    if (!missing(variant)) {
+      cli::cli_warn(
+        "{.arg variant} is ignored unless used with {.arg hue} or {.arg tone}"
+      )
+    }
+  }
   if (
-    !missing(variant) && (!is_waiver(palette) || all(is.na(hue), is.na(shade)))
+    !is_waiver(palette) &&
+      any(!missing(variant), !identical(hue, NA), !identical(tone, NA))
   ) {
     cli::cli_warn(
-      "{.arg variant} is ignored unless used with {.arg hue} or {.arg shade}"
+      "{.arg variant}, {.arg hue} and {.arg tone} are ignored when {.arg palette} is specified"
     )
-  }
-  if (!is_waiver(palette) && any(!is.na(hue), !is.na(shade))) {
-    cli::cli_warn(
-      "{.arg hue} and {.arg shade} are ignored when {.arg palette} is specified"
-    )
-  }
-  if (all(!is.na(hue), !is.na(shade))) {
-    cli::cli_abort("{.arg hue} and {.arg shade} cannot both be set")
   }
 
-  palette <- pal_name(
-    palette = palette,
-    hue = hue,
-    shade = shade,
-    variant = variant
-  )
-  colours <- nsw_palettes[[palette]]
+  if (!identical(hue, NA) && !identical(tone, NA)) {
+    colours <- col_nsw(hue = hue, tone = tone, variant = variant)
+  } else if (!identical(hue, NA)) {
+    colours <- col_nsw(hue = hue, variant = variant)
+  } else if (!identical(tone, NA)) {
+    colours <- col_nsw(tone = tone, variant = variant)
+  } else if (!is_waiver(palette)) {
+    colours <- get(palette, envir = nsw_named_palettes)
+  } else {
+    colours <- get("default", envir = nsw_named_palettes)
+  }
 
   if (direction < 0) {
     colours <- rev(colours)
   }
 
-  scales::pal_manual(colours, type = "colour")
+  scales::pal_manual(unlist(colours), type = "colour")
 }
 
-is_waiver <- function(x) {
-  inherits(x, "waiver")
+#' @rdname pal_nsw
+#'
+#' @param colours vector of colour names corresponding to [nsw_colours].
+#'
+#' @export
+pal_nsw_manual <- function(colours) {
+  colours <- rlang::env_get_list(colours, env = as.environment(nsw_colours))
+  scales::pal_manual(unlist(unname(colours)), type = "colour")
 }
 
-pal_name <- function(
-  palette = waiver(),
-  hue = NA,
-  shade = NA,
-  variant = c("base", "aboriginal")
-) {
-  if (is_waiver(palette) && !all(is.na(hue), is.na(shade))) {
-    variant <- match.arg(variant)
-    pals <- Filter(
-      \(x) {
-        isTRUE(
-          attr(x, "variant") == variant &&
-            (is.na(hue) || attr(x, "hue") == hue) &&
-            (is.na(shade) || attr(x, "shade") == shade)
-        )
-      },
-      nsw_palettes
-    )
-    palette <- switch(
-      length(pals) + 1L,
-      cli::cli_abort("No matching palettes"),
-      names(pals)[[1]],
-      cli::cli_abort("Bad search")
-    )
-  }
-  if (is_waiver(palette)) {
-    palette = names(nsw_palettes)[[1]]
-  }
-  if (!palette %in% names(nsw_palettes)) {
-    cli::cli_abort("Unknown palette: {.val {palette}}")
-  }
-  palette
-}
-
-nsw_palettes_manual <- list(
+nsw_named_palettes <- rlang::new_environment(list(
   default = c(
     nsw_colours$blue_01,
     nsw_colours$teal_02,
@@ -137,121 +114,49 @@ nsw_palettes_manual <- list(
     nsw_colours$blue_02,
     nsw_colours$red_02
   ),
-  neg_to_pos = c(
-    nsw_colours$purple_01,
-    nsw_colours$teal_04,
-    nsw_colours$yellow_02
-  ),
-  colour_blind = c(
+  core = c(
     nsw_colours$blue_01,
-    nsw_colours$blue_02,
-    nsw_colours$teal_03,
-    nsw_colours$orange_01,
-    nsw_colours$brown_02,
-    nsw_colours$orange_03
+    nsw_colours$red_02
   )
-)
-
-nsw_palettes <- {
-  # sets attributes on each grid-based palette so that they can
-  # be retrieved by other functions in this file
-  new_pal_group <- function(
-    pals,
-    variant = NA_character_,
-    hue = NA_character_,
-    shade = NA_character_
-  ) {
-    pals <- mapply(
-      structure,
-      .Data = pals,
-      variant = variant,
-      hue = hue,
-      shade = shade,
-      SIMPLIFY = FALSE
-    )
-    stats::setNames(
-      pals,
-      apply(cbind(variant, hue, shade), 1, function(x) {
-        paste(x[!is.na(x)], collapse = "_")
-      })
-    )
-  }
-
-  base_hues <-
-    new_pal_group(
-      Map(
-        \(i) unname(calc_pal_shade(nsw_colour_grids$base, i)),
-        seq_along(nsw_colour_grids$base$hues)
-      ),
-      variant = "base",
-      hue = nsw_colour_grids$base$hues
-    )
-
-  base_shades <-
-    new_pal_group(
-      Map(
-        \(i) unname(calc_pal_hue(nsw_colour_grids$base, i)),
-        seq_along(nsw_colour_grids$base$shades)
-      ),
-      variant = "base",
-      shade = nsw_colour_grids$base$shades
-    )
-
-  aboriginal_hues <-
-    new_pal_group(
-      Map(
-        \(i) unname(calc_pal_shade(nsw_colour_grids$aboriginal, i)),
-        seq_along(nsw_colour_grids$aboriginal$hues)
-      ),
-      variant = "aboriginal",
-      hue = nsw_colour_grids$aboriginal$hues
-    )
-
-  aboriginal_shades <-
-    new_pal_group(
-      Map(
-        \(i) unname(calc_pal_hue(nsw_colour_grids$aboriginal, i)),
-        seq_along(nsw_colour_grids$aboriginal$shades)
-      ),
-      variant = "aboriginal",
-      shade = nsw_colour_grids$aboriginal$shades
-    )
-
-  c(
-    nsw_palettes_manual,
-    base_hues,
-    base_shades,
-    aboriginal_hues,
-    aboriginal_shades
-  )
-}
+))
 
 display_pal_nsw <- function() {
   pals <- c(
-    names(nsw_palettes_manual),
+    rev(names(nsw_named_palettes)),
     " ",
     " v=base",
-    Filter(\(x) isTRUE(attr(x, "variant") == "base"), nsw_palettes) |>
-      names(),
+    paste0("h=", colnames(nsw_colour_grids$base)),
+    paste0("t=", rownames(nsw_colour_grids$base)),
     " ",
     " v=aboriginal",
-    Filter(\(x) isTRUE(attr(x, "variant") == "aboriginal"), nsw_palettes) |>
-      names()
+    paste0("h=", colnames(nsw_colour_grids$aboriginal)),
+    paste0("t=", rownames(nsw_colour_grids$aboriginal))
   )
-  labels <- Map(function(pal) {
-    if (startsWith(pal, " ")) return(pal)
-    hue <- attr(nsw_palettes[[pal]], "hue")
-    shade <- attr(nsw_palettes[[pal]], "shade")
-    if (is.null(hue)) {
-      pal
-    } else if (is.na(shade)) {
-      sprintf("h=%s", hue)
-    } else {
-      sprintf("s=%s", shade)
-    }
-  }, pals)
+  cols <- unname(c(
+    rev(as.list(nsw_named_palettes)),
+    NA,
+    NA,
+    Map(
+      \(x) unname(unlist(col_nsw(hue = x, variant = "base"))),
+      colnames(nsw_colour_grids$base)
+    ),
+    Map(
+      \(x) unname(unlist(col_nsw(tone = x, variant = "base"))),
+      rownames(nsw_colour_grids$base)
+    ),
+    NA,
+    NA,
+    Map(
+      \(x) unname(unlist(col_nsw(hue = x, variant = "aboriginal"))),
+      colnames(nsw_colour_grids$aboriginal)
+    ),
+    Map(
+      \(x) unname(unlist(col_nsw(tone = x, variant = "aboriginal"))),
+      rownames(nsw_colour_grids$aboriginal)
+    )
+  ))
 
-  n <- lengths(nsw_palettes[pals])
+  n <- lengths(cols)
   nr <- length(pals)
   nc <- max(n)
 
@@ -274,7 +179,7 @@ display_pal_nsw <- function() {
     if (startsWith(pals[[i]], " ")) {
       next
     }
-    shadi <- nsw_palettes[[pals[[i]]]]
+    shadi <- cols[[i]]
     graphics::rect(
       xleft = 0:(nj - 1),
       ytop = nr - i,
@@ -287,7 +192,7 @@ display_pal_nsw <- function() {
   graphics::text(
     rep(-0.1, nr),
     rev(1:nr) - 0.6,
-    labels = labels,
+    labels = pals,
     xpd = TRUE,
     adj = 1,
     cex = 0.7

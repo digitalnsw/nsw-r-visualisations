@@ -2,81 +2,75 @@
 % Please edit documentation in R/reactable_theme.R
 \name{reactable_theme}
 \alias{reactable_theme}
-\title{reactable_theme()}
+\title{Theme for reactable interactive tables}
 \usage{
 reactable_theme(
   colour = "blue_01",
-  title_font = "Public Sans",
-  base_font = "Public Sans",
+  text_colour = colour,
+  borderColor = colour,
+  backgroundColor = "white",
+  base_family = "Public Sans",
+  title_family = "Public Sans",
   base_text_size = 10,
-  textColor = NULL,
-  .colours = nsw_colours,
-  backgroundColor = TRUE,
-  borderColor = TRUE,
-  stripedColor = NULL,
+  stripedColor = NA,
   ...
 )
 }
 \arguments{
-\item{colour}{The starting colour for the table.
-It can be any of the ophelia_colours (e.g. "blue_01", "green_01", "purple_02").}
+\item{colour}{starting colour used only to set a common default for other
+colour parameters.}
 
-\item{title_font}{The default title is "Public Sans".
-To change to a different font (e.g. to match up with an external publication
-requirement), simply change as desired (e.g. "Times New Roman"). Make sure you've
-installed the fonts you want to use on your device first!}
+\item{text_colour}{colour of all text.}
 
-\item{base_font}{The default font is also "Public Sans".
-If you want to use a different font (e.g. to match up with an external publication
-requirement), simply change as desired (e.g. "Arial"). Make sure you've installed
-the fonts you want to use on your device first!}
+\item{borderColor}{colour for the horizontal lines between rows.}
 
-\item{base_text_size}{Base text size.
+\item{backgroundColor}{background colour.}
+
+\item{base_family}{font family for normal text.}
+
+\item{title_family}{font family for title text.}
+
+\item{base_text_size}{base text size in pt.
 The header size is relative to the base text size.}
 
-\item{textColor}{You can specify a text colour if you would like it
-different to the borderColor and stripedColor.}
+\item{stripedColor}{fill colour for alternate rows.
+When \code{NA}, this is set to a blend of \code{borderColor} and \code{backgroundColor}.}
 
-\item{.colours}{Used to read in nsw_colours.
-Please leave as is!}
-
-\item{backgroundColor}{Logical. Can be specified as TRUE/FALSE.
-The colour is off_white #F2F2F2}
-
-\item{borderColor}{The colour for the horizontal lines between rows.}
-
-\item{stripedColor}{The fill colour for alternate rows.}
-
-\item{...}{Other parameters to pass to reactable::reactableTheme().
-See ?reactable::reactableTheme for documentation.
+\item{...}{other parameters to pass to \code{\link[reactable:reactableTheme]{reactable::reactableTheme()}}.
 For examples of what can be done with reactable, see
-https://glin.github.io/reactable/articles/cookbook/cookbook.html.}
+\url{https://glin.github.io/reactable/articles/cookbook/cookbook.html}.}
 }
 \value{
-A theme to apply to a reactable object
+A reactable theme object
 }
 \description{
-reactable_theme()
+If using reactable, this helper constructs a theme.
+}
+\details{
+Colours can be specified as named NSW colours as in \code{\link{nsw_colours}}.
+
+As normal with HTML elements, you must make sure that the final document
+loads the necessary fonts. See \code{vignette("waratah")} for instructions.
 }
 \examples{
-
 library(reactable)
+
+# The default theme
 head(palmerpenguins::penguins, 10) |>
   reactable(theme = reactableTheme())
 
-# Adding NSW style:
+# Adding waratah style
 head(palmerpenguins::penguins, 10) |>
   reactable(theme = reactable_theme())
 
-# Further arguments for styling
+# More customised styling
 head(palmerpenguins::penguins, 10) |>
   reactable(
     theme = reactable_theme(
       colour = "blue_01",
-      base_font = "Arial",
-      textColor = "black",
-      backgroundColor = TRUE,
-      borderColor = TRUE
+      base_family = "Arial",
+      text_colour = "black",
+      backgroundColor = NULL
     ),
     striped = TRUE
   )
