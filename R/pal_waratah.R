@@ -33,7 +33,7 @@
 pal_waratah <- function(
   type = c("qual", "seq", "div", "pairs", "triples"),
   hue = 1,
-  cvd = FALSE,
+  cvd = getOption("waratah.cvd", default = FALSE),
   variant = getOption("waratah.colour_theme", default = "base"),
   direction = 1
 ) {
