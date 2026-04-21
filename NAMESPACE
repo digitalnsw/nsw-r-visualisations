@@ -3,6 +3,7 @@
 export(col_contrasting)
 export(col_nsw)
 export(nsw_colours)
+export(pal_c)
 export(pal_interleave)
 export(pal_nsw)
 export(pal_nsw_manual)

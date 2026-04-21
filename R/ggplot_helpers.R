@@ -5,16 +5,22 @@ NULL
 #'
 #' Depending on the structure of your data you may wish to combine palettes
 #' according to some pattern. These helpers may come in handy.
-#' `pal_interleave()` is for grouped data.
-#' `pal_stretch()` interpolates a palette into a new discrete palette.
-#' `col_contrasting()` chooses colours based on the given background colours.
+#'   - `pal_c()` concatenates multiple discrtee palettes.
+#'   - `pal_interleave()` interleaves colours from multiple palettes of the same size.
+#'     It helps when your data are grouped and you need more flexibility than the colour grid.
+#'   - `pal_stretch()` interpolates a palette into a new discrete palette.
+#'     It's useful for stretching the 4 tones into 5 or 6, at the expense of straying from
+#'     the NSW grid.
+#'   - `col_contrasting()` chooses colours based on the given background colours.
+#'     It helps when drawing text on top of a mapped (i.e. variable) fill aesthetic
 #'
-#' @param ... two or more vectors of colours
-#' @param bg vector of colours
-#' @param pal palette object
+#' @param ... two or more vectors of colours.
+#' @param colour vector of colours.
+#' @param light,dark colours to output when `colour` is dark or light respectively.
+#' @param pal palette object.
 #'
 #' @return
-#'   - for `col_contrasting()` a vector of colours the same length as `bg`,
+#'   - for `col_contrasting()` a vector of colours the same length as `colour`,
 #'   - for `pal_*()` a palette object.
 #'
 #' @export
@@ -31,12 +37,11 @@ pal_interleave <- function(...) {
   scales::pal_manual(unlist(pals)[idx], type = "colour")
 }
 
-as_colour_vector <- function(x) {
-  if (scales::is_discrete_pal(x)) {
-    x(scales::palette_nlevels(x))
-  } else {
-    x
-  }
+#' @export
+#' @rdname ggplot_palettes
+pal_c <- function(...) {
+  pals <- Map(as_colour_vector, rlang::list2(...))
+  scales::pal_manual(unlist(pals), type = "colour")
 }
 
 #' @export
@@ -48,12 +53,15 @@ pal_stretch <- function(pal) {
 
 #' @export
 #' @rdname ggplot_palettes
-col_contrasting <- function(bg) {
-  Lab <- grDevices::convertColor(
-    t(grDevices::col2rgb(bg)),
-    from = "sRGB",
-    to = "Lab",
-    scale.in = 255
-  )
-  ifelse(Lab[, 1] < 50, "white", "black")
+col_contrasting <- function(colour, light = "white", dark = "black") {
+  lab <- farver::decode_colour(colour, to = "lab")
+  ifelse(lab[, 1] < 50, light, dark)
+}
+
+as_colour_vector <- function(x) {
+  if (scales::is_discrete_pal(x)) {
+    x(scales::palette_nlevels(x))
+  } else {
+    x
+  }
 }
