@@ -17,7 +17,8 @@
 #' @param lightness,... other params passed to [`farver::compare_colour()`].
 #'
 #' @return vector of distinct colours from `colours`
-#' @export
+#' @keywords internal
+#' @noRd
 #' @examples
 #'
 #' col_nsw(1:10, v = "b") |> col_distinct(plot = TRUE)

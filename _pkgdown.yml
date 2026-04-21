@@ -21,7 +21,6 @@ reference:
   contents:
   - col_nsw
   - pal_interleave
-  - col_distinct
 - title: HTML elements
   desc: >
     Themes for interactive HTML tables and plots.
